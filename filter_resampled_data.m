@@ -45,7 +45,7 @@ filtered_z_wrist = filtfilt(b,a,varargin(:,12));
 filtered_data = [filtered_x_index filtered_y_index filtered_z_index filtered_x_palm filtered_y_palm filtered_z_palm filtered_x_thumb filtered_y_thumb filtered_z_thumb filtered_x_wrist filtered_y_wrist filtered_z_wrist varargin(:,13)];
 varargout = num2cell(filtered_data, [1 2]);
 end
-if(sys ==2)
+if(sys ==2) %Optotrak
     a = cuttoff_freq/(sample_rate/2);
     [b,a] = butter(3,a);
     varargin = cell2mat(varargin);

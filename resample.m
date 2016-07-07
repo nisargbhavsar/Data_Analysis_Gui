@@ -1,13 +1,15 @@
-function [downsampled_data] = resample(sys, resample_rate, varargin )
+function [status, downsampled_data] = resample(sys, resample_rate, varargin )
 %resample Resamples given data at a user specified frequency using pchip
 %   resample (matrix) returns a resampled data set
 %   matrix must have time data in last coloumn with x y and z position data
 %   in coloumns 1,2 and 3 respectively
+%   Status corresponds to the amount of data missing
+%   If more than 30% of data missing, status =1, else status =0
 
 if(sys ==1)
             %missing_data_limit = 200; %in ms
             varargin = cell2mat(varargin);
-
+            status =0;
             size_array = size(varargin);
             rows = size_array (1);
             coloumns = size_array (2);
@@ -33,11 +35,20 @@ if(sys ==1)
 %             end
             
             %Remove all data points where hand was lost to the camera
-            index = find(varargin(:,1)==999.0000);
+            index = find(varargin(:,1)==999.00);
+            if(length(index(:,1))/length(varargin(:,1)) > 0.3)
+                status =1;
+            end
             for count =1: 12
                 for j =1: length(index(:,1))
                     varargin(index(j,1),count) = nan;
                 end
+            end
+            if(length(index(:,1)) == length(varargin(:,1)))
+                a = [0;1;2;3];
+                downsampled_data = [a a a a a a a a a a a a a];
+                status = 2;
+                return;
             end
            
 %             for j =1: length(missing_index)

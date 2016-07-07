@@ -411,18 +411,29 @@ if(handles.count <= handles.num_cal)
 %        set(handles.Points_Text, 'String', handles.values{:,1});
 %        set(handles.text6, 'String', handles.values{:,2});
 %        set(handles.text7, 'String', handles.values{:,3});
+       if(index2>index)
+           meanx = mean(handles.Cal_array(index:index2,1));
+           meany = mean(handles.Cal_array(index:index2,2));
+           meanz = mean(handles.Cal_array(index:index2,3));
        
-       meanx = mean(handles.Cal_array(index:index2,1));
-       meany = mean(handles.Cal_array(index:index2,2));
-       meanz = mean(handles.Cal_array(index:index2,3));
+       else
+           meanx = mean(handles.Cal_array(index2:index,1));
+           meany = mean(handles.Cal_array(index2:index,2));
+           meanz = mean(handles.Cal_array(index2:index,3));
+       end
        
        handles.values{i,4} = meanx;
        handles.values{i,5} = meany;
        handles.values{i,6} = meanz;
-       
-       handles.values{i,7} = std(handles.Cal_array(index:index2,1));
-       handles.values{i,8} = std(handles.Cal_array(index:index2,2));
-       handles.values{i,9} = std(handles.Cal_array(index:index2,3));
+       if(index2>index)
+           handles.values{i,7} = std(handles.Cal_array(index:index2,1));
+           handles.values{i,8} = std(handles.Cal_array(index:index2,2));
+           handles.values{i,9} = std(handles.Cal_array(index:index2,3));
+       else
+           handles.values{i,7} = std(handles.Cal_array(index2:index,1));
+           handles.values{i,8} = std(handles.Cal_array(index2:index,2));
+           handles.values{i,9} = std(handles.Cal_array(index2:index,3));
+       end
        set(handles.uitable1,'Data',handles.values);
        %stats = strcat('Mean: ', num2str(meanx),' ', num2str(meany),' ', num2str(meanz));
        

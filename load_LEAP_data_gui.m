@@ -50,7 +50,16 @@ function [trial_num,varargout ] = load_LEAP_data_gui( varargin )
         cal_array = fscanf(calFile, formatSpec, size_);
         
         cal_array = cal_array';
-        cal_array = cal_array(1:end-5,:);
+        count =0;
+        i=1;
+        while (count <2)
+            if(cal_array(i,4) == 0)
+            count = count +1;
+            end
+            i = i+1;
+        end
+        
+        cal_array = cal_array(1:i-3,:);
         max_time = cal_array(end,4)/1e3;
        
         time = (0:1/50:max_time)*1e3;
@@ -65,7 +74,7 @@ function [trial_num,varargout ] = load_LEAP_data_gui( varargin )
         new_cal_array(:,3) = predicted_z_index;
         new_cal_array(:,4) = time'; 
         
-        [b,a] = butter(3,0.26);
+        [b,a] = butter(3,0.4);
 
         filt_cal_array(:,1)= filtfilt(b,a,new_cal_array(:,1));
         filt_cal_array(:,2) = filtfilt(b,a,new_cal_array(:,2));
@@ -113,7 +122,7 @@ function [trial_num,varargout ] = load_LEAP_data_gui( varargin )
 %         new_array(:,3) = predicted_z_index;
 %         new_array(:,4) = time'; 
 %         
-%         [b,a] = butter(3,0.26);
+%         [b,a] = butter(3,0.4);
 % 
 %         filt_cal_array(:,1)= filtfilt(b,a,new_cal_array(:,1));
 %         filt_cal_array(:,2) = filtfilt(b,a,new_cal_array(:,2));

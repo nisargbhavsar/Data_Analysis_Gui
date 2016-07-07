@@ -22,7 +22,7 @@ function varargout = LeapEye_Analysis(varargin)
 
 % Edit the above text to modify the response to help LeapEye_Analysis
 
-% Last Modified by GUIDE v2.5 30-Jun-2016 09:42:01
+% Last Modified by GUIDE v2.5 07-Jul-2016 15:11:33
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -714,7 +714,7 @@ function Cutoff_Freq_Edit_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-handles.Cutoff_Freq = 6.5; %Pre-Set Cutoff Frequency
+handles.Cutoff_Freq = 10; %Pre-Set Cutoff Frequency
 guidata(hObject, handles);
 end
 
@@ -723,6 +723,8 @@ function Load_Data_Button_Callback(hObject, eventdata, handles)
 % hObject    handle to Load_Data_Button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+set(handles.warning_text, 'String','Warning:');
 
 set(handles.Resample_Radio,'Value',0);
 set(handles.Raw_Radio,'Value',0);
@@ -786,7 +788,7 @@ else
 end
 handles.Raw_disp = zeros(1,3);
 handles.Vel_Tol = 0.02;
-handles.VelEnd_Tol = 0.02;
+handles.VelEnd_Tol = 0.1;
 handles.kin_array = zeros(1,13);
 handles.variables = zeros (1,4);
 h = findobj(0, 'tag', 'figure1');
@@ -959,7 +961,6 @@ end
 name = strcat('Trial # : ',num2str(handles.Trial_Num), ' Loaded');
 set(handles.Trial_Num_Text, 'String',name);
 handles.Raw_disp = zeros (1,3);
-guidata(hObject,handles);
 
 aCheckbox = findobj('Tag','Index_Accel_Check');
     bCheckbox = findobj('Tag','Thumb_Accel_Check');
@@ -982,7 +983,11 @@ aCheckbox = findobj('Tag','Index_Accel_Check');
         cla;        
     axes(handles.Bottom_Graph);
         cla;   
+        
+        A = strcat('Trial #:', num2str(handles.Trial_Num));
+set(handles.trial_num_edit,'String',A);
 
+guidata(hObject,handles);
 end
 
 % --- Executes on button press in Resample_Button.
@@ -991,7 +996,13 @@ function Resample_Button_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-handles.Master_array = resample(handles.system, handles.Resample_Rate, handles.Master_array);
+[status, handles.Master_array] = resample(handles.system, handles.Resample_Rate, handles.Master_array);
+if(status ==1)
+    set(handles.warning_text, 'String','Warning: There is more than 30% of data missing from this trial.');
+end
+if(status ==2)
+    set(handles.warning_text,'String','Warning: Please reject, there is no data in this trial.');
+end
 index_x = 0;
 index_y = 0;
 index_z = 0;
@@ -1862,7 +1873,7 @@ if(handles.system == 1)
         movement_time_index_z = movement_time_thumb_z;
     end
 
-    disp(handles.Trial_Num);
+    %disp(handles.Trial_Num);
     targetloc = handles.event_data{handles.Trial_Num, 7}; %assume target location is inputted as a numerical value following the order during calibration
     targetloc = str2double (targetloc);
 
@@ -1870,9 +1881,9 @@ if(handles.system == 1)
     targety = handles.Calibration_array (targetloc, 2);
     targetz = handles.Calibration_array (targetloc, 3);
 
-    index_end_pos_x = (handles.Filtered_XYZ(handles.kin_array(1,7),1)) * index; %index x values when kept still
-    index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1,8),2))* index;
-    index_end_pos_z = (handles.Filtered_XYZ(handles.kin_array(1,9),3))* index;
+    index_end_pos_x = (handles.Filtered_XYZ(handles.kin_array(1,7),1)); %index x values when kept still
+    index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1,8),2));
+    index_end_pos_z = (handles.Filtered_XYZ(handles.kin_array(1,9),3));
 
 
     accuracyx = (index_end_pos_x-targetx); %accuracy of 
@@ -2682,6 +2693,43 @@ function edit13_CreateFcn(hObject, eventdata, handles)%thumb vector velocity
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-handles.th_vec_vel =0;
+handles.th_vec_vel =0.1;
 guidata(hObject, handles);
+end
+
+
+function trial_num_edit_Callback(hObject, eventdata, handles)
+% hObject    handle to trial_num_edit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of trial_num_edit as text
+%        str2double(get(hObject,'String')) returns contents of trial_num_edit as a double
+handles.Trial_Num = str2double(get(hObject,'String'));
+name = strcat('Trial # : ',num2str(handles.Trial_Num), ' Loaded');
+set(handles.Trial_Num_Text, 'String',name);
+guidata(hObject, handles);
+
+end
+
+% --- Executes during object creation, after setting all properties.
+function trial_num_edit_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to trial_num_edit (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+end
+% --- Executes during object creation, after setting all properties.
+function warning_text_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to warning_text (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+set(hObject, 'String','Warning:');
+guidata(hObject,handles);
 end
