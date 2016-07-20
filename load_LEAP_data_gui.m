@@ -1,6 +1,6 @@
-function [trial_num,varargout ] = load_LEAP_data_gui( varargin )
+function [frequency, trial_num,varargout ] = load_LEAP_data_gui( varargin )
 %LOAD_LEAP_DATA_GUI Select multiple files to load and assemble info into an array for gui
-% INPUT: 0 (Load Calibration Data) or 1 (Load Trial Data)
+% INPUT: 0 (Load Calibration Data) or 1 (Load Trial Data) or 2 (Load Optotrak Calibration File) or 3 (Load Optotrak Trial)
 % OUTPUT: Calibration points array (0)
         % master_array (1)
         %%
@@ -18,30 +18,32 @@ function [trial_num,varargout ] = load_LEAP_data_gui( varargin )
 
 
         
-    if (varargin{1} ==1)
+    if (varargin{1} ==1) %Leap Trial
         [filename, ~] = uigetfile('*.txt', 'Select a Trial');
         if isequal(filename,0)
             master_array = zeros (5,13);
             varargout = num2cell(master_array, [1 2]);
             trial_num = 0;
+            frequency =0;
             return;
         else
-                    currFile =fopen(filename, 'r');
-                    formatSpec = '%f';
-                    size_ = [13 Inf]; 
-                    array = fscanf(currFile,formatSpec ,size_);
-
-                    array = array';
+            currFile =fopen(filename, 'r');
+            formatSpec = '%f';
+            size_ = [13 Inf]; 
+            array = fscanf(currFile,formatSpec ,size_);
+            array = array';
         end
+        array(:,13) = array(:,13) - array(1,13); %ensure first time point is zero
                 %[rows coloumns] = size(master_array);
 
                 str = regexprep(filename,'Trial_','');
                 str = regexprep(str,'.txt','');
 
                 trial_num = str2double(str);
+                frequency = trial_num;
             varargout = num2cell(array, [1 2]);
    end
-    if (varargin{1} == 0)
+    if (varargin{1} == 0) %Leap Calibration
         [calfile, ~] = uigetfile('*.txt', 'Select a Calibration File');
         formatSpec = '%f';
         size_ = [4 Inf];
@@ -50,6 +52,7 @@ function [trial_num,varargout ] = load_LEAP_data_gui( varargin )
         cal_array = fscanf(calFile, formatSpec, size_);
         
         cal_array = cal_array';
+        cal_array(:,4) = cal_array(:,4) - cal_array(1,4); %ensure first time point is zero
         count =0;
         i=1;
         while (count <2)
@@ -85,16 +88,24 @@ function [trial_num,varargout ] = load_LEAP_data_gui( varargin )
         output_array(:,3) = filt_cal_array(:,3);
         output_array(:,4) = time';
         trial_num =0;
+        frequency =0;
         varargout = num2cell( output_array, [1 2]);
     end
     
-    if (varargin{1} == 3)
-        [calfile, ~] = uigetfile('*.xls', 'Select an Optotrak Trial');
-
-        if isequal(calname,0)
-            master_array = zeros (5,13);
+    if (varargin{1} == 3) %Optotrak Trial
+        [calfile, ~] = uigetfile('*.csv', 'Select an Optotrak Trial');
+        remain = calfile;
+        for(i =1:6)  
+            [token, remain] = strtok(remain,'_');
+        end
+        %trial_num = double(token);
+        trial_num = str2double(token);
+        
+        if isequal(calfile,0)
+            master_array = zeros (5,7);
             varargout = num2cell(master_array, [1 2]);
             trial_num = 0;
+            frequency =0;
             return;
         else
         [num, txt, ~] = xlsread(calfile, 1);
@@ -103,8 +114,8 @@ function [trial_num,varargout ] = load_LEAP_data_gui( varargin )
         frequency = regexprep(frequency,'Frequency: ','');
         frequency = str2double(frequency);
         
-        
-        trial_num = frequency;
+        num(:,1) = (1/frequency)*1e3*num(:,1); %Turn from frames to time in ms 
+       % trial_num = frequency;
         
         varargout = num2cell(num, [1 2]);
 %         
@@ -135,6 +146,29 @@ function [trial_num,varargout ] = load_LEAP_data_gui( varargin )
 %         trial_num =0;
 %         varargout = num2cell( output_array, [1 2]);
         end
+    end
+    
+    if(varargin {1} ==2) %Optotrak Calibration
+        frequency =0; %Not needed
+        trial_num =0; %Not needed
+        
+        [calfile, ~] = uigetfile('*.csv', 'Select Optotrak Calibration');
+
+        if isequal(calfile,0)
+            master_array = zeros (5,7);
+            varargout = num2cell(master_array, [1 2]);
+            return;
+        else
+        [num, txt, ~] = xlsread(calfile, 1);
+        
+        frequency = txt{2,1};
+        frequency = regexprep(frequency,'Frequency: ','');
+        frequency = str2double(frequency);
+        
+        num(:,1) = (1/frequency)*1e3*num(:,1); %Turn from frames to time in ms 
+        trial_num = frequency;
+        
+        varargout = num2cell(num, [1 2]);
     end
 end
 

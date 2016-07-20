@@ -49,11 +49,31 @@ if(sys ==2) %Optotrak
     a = cuttoff_freq/(sample_rate/2);
     [b,a] = butter(3,a);
     varargin = cell2mat(varargin);
+    
+%     for(i =1:length(varargin(:,1)))
+%         if(num2str(varargin(i,2) == 'NaN'))
+%             varargin(i,2) = 0;
+%         end
+%         if(num2str(varargin(i,3) == 'NaN'))
+%             varargin(i,3) = 0;
+%         end
+%         if(num2str(varargin(i,4) == 'NaN'))
+%             varargin(i,4) = 0;
+%         end
+%         if(num2str(varargin(i,5) == 'NaN'))
+%             varargin(i,5) = 0;
+%         end
+%         if(num2str(varargin(i,6) == 'NaN'))
+%             varargin(i,6) = 0;
+%         end
+%         if(num2str(varargin(i,7) == 'NaN'))
+%             varargin(i,7) = 0;
+%         end
+%     end
 
     filtered_x_index = filtfilt(b,a,varargin(:,2));
     filtered_y_index = filtfilt(b,a,varargin(:,3));
     filtered_z_index = filtfilt(b,a,varargin(:,4));
-
     filtered_x_palm = filtfilt(b,a,varargin(:,5));
     filtered_y_palm = filtfilt(b,a,varargin(:,6));
     filtered_z_palm = filtfilt(b,a,varargin(:,7));
@@ -61,7 +81,5 @@ if(sys ==2) %Optotrak
     filtered_data = [varargin(:,1) filtered_x_index filtered_y_index filtered_z_index filtered_x_palm filtered_y_palm filtered_z_palm];
     varargout = num2cell(filtered_data, [1 2]);
 end
-
-
 end
 

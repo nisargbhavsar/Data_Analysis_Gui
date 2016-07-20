@@ -4,9 +4,9 @@ function [status, downsampled_data] = resample(sys, resample_rate, varargin )
 %   matrix must have time data in last coloumn with x y and z position data
 %   in coloumns 1,2 and 3 respectively
 %   Status corresponds to the amount of data missing
-%   If more than 30% of data missing, status =1, else status =0
+%   If more than 30% of data missing, status =1,  all data missing status =2 else status =0
 
-if(sys ==1)
+    if(sys ==1) %Leap
             %missing_data_limit = 200; %in ms
             varargin = cell2mat(varargin);
             status =0;
@@ -80,11 +80,25 @@ if(sys ==1)
             predicted_y_wrist = (pchip( varargin(:,13),varargin(:,11), time))';
             predicted_z_wrist = (pchip( varargin(:,13),varargin(:,12), time))'; 
             time = time';
-            downsampled_data = [predicted_x_index predicted_y_index  predicted_z_index predicted_x_palm predicted_y_palm predicted_z_palm predicted_x_thumb predicted_y_thumb predicted_z_thumb predicted_x_wrist predicted_y_wrist predicted_z_wrist time];
+            downsampled_data = [predicted_x_index predicted_y_index predicted_z_index predicted_x_palm predicted_y_palm predicted_z_palm predicted_x_thumb predicted_y_thumb predicted_z_thumb predicted_x_wrist predicted_y_wrist predicted_z_wrist time];
+    end
+if(sys == 2) %Optotrak
+%     varargin = cell2mat(varargin);
+%     time = varargin(:,1)';
+%     predicted_x_index = (pchip( varargin(:,1),varargin(:,2), time))';
+%     predicted_y_index = (pchip( varargin(:,1),varargin(:,3), time))';
+%     predicted_z_index = (pchip( varargin(:,1),varargin(:,4), time))'; 
+%             
+%     predicted_x_palm = (pchip( varargin(:,1),varargin(:,5), time))';
+%     predicted_y_palm = (pchip( varargin(:,1),varargin(:,6), time))';
+%     predicted_z_palm = (pchip( varargin(:,1),varargin(:,7), time))'; 
+%     
+%     %time = time';
+%     downsampled_data = [varargin(:,1) predicted_x_index predicted_y_index predicted_z_index predicted_x_palm predicted_y_palm predicted_z_palm];
+%     status =0;
+    return;
 end
-if(sys == 2)
-    
-    
+if (sys ==3) %Eyelink
 end
 
 end

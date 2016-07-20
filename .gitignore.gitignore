@@ -1,0 +1,7 @@
+# ignore generated html files,
+    *.html
+    
+#ignore generated data files
+    *.csv
+    *.xls
+    *.txt
