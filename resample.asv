@@ -84,21 +84,21 @@ function [status, downsampled_data] = resample(sys, resample_rate, varargin )
     end
 if(sys == 2) %Optotrak
     varargin = cell2mat(varargin);
-    time = varargin(:,1)'; 
+    time = varargin(:,1)';
     lost_data_index = find(isnan(varargin(:,2)));
-    lost_data_palm = find(isnan(varargin(:,5)));
+    lost_data_palm = find(isnan(varargin(:,2)));
     status = zeros(1,2);
     if((length(lost_data_index) / length (varargin(:,1)) > 0.3))
-         status(1) = 1; %More than 30% of data missing
+          status(1) = 1; %More than 30% of data missing
     end
-    if((length(lost_data_palm) / length(varargin(:,1)) > 0.3))
+    if((length(lost_data_thumb) / length(varargin(:,1)) > 0.3))
         status (2) = 1; %more than 30% of data missing
     end
     if(length(lost_data_index) == length(varargin(:,1)))
-        status(1) = 2; %Index data is entirely missing
+        status(1) = 2; %Either index or palm data is entrily missing
     end
-    if(length(lost_data_palm) == length(varargin(:,1)))
-        status(2) = 2; %Palm data is entirely missing
+    if(length(lost_data_palm) == varargin(:,1))
+        status(2) = 2;
     end
     predicted_x_index = (pchip( varargin(:,1),varargin(:,2), time))';
     predicted_y_index = (pchip( varargin(:,1),varargin(:,3), time))';

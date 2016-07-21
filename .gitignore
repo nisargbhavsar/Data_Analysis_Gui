@@ -1,5 +1,4 @@
 #Ignore data files
-    *.csv
-    *.txt
-    data
-    
+*.csv
+*.txt
+data    

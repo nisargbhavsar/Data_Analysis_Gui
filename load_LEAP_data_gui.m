@@ -116,6 +116,7 @@ function [frequency, trial_num,varargout ] = load_LEAP_data_gui( varargin )
         
         num(:,1) = (1/frequency)*1e3*num(:,1); %Turn from frames to time in ms 
        % trial_num = frequency;
+        num(:,2)
         
         varargout = num2cell(num, [1 2]);
 %         

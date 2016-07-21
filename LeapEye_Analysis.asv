@@ -1181,11 +1181,11 @@ if(handles.system == 2) %Optotrak
     change =0;
     if(status(1) == 1 || status(2) == 1)
         change =1;
-        text = strcat(text,' There is more than 30% of data missing (');
+        text = strcat(text,'There is more than 30% of data missing (');
     end
     if(status(1) ==2 || status(2) == 2)
         change =1;
-        text = strcat(text,' There is no data (');
+        text = strcat(text,'There is no data (');
     end
     if(status(1) ~= 0)
         text = strcat(text, 'index,');
@@ -1853,115 +1853,115 @@ if(handles.system ==2) %Optotrak
        if (get(handles.Index_XYZ_Check,'Value') == get(handles.Index_XYZ_Check,'Max')) %changing Index kin vars
            if(handles.marker_select == 1 || handles.marker_select == 2)
                 axes(handles.Top_Graph);
-                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,2), '-r');
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,1), '-r');
                 hold on;
-                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,3), '-g');
-                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,4), '-b');
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,2), '-g');
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,3), '-b');
 
-                plot(handles.Filtered_XYZ(handles.kin_array(1,1),1), handles.Filtered_XYZ(handles.kin_array(1,1),2), 'or'); %Movement start X outgoing
-                plot(handles.Filtered_XYZ(handles.kin_array(1,2),1), handles.Filtered_XYZ(handles.kin_array(1,2),3), 'og'); %Movement start Y outgoing
-                plot(handles.Filtered_XYZ(handles.kin_array(1,3),1), handles.Filtered_XYZ(handles.kin_array(1,3),4), 'ob'); %Movement start Z outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,1),7), handles.Filtered_XYZ(handles.kin_array(1,1),1), 'or'); %Movement start X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,2),7), handles.Filtered_XYZ(handles.kin_array(1,2),2), 'og'); %Movement start Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,3),7), handles.Filtered_XYZ(handles.kin_array(1,3),3), 'ob'); %Movement start Z outgoing
 
-                plot(handles.Filtered_XYZ(handles.kin_array(1,7),1), handles.Filtered_XYZ(handles.kin_array(1,7),2), 'squarer'); %Movement end X outgoing
-                plot(handles.Filtered_XYZ(handles.kin_array(1,8),1), handles.Filtered_XYZ(handles.kin_array(1,8),3), 'squareg'); %Movement end Y outgoing
-                plot(handles.Filtered_XYZ(handles.kin_array(1,9),1), handles.Filtered_XYZ(handles.kin_array(1,9),4), 'squareb'); %Movement end Z outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,7),7), handles.Filtered_XYZ(handles.kin_array(1,7),1), 'squarer'); %Movement end X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,8),7), handles.Filtered_XYZ(handles.kin_array(1,8),2), 'squareg'); %Movement end Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,9),7), handles.Filtered_XYZ(handles.kin_array(1,9),3), 'squareb'); %Movement end Z outgoing
 
                 axes(handles.Middle_Graph);
-                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,2), '-r'); 
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,1), '-r'); 
                 hold on;
-                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,3), '-g'); 
-                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,4), '-b'); 
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,2), '-g'); 
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,3), '-b'); 
 
-                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,13),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,13),2), 'squarer'); % Peak velocity index X
-                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,14),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,14),3), 'squareg'); % Peak velocity index y
-                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),4), 'squareb'); % Peak velocity index z
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,13),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,13),1), 'squarer'); % Peak velocity index X
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,14),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,14),2), 'squareg'); % Peak velocity index y
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),3), 'squareb'); % Peak velocity index z
 
                 axes(handles.Bottom_Graph);
-                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,2),'-r');
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,1),'-r');
                 hold on;
-                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,3),'-g');
-                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,4),'-b');
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,2),'-g');
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,3),'-b');
 
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,19),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,19),2),'squarer');
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,20),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,20),3),'squareg');
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,21),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,21),4),'squareb');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,19),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,19),1),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,20),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,20),2),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,21),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,21),3),'squareb');
 
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,25),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,25),2),'squarer');
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,26),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,26),3),'squareg');
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,27),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,27),4),'squareb');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,25),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,25),1),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,26),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,26),2),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,27),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,27),3),'squareb');
            end
        end
 
        if (get(handles.Thumb_XYZ_Check,'Value') == get(handles.Thumb_XYZ_Check,'Max')) %changing Palm kin vars
             if(handles.marker_select == 1 || handles.marker_select == 3)
                axes(handles.Top_Graph);
-                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,5), '-r');
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,4), '-r');
                 hold on;
-                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,6), '-g');
-                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,7), '-b');
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,5), '-g');
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,6), '-b');
 
-                plot(handles.Filtered_XYZ(handles.kin_array(1,4),1), handles.Filtered_XYZ(handles.kin_array(1,4),5), 'or'); %Movement start X outgoing
-                 plot(handles.Filtered_XYZ(handles.kin_array(1,5),1), handles.Filtered_XYZ(handles.kin_array(1,5),6), 'og'); %Movement start Y outgoing
-                 plot(handles.Filtered_XYZ(handles.kin_array(1,6),1), handles.Filtered_XYZ(handles.kin_array(1,6),7), 'ob'); %Movement start Z outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,4),7), handles.Filtered_XYZ(handles.kin_array(1,4),4), 'or'); %Movement start X outgoing
+                 plot(handles.Filtered_XYZ(handles.kin_array(1,5),7), handles.Filtered_XYZ(handles.kin_array(1,5),5), 'og'); %Movement start Y outgoing
+                 plot(handles.Filtered_XYZ(handles.kin_array(1,6),7), handles.Filtered_XYZ(handles.kin_array(1,6),6), 'ob'); %Movement start Z outgoing
 
-                 plot(handles.Filtered_XYZ(handles.kin_array(1,10),1), handles.Filtered_XYZ(handles.kin_array(1,10),5), 'squarer'); %Movement end X outgoing
-                 plot(handles.Filtered_XYZ(handles.kin_array(1,11),1), handles.Filtered_XYZ(handles.kin_array(1,11),6), 'squareg'); %Movement end Y outgoing
-                 plot(handles.Filtered_XYZ(handles.kin_array(1,12),1), handles.Filtered_XYZ(handles.kin_array(1,12),7), 'squareb'); %Movement end Z outgoing
+                 plot(handles.Filtered_XYZ(handles.kin_array(1,10),7), handles.Filtered_XYZ(handles.kin_array(1,10),4), 'squarer'); %Movement end X outgoing
+                 plot(handles.Filtered_XYZ(handles.kin_array(1,11),7), handles.Filtered_XYZ(handles.kin_array(1,11),5), 'squareg'); %Movement end Y outgoing
+                 plot(handles.Filtered_XYZ(handles.kin_array(1,12),7), handles.Filtered_XYZ(handles.kin_array(1,12),6), 'squareb'); %Movement end Z outgoing
 
 
                 axes(handles.Middle_Graph);
-                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,5), '-r'); 
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,4), '-r'); 
                 hold on;
-                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,6), '-g'); 
-                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,7), '-b'); 
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,5), '-g'); 
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,6), '-b'); 
 
-                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),5), 'squarer'); % Peak velocity index X
-                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),6), 'squareg'); % Peak velocity index y
-                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),7), 'squareb'); % Peak velocity index z
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),4), 'squarer'); % Peak velocity index X
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),5), 'squareg'); % Peak velocity index y
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),6), 'squareb'); % Peak velocity index z
 
                 axes(handles.Bottom_Graph);
-                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,5),'-r');
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,4),'-r');
                 hold on;
-                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,6),'-g');
-                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,7),'-b');
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,5),'-g');
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,6),'-b');
 
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,22),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,22),5),'squarer');
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,23),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,23),6),'squareg');
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,24),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,24),7),'squareb');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,22),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,22),4),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,23),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,23),5),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,24),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,24),6),'squareb');
 
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,28),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,28),5),'squarer');
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,29),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,29),6),'squareg');
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,30),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,30),7),'squareb');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,28),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,28),4),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,29),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,29),5),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,30),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,30),6),'squareb');
             end
        end
       
        if (get(handles.Index_Accel_Check,'Value') == get(handles.Index_Accel_Check,'Max')) %changing Index Vector kin vars
            if(handles.marker_select == 1 || handles.marker_select == 2)
                 axes(handles.Top_Graph);
-                plot(handles.Filtered_SagPos(:,1), handles.Filtered_SagPos(:,2), '-r');
+                plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,1), '-r');
                 hold on;
 
-                plot(handles.Filtered_SagPos(handles.kin_array(1,1),1), handles.Filtered_SagPos(handles.kin_array(1,1),2), 'or'); %Movement start 
-                plot(handles.Filtered_SagPos(handles.kin_array(1,7),1), handles.Filtered_SagPos(handles.kin_array(1,7),2), 'or'); %Movement end
+                plot(handles.Filtered_SagPos(handles.kin_array(1,1),5), handles.Filtered_SagPos(handles.kin_array(1,1),1), 'or'); %Movement start 
+                plot(handles.Filtered_SagPos(handles.kin_array(1,7),5), handles.Filtered_SagPos(handles.kin_array(1,7),1), 'or'); %Movement end
 
                 axes(handles.Middle_Graph);
-                plot(handles.Filtered_Velocity(:,1), handles.Filtered_Velocity(:,2),'-r');
+                plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,1),'-r');
                 hold on;
-                plot(handles.Filtered_SagPos(handles.kin_array(1,31),1),handles.Filtered_Velocity(handles.kin_array(1,31),2),'or');
+                plot(handles.Filtered_SagPos(handles.kin_array(1,31),5),handles.Filtered_Velocity(handles.kin_array(1,31),1),'or');
            end
       end
        if (get(handles.Thumb_Accel_Check,'Value') == get(handles.Thumb_Accel_Check,'Max')) %changing Palm Vector kin vars
            if(handles.marker_select == 1 || handles.marker_select == 3)
                 axes(handles.Top_Graph);
-                plot(handles.Filtered_SagPos(:,1), handles.Filtered_SagPos(:,3), '-r');
+                plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,2), '-r');
                 hold on;
-                plot(handles.Filtered_SagPos(handles.kin_array(1,4),1), handles.Filtered_SagPos(handles.kin_array(1,4),3), 'or'); %Movement start 
-                plot(handles.Filtered_SagPos(handles.kin_array(1,10),1), handles.Filtered_SagPos(handles.kin_array(1,10),3), 'or'); %Movement end
+                plot(handles.Filtered_SagPos(handles.kin_array(1,4),5), handles.Filtered_SagPos(handles.kin_array(1,4),2), 'or'); %Movement start 
+                plot(handles.Filtered_SagPos(handles.kin_array(1,10),5), handles.Filtered_SagPos(handles.kin_array(1,10),2), 'or'); %Movement end
 
                 axes(handles.Middle_Graph);
-                plot(handles.Filtered_Velocity(:,1), handles.Filtered_Velocity(:,3),'-r');
+                plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,2),'-r');
                 hold on;
-                plot(handles.Filtered_SagPos(handles.kin_array(1,32),1),handles.Filtered_Velocity(handles.kin_array(1,32),3),'or');
+                plot(handles.Filtered_SagPos(handles.kin_array(1,32),5),handles.Filtered_Velocity(handles.kin_array(1,32),2),'or');
            end
        end
     end
@@ -2494,8 +2494,8 @@ if(handles.system ==2) %Optotrak: handles.marker_select ->1 (index +palm) handle
     %processing the accepted markers
     trial_validity = 1;
     hand_latency = handles.Filtered_XYZ(handles.kin_array(1,1),13)/1000; 
-    movement_time_index_z = (handles.Master_array(handles.kin_array(1,9),1)-handles.Master_array(handles.kin_array(1,3),1))/1000 * index; %used this as movement time (sec)
-    movement_time_thumb_z = (handles.Master_array(handles.kin_array(1,12),1)-handles.Master_array(handles.kin_array(1,6),1))/1000 * palm; 
+    movement_time_index_z = (handles.Master_array(handles.kin_array(1,9),13)-handles.Master_array(handles.kin_array(1,3),13))/1000 * index; %used this as movement time (sec)
+    movement_time_thumb_z = (handles.Master_array(handles.kin_array(1,12),13)-handles.Master_array(handles.kin_array(1,6),13))/1000 * palm; 
 
     if(movement_time_index_z ==0) %if index finger not selected, use thumb movement start time
         movement_time_index_z = movement_time_thumb_z;
