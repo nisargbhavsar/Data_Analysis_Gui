@@ -2,4 +2,7 @@
 *.csv
 *.txt
 *.mat
+*.xlsx
+*.xls
+*.prn
 data    
