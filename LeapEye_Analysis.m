@@ -1838,14 +1838,14 @@ end
 if(handles.system ==2) %Optotrak
     if(handles.extract == 0 && handles.point ==0)%Pointing
         handles.kin_array = zeros (1,56);
-        side = handles.event_data{handles.Trial_Num, 6};
+        side = handles.event_data(handles.Trial_Num, 6);
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ,handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel,handles.th_vec_vel, 0);
         handles.extract =1;
     end
 
     if(handles.extract == 0 && handles.point == 1) %Grasping
         handles.kin_array = zeros (1,32);
-        side = handles.event_data{handles.Trial_Num, 6};
+        side = handles.event_data(handles.Trial_Num, 6);
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
@@ -2246,12 +2246,12 @@ if(handles.system == 1) %Leap
         hand_latency = handles.Master_array(handles.kin_array(1,1),13)/1000; 
         movement_time_index_z = (handles.Master_array(handles.kin_array(1,9),13)-handles.Master_array(handles.kin_array(1,3),13))/1000 * index; %used this as movement time (sec)
 
-        targetloc = handles.event_data{handles.Trial_Num, 7}; %assume target location is inputted as a numerical value following the order during calibration
+        targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
         targetloc = str2double (targetloc);
 
-        targetx = handles.Calibration_array (targetloc, 1);
-        targety = handles.Calibration_array (targetloc, 2);
-        targetz = handles.Calibration_array (targetloc, 3);
+        targetx = handles.Calibration_array (targetloc+1, 1);
+        targety = handles.Calibration_array (targetloc+1, 2);
+        targetz = handles.Calibration_array (targetloc+1, 3);
 
         index_end_pos_x = (handles.Filtered_XYZ(handles.kin_array(1,7),1)); %index x values when kept still
         index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1,8),2));
@@ -2312,9 +2312,9 @@ if(handles.system == 1) %Leap
         targetloc = handles.event_data{handles.Trial_Num, 7}; %assume target location is inputted as a numerical value following the order during calibration
         targetloc = str2double (targetloc);
 
-        targetx = handles.Calibration_array (targetloc, 1);
-        targety = handles.Calibration_array (targetloc, 2);
-        targetz = handles.Calibration_array (targetloc, 3);
+        targetx = handles.Calibration_array (targetloc+1, 1);
+        targety = handles.Calibration_array (targetloc+1, 2);
+        targetz = handles.Calibration_array (targetloc+1, 3);
 
         thumb_end_pos_x = handles.Filtered_XYZ(handles.kin_array(1,10),4)* thumb;%thumb x value when kept still
         thumb_end_pos_y = handles.Filtered_XYZ(handles.kin_array(1,11),5)* thumb;
@@ -2375,12 +2375,12 @@ if(handles.system == 1) %Leap
         end
 
         %disp(handles.Trial_Num);
-        targetloc = handles.event_data{handles.Trial_Num, 7}; %assume target location is inputted as a numerical value following the order during calibration
+        targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
         targetloc = str2double (targetloc);
 
-        targetx = handles.Calibration_array (targetloc, 1);
-        targety = handles.Calibration_array (targetloc, 2);
-        targetz = handles.Calibration_array (targetloc, 3);
+        targetx = handles.Calibration_array (targetloc+1, 1);
+        targety = handles.Calibration_array (targetloc+1, 2);
+        targetz = handles.Calibration_array (targetloc+1, 3);
 
         index_end_pos_x = (handles.Filtered_XYZ(handles.kin_array(1,7),1)); %index x values when kept still
         index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1,8),2));
@@ -2504,9 +2504,9 @@ if(handles.system ==2) %Optotrak: handles.marker_select ->1 (index +palm) handle
         movement_time_index_z = movement_time_palm_z;
     end
 
-    targetloc = handles.event_data{handles.Trial_Num, 7}; %assume target location is inputted as a numerical value following the order during calibration
+    targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
     %targetloc = str2double (targetloc);
-
+    
     targetx = handles.Calibration_array (targetloc, 1);
     targety = handles.Calibration_array (targetloc, 2);
     targetz = handles.Calibration_array (targetloc, 3);
@@ -3161,12 +3161,11 @@ if(handles.system ==1 || handles.system ==2)
     xlswrite(handles.events_filename,{'Stimulus'}, 1,'C1'); %loaded events file information
     xlswrite(handles.events_filename,{'Delay'}, 1,'D1'); %loaded events file information
     xlswrite(handles.events_filename,{'Location'}, 1,'E1'); %loaded events file information
-    xlswrite(handles.events_filename,{'Side'}, 1,'F1'); %loaded events file information
-    xlswrite(handles.events_filename,{'Calibration Value'}, 1,'G1'); %loaded events file information
+    xlswrite(handles.events_filename,{'Calibration Value'}, 1,'F1'); %loaded events file information
     xlswrite(handles.events_filename, handles.event_data, 1,'A2'); %loaded events file information
 
     output_headers ={'Pointing Valid Data 1/0','Hand Latency (sec)','Movement Time (sec)','Index X Accuracy','Index Y Accuracy','Index Z Accuracy','Peak Acceleration Index X','Peak Acceleration Index Y','Peak Acceleration Index Z','Time from onset to PA_Z','Index Position X @ PA_Z','Index Position Y @ PA_Z','Index Position Z @ PA_Z','Peak Velocity Index X','Peak Velocity Index Y','Peak Velocity Index Z','Time from onset to PV_Z','Index Position X @ PV_Z','Index Position Y @ PV_Z','Index Position Z @ PV_Z','Peak Deceleration Index X','Peak Deceleration Index Y','Peak Deceleration Index Z','Time from onset to PD_Z',	'Index Position X @ PD_Z',	'Index Position Y @ PD_Z',	'Index Position Z @ PD_Z',	'Index End Position X',	'Index End Position Y',	'Index End Position Z',	'Peak Acceleration thumb X','Peak Acceleration thumb Y','Peak Acceleration thumb Z','Time from onset to PA thumb Z','Finger Position X @ PA thumb Z','Finger Position Y @ PA thumb Z','Finger Position Z @ PA thumb Z','Peak Velocity thumb X','Peak Velocity thumb Y','Peak Velocity thumb Z',	'Time from onset to PV thumb Z','Finger Position X @ PV thumb Z','Finger Position Y @ PV thumb Z','Finger Position Z @ PV thumb Z',	'Peak Deceleration thumb X','Peak Deceleration thumb Y','Peak Deceleration thumb Z','Time from onset to PD thumb Z','Thumb Position X @ PD thumb Z','Thumb Position Y @ PD_Z','Thumb Position Z @ PD thumb Z','thumb End Position X','thumb End Position Y','thumb End Position z', 'Index Peak Velocity (Vector)','Thumb Peak Velocity (Vector)', 'Index (x) 50 msec before PV', 'Index (y) 50 msec before PV', 'Index (z) 50 msec before PV', 'Index (x) 50 msec after PV', 'Index (y) 50 msec after PV', 'Index (z) 50 msec after PV', 'Index (x) 100 msec before PV','Index (y) 100msec before PV','Index (z) 100 msec before PV','Index (x) 100 msec after PV','Index (y) 100 msec after PV','Index (z) 100 msec after PV','Thumb (x) 50 msec before PV', 'Thumb (y) 50 msec before PV', 'Thumb (z) 50 msec before PV', 'Thumb (x) 50 msec after PV', 'Thumb (y) 50 msec after PV', 'Thumb (z) 50 msec after PV', 'Thumb (x) 100 msec before PV','Thumb (y) 100msec before PV','Thumb (z) 100 msec before PV','Thumb (x) 100 msec after PV','Thumb (y) 100 msec after PV','Thumb (z) 100 msec after PV','Index (x) pos ofbs','Index(y) pos ofbs','Index (z) pos ofbs','Thumb (x) pos ofbs','Thumb (y) pos ofbs','Thumb (z) pos ofbs'};
-    xlswrite(handles.events_filename,output_headers, 1,'H1:CR1');
+    xlswrite(handles.events_filename,output_headers, 1,'H1:CO1');
     guidata(hObject, handles);
 end
 drawnow; pause(0.05);  % this innocent line prevents the Matlab hang

@@ -100,13 +100,13 @@ if(sys == 2) %Optotrak
     if(length(lost_data_palm) == length(varargin(:,1)))
         status(2) = 2; %Palm data is entirely missing
     end
-    predicted_x_index = (pchip( varargin(:,1),varargin(:,2), time))';
-    predicted_y_index = (pchip( varargin(:,1),varargin(:,3), time))';
-    predicted_z_index = (pchip( varargin(:,1),varargin(:,4), time))'; 
+    predicted_x_index = (spline( varargin(:,1),varargin(:,2), time))';
+    predicted_y_index = (spline( varargin(:,1),varargin(:,3), time))';
+    predicted_z_index = (spline( varargin(:,1),varargin(:,4), time))'; 
             
-    predicted_x_palm = (pchip( varargin(:,1),varargin(:,5), time))';
-    predicted_y_palm = (pchip( varargin(:,1),varargin(:,6), time))';
-    predicted_z_palm = (pchip( varargin(:,1),varargin(:,7), time))'; 
+    predicted_x_palm = (spline( varargin(:,1),varargin(:,5), time))';
+    predicted_y_palm = (spline( varargin(:,1),varargin(:,6), time))';
+    predicted_z_palm = (spline( varargin(:,1),varargin(:,7), time))'; 
     
     %time = time';
     downsampled_data = [varargin(:,1) predicted_x_index predicted_y_index predicted_z_index predicted_x_palm predicted_y_palm predicted_z_palm];

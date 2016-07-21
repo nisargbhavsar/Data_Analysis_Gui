@@ -110,10 +110,10 @@ if (type ==0 && system ==1) %Pointing Leap
         
         % Peak XYZ velocities
         %index finger max velocity (X)
-    %     if(side>3) %Subject pointing in positive x direction
+    %     if(side>2) %Subject pointing in positive x direction
     %         if_max_vel = max((velocity(ifs_move_x:ife_move_x,1)));
     %     end
-    %     if(side <4)  %Subject pointing in negative x direction
+    %     if(side <3)  %Subject pointing in negative x direction
             if_max_vel = min((velocity(ifs_move_x:ife_move_x,1)));
     %     end
         if_max_vel_index_x = find((velocity(:,1)) == if_max_vel);
@@ -128,9 +128,9 @@ if (type ==0 && system ==1) %Pointing Leap
         if(isempty(temp_array))
             temp_array = accel(if_max_vel_index_x:ifs_move_x,1); %necessary for catching an error
         end
-        if(side>3)
+        if(side>2)
             peakAccel = max(temp_array);
-        else % if(side<4)%Subject pointing in negative x direction
+        else % if(side<3)%Subject pointing in negative x direction
             peakAccel = min(temp_array);
         end    
         if_peakAccel_index_x = find(accel(:,1) == peakAccel);
@@ -163,9 +163,9 @@ if (type ==0 && system ==1) %Pointing Leap
         if(isempty(temp_array))
             temp_array = accel(ife_move_x:if_max_vel_index_x, 1);
         end
-        if(side >3) %Subject pointing to the right
+        if(side >2) %Subject pointing to the right
             peakDeccel = min(temp_array);
-        else %if(side<4)
+        else %if(side<3)
             peakDeccel = max(temp_array);
         end    
         if_peakDeccel_index_x = find(accel(:,1) == peakDeccel);
@@ -303,10 +303,10 @@ if (type ==0 && system ==1) %Pointing Leap
         the_move_y = the_move_z;
         
         %thumb max velocity (X)
-    %     if(side>3) %Subject pointing in positive x direction
+    %     if(side>2) %Subject pointing in positive x direction
     %         th_max_vel = max((velocity(ths_move_x:the_move_x,4)));
     %     end
-    %     if(side <4) %Subject pointing in negative x direction
+    %     if(side <3) %Subject pointing in negative x direction
             th_max_vel = min((velocity(ths_move_x:the_move_x,4)));
     %     end
         th_max_vel_index_x = find((velocity(:,4)) == th_max_vel);
@@ -320,9 +320,9 @@ if (type ==0 && system ==1) %Pointing Leap
         if(isempty(temp_array))
             temp_array = accel(th_max_vel_index_x:ths_move_x, 4);
         end
-        if(side >3) %Subject pointing to the right
+        if(side >2) %Subject pointing to the right
             peakAccel = max(temp_array);
-        else % if(side<4)
+        else % if(side<3)
             peakAccel = min(temp_array);
         end
         th_peakAccel_index_x = find(accel(:,4) == peakAccel);
@@ -356,9 +356,9 @@ if (type ==0 && system ==1) %Pointing Leap
         if(isempty(temp_array))
             temp_array = accel(the_move_x:th_max_vel_index_x, 4);
         end
-        if(side >3)
+        if(side >2)
             peakDeccel = min(temp_array);
-        else %if(side<4)
+        else %if(side<3)
             peakDeccel = max(temp_array);
         end   
         th_peakDeccel_index_x = find(accel(:,4) == peakDeccel);
@@ -392,10 +392,10 @@ if (type ==0 && system ==1) %Pointing Leap
         output_array = [ifs_move_x   ifs_move_y   ifs_move_z   ths_move_x   ths_move_y   ths_move_z   ife_move_x   ife_move_y   ife_move_z   the_move_x   the_move_y   the_move_z   if_max_vel_index_x   if_max_vel_index_y   if_max_vel_index_z   th_max_vel_index_x   th_max_vel_index_y   th_max_vel_index_z   if_peakAccel_index_x   if_peakAccel_index_y   if_peakAccel_index_z   th_peakAccel_index_x   th_peakAccel_index_y   th_peakAccel_index_z   if_peakDeccel_index_x   if_peakDeccel_index_y   if_peakDeccel_index_z   th_peakDeccel_index_x   th_peakDeccel_index_y   th_peakDeccel_index_z   if_max_v_vel_index   th_max_v_vel_index   if_x_50n   if_y_50n   if_z_50n   if_x_50p   if_y_50p   if_z_50p   if_x_100n   if_y_100n   if_z_100n   if_x_100p   if_y_100p   if_z_100p   th_x_50n   th_y_50n   th_z_50n   th_x_50p   th_y_50p   th_z_50p   th_x_100n   th_y_100n   th_z_100n   th_x_100p   th_y_100p   th_z_100p]; 
     end
     if(marker ==2) %index only
-        output_array = [ifs_move_x   ifs_move_y   ifs_move_z   0   0  0   ife_move_x   ife_move_y   ife_move_z   0   0   0   if_max_vel_index_x   if_max_vel_index_y   if_max_vel_index_z   0   0   0   if_peakAccel_index_x   if_peakAccel_index_y   if_peakAccel_index_z   0   0   0   if_peakDeccel_index_x   if_peakDeccel_index_y   if_peakDeccel_index_z   0   0   0   if_max_v_vel_index   0   if_x_50n   if_y_50n   if_z_50n   if_x_50p   if_y_50p   if_z_50p   if_x_100n   if_y_100n   if_z_100n   if_x_100p   if_y_100p   if_z_100p   0   0   0   0   0   0   0   0   0   0   0   0]; 
+        output_array = [ifs_move_x   ifs_move_y   ifs_move_z   1   1  1   ife_move_x   ife_move_y   ife_move_z   1   1   1   if_max_vel_index_x   if_max_vel_index_y   if_max_vel_index_z   1   1   1   if_peakAccel_index_x   if_peakAccel_index_y   if_peakAccel_index_z   1   1   1   if_peakDeccel_index_x   if_peakDeccel_index_y   if_peakDeccel_index_z   1   1   1   if_max_v_vel_index   1   if_x_50n   if_y_50n   if_z_50n   if_x_50p   if_y_50p   if_z_50p   if_x_100n   if_y_100n   if_z_100n   if_x_100p   if_y_100p   if_z_100p   1   1   1   1   1   1   1   1   1   1   1   1]; 
     end
     if(marker == 3) %thumb only
-        output_array = [0   0   0   ths_move_x   ths_move_y   ths_move_z   0   0   0   the_move_x   the_move_y   the_move_z   0   0   0   th_max_vel_index_x   th_max_vel_index_y   th_max_vel_index_z   0   0   0   th_peakAccel_index_x   th_peakAccel_index_y   th_peakAccel_index_z   0   0   0   th_peakDeccel_index_x   th_peakDeccel_index_y   th_peakDeccel_index_z   0   th_max_v_vel_index   0   0   0   0   0   0   0   0   0   0   0   0   th_x_50n   th_y_50n   th_z_50n   th_x_50p   th_y_50p   th_z_50p   th_x_100n   th_y_100n   th_z_100n   th_x_100p   th_y_100p   th_z_100p]; 
+        output_array = [1   1   1   ths_move_x   ths_move_y   ths_move_z   1   1   1   the_move_x   the_move_y   the_move_z   1   1   1   th_max_vel_index_x   th_max_vel_index_y   th_max_vel_index_z   1   1   1   th_peakAccel_index_x   th_peakAccel_index_y   th_peakAccel_index_z   1   1   1   th_peakDeccel_index_x   th_peakDeccel_index_y   th_peakDeccel_index_z   1   th_max_v_vel_index   1   1   1   1   1   1   1   1   1   1   1   1   th_x_50n   th_y_50n   th_z_50n   th_x_50p   th_y_50p   th_z_50p   th_x_100n   th_y_100n   th_z_100n   th_x_100p   th_y_100p   th_z_100p]; 
     end
     %               a = {'ifs_move_x','ifs_move_y','ifs_move_z','ths_move_x','ths_move_y','the_move_z','ife_move_x','ife_move_y','ife_move_z','the_move_x','the_move_y','the_move_z','if_max_vel_index_x','if_max_vel_index_y','if_max_vel_index_z','th_max_vel_index_x','th_max_vel_index_y','th_max_vel_index_z','if_peakAccel_index_x','if_peakAccel_index_y','if_peakAccel_index_z','th_peakAccel_index_x','th_peakAccel_index_y','th_peakAccel_index_z','if_peakDeccel_index_x','if_peakDeccel_index_y','if_peakDeccel_index_z','th_peakDeccel_index_x','th_peakDeccel_index_y','th_pealDeccel_index_z','if_max_v_vel_index','th_max_v_vel_index','if_x_50n','if_y_50n','if_z_50n','if_x_50p','if_y_50p','if_z_50p','if_x_100n','if_y_100n','if_z_100n','if_x_100p','if_y_100p','if_z_100p','th_x_50n','th_y_50n','th_z_50n','th_x_50p','th_y_50p','th_z_50p','th_x_100n','th_y_100n','th_z_100n','th_x_100p','th_y_100p','th_z_100p'};
 %      disp((output_array));
@@ -643,10 +643,10 @@ if (type ==1 && system ==1) %Grasping motion Leap
     the_move_y = the_move_z;
     % Peak XYZ velocities
     %index finger max velocity (X)
-    %if(side>3) %Subject pointing in positive x direction
+    %if(side>2) %Subject pointing in positive x direction
         if_max_vel = max((velocity(ifs_move_x:ife_move_x,1)));
     %end
-    %if(side <4)  %Subject pointing in negative x direction
+    %if(side <3)  %Subject pointing in negative x direction
         %if_max_vel = min((velocity(ifs_move_x:ife_move_x,2)));
     %end
     if_max_vel_index_x = find((velocity(:,1)) == if_max_vel);
@@ -658,10 +658,10 @@ if (type ==1 && system ==1) %Grasping motion Leap
     
         
     %thumb max velocity (X)
-%     if(side>3) %Subject pointing in positive x direction
+%     if(side>2) %Subject pointing in positive x direction
          th_max_vel = max((velocity(ths_move_x:the_move_x,4)));
 %     end
-%     if(side <4) %Subject pointing in negative x direction
+%     if(side <3) %Subject pointing in negative x direction
 %         th_max_vel = min((velocity(ths_move_x:the_move_x,4)));
 %     end
     th_max_vel_index_x = find((velocity(:,4)) == th_max_vel);
@@ -676,7 +676,7 @@ if (type ==1 && system ==1) %Grasping motion Leap
     if(isempty(temp_array))
         temp_array = accel(if_max_vel_index_x:ifs_move_x,1); %necessary for catching an error
     end
-    if(side>3) %Subject pointing to a target to the right
+    if(side>2) %Subject pointing to a target to the right
         peakAccel = max(temp_array);
     else % if(side<4)%Subject pointing in negative x direction
         peakAccel = min(temp_array);
@@ -711,9 +711,9 @@ if (type ==1 && system ==1) %Grasping motion Leap
     if(isempty(temp_array))
         temp_array = accel(th_max_vel_index_x:ths_move_x, 4);
     end
-    if(side >3) %Subject pointing to the right
+    if(side >2) %Subject pointing to the right
         peakAccel = max(temp_array);
-    else % if(side<4)
+    else % if(side<3)
         peakAccel = min(temp_array);
     end
     th_peakAccel_index_x = find(accel(:,4) == peakAccel);
@@ -746,9 +746,9 @@ if (type ==1 && system ==1) %Grasping motion Leap
     if(isempty(temp_array))
         temp_array = accel(ife_move_x:if_max_vel_index_x, 1);
     end
-    if(side >3) %Subject pointing to the right
+    if(side >2) %Subject pointing to the right
         peakDeccel = min(temp_array);
-    else %if(side<4)
+    else %if(side<3)
         peakDeccel = max(temp_array);
     end    
     if_peakDeccel_index_x = find(accel(:,1) == peakDeccel);
@@ -782,9 +782,9 @@ if (type ==1 && system ==1) %Grasping motion Leap
     if(isempty(temp_array))
         temp_array = accel(the_move_x:th_max_vel_index_x, 4);
     end
-    if(side >3)
+    if(side >2)
         peakDeccel = min(temp_array);
-    else %if(side<4)
+    else %if(side<3)
         peakDeccel = max(temp_array);
     end   
     th_peakDeccel_index_x = find(accel(:,4) == peakDeccel);
@@ -918,10 +918,10 @@ if (type ==1 && system ==1) %Grasping motion Leap
     the_move_y = the_move_z;
     % Peak XYZ velocities
     %index finger max velocity (X)
-    %if(side>3) %Subject pointing in positive x direction
+    %if(side>2) %Subject pointing in positive x direction
         if_max_vel = max(abs(velocity(ifs_move_x:ife_move_x,1)));
     %end
-    %if(side <4)  %Subject pointing in negative x direction
+    %if(side <3)  %Subject pointing in negative x direction
         %if_max_vel = min((velocity(ifs_move_x:ife_move_x,2)));
     %end
     if_max_vel_index_x = find((velocity(:,1)) == if_max_vel);
@@ -931,10 +931,10 @@ if (type ==1 && system ==1) %Grasping motion Leap
     if_max_vel_index_y = find(velocity(:,2)==if_max_vel);
     
     %thumb max velocity (X)
-%     if(side>3) %Subject pointing in positive x direction
+%     if(side>2) %Subject pointing in positive x direction
 %         th_max_vel = max((velocity(ths_move_x:the_move_x,4)));
 %     end
-%     if(side <4) %Subject pointing in negative x direction
+%     if(side <3) %Subject pointing in negative x direction
         th_max_vel = max(abs(velocity(ths_move_x:the_move_x,4)));
 %     end
     th_max_vel_index_x = find((velocity(:,4)) == th_max_vel);
@@ -1106,10 +1106,10 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         
         % Peak XYZ velocities
         %index finger max velocity (X)
-        if(side>3) %Subject pointing to the right
+        if(side>2) %Subject pointing to the right
             if_max_vel = max((velocity(ifs_move_x:ife_move_x,2)));
         end
-        if(side <4) %Subject pointing to the left
+        if(side <3) %Subject pointing to the left
             if_max_vel = min((velocity(ifs_move_x:ife_move_x,2)));
         end
         if_max_vel_index_x = find((velocity(:,2)) == if_max_vel);
@@ -1124,9 +1124,9 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         if(isempty(temp_array))
             temp_array = accel(if_max_vel_index_x:ifs_move_x,2);
         end
-        if(side >3)
+        if(side >2)
             peakAccel = max(temp_array);
-        else %if(side<4)
+        else %if(side<3)
             peakAccel = min(temp_array);
         end    
         if_peakAccel_index_x = find(accel(:,2) == peakAccel);
@@ -1159,9 +1159,9 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         if(isempty(temp_array))
             temp_array = accel(ife_move_x:if_max_vel_index_x, 2);
         end
-        if(side >3)
+        if(side >2)
             peakDeccel = min(temp_array);
-        else %if(side<4)
+        else %if(side<3)
             peakDeccel = max(temp_array);
         end    
         if_peakDeccel_index_x = find(accel(:,2) == peakDeccel);
@@ -1280,10 +1280,10 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         ple_move_y = ple_move_z;
         
         %palm max velocity (X)
-        if(side>3) %Sbject pointing to the right
+        if(side>2) %Sbject pointing to the right
             pl_max_vel = max((velocity(pls_move_x:ple_move_x,5)));
         end
-        if(side <4) %Subject pointing to the left
+        if(side <3) %Subject pointing to the left
             pl_max_vel = min((velocity(pls_move_x:ple_move_x,5)));
         end
         pl_max_vel_index_x = find((velocity(:,5)) == pl_max_vel);
@@ -1297,9 +1297,9 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         if(isempty(temp_array))
             temp_array = accel(pl_max_vel_index_x:pls_move_x, 5);
         end
-        if(side >3)
+        if(side >2)
             peakAccel = max(temp_array);
-        else %if(side<4)
+        else %if(side<3)
          peakAccel = min(temp_array);
         end
         pl_peakAccel_index_x = find(accel(:,5) == peakAccel);
@@ -1333,10 +1333,10 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
             temp_array = accel(ple_move_x:pl_max_vel_index_x, 5);
         end
         peakDeccel = min(temp_array);
-        if(side<4)
+        if(side<3)
          temp = accel(pl_max_vel_index_x:ple_move_x, 5);
              if(isempty(temp))
-             temp = accel(ple_move_x:pl_max_vel_index_x, 5);
+                temp = accel(ple_move_x:pl_max_vel_index_x, 5);
              end
          peakDeccel = max(temp);
         end   
@@ -1362,10 +1362,10 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         output_array = [ifs_move_x ifs_move_y ifs_move_z pls_move_x pls_move_y pls_move_z ife_move_x ife_move_y ife_move_z ple_move_x ple_move_y ple_move_z if_max_vel_index_x if_max_vel_index_y if_max_vel_index_z pl_max_vel_index_x pl_max_vel_index_y pl_max_vel_index_z if_peakAccel_index_x if_peakAccel_index_y if_peakAccel_index_z pl_peakAccel_index_x pl_peakAccel_index_y pl_peakAccel_index_z if_peakDeccel_index_x if_peakDeccel_index_y if_peakDeccel_index_z pl_peakDeccel_index_x pl_peakDeccel_index_y pl_peakDeccel_index_z if_max_v_vel_index pl_max_v_vel_index if_x_50n if_y_50n if_z_50n if_x_50p if_y_50p if_z_50p if_x_100n if_y_100n if_z_100n if_x_100p if_y_100p if_z_100p pl_x_50n pl_y_50n pl_z_50n pl_x_50p pl_y_50p pl_z_50p pl_x_100n pl_y_100n pl_z_100n pl_x_100p pl_y_100p pl_z_100p]; 
     end
     if(marker == 2) %index only
-        output_array = [ifs_move_x ifs_move_y ifs_move_z 0 0 0 ife_move_x ife_move_y ife_move_z 0 0 0 if_max_vel_index_x if_max_vel_index_y if_max_vel_index_z 0 0 0 if_peakAccel_index_x if_peakAccel_index_y if_peakAccel_index_z 0 0 0 if_peakDeccel_index_x if_peakDeccel_index_y if_peakDeccel_index_z 0 0 0 if_max_v_vel_index 0 if_x_50n if_y_50n if_z_50n if_x_50p if_y_50p if_z_50p if_x_100n if_y_100n if_z_100n if_x_100p if_y_100p if_z_100p 0 0 0 0 0 0 0 0 0 0 0 0];   
+        output_array = [ifs_move_x ifs_move_y ifs_move_z 1 1 1 ife_move_x ife_move_y ife_move_z 1 1 1 if_max_vel_index_x if_max_vel_index_y if_max_vel_index_z 1 1 1 if_peakAccel_index_x if_peakAccel_index_y if_peakAccel_index_z 1 1 1 if_peakDeccel_index_x if_peakDeccel_index_y if_peakDeccel_index_z 1 1 1 if_max_v_vel_index 1 if_x_50n if_y_50n if_z_50n if_x_50p if_y_50p if_z_50p if_x_100n if_y_100n if_z_100n if_x_100p if_y_100p if_z_100p 1 1 1 1 1 1 1 1 1 1 1 1];   
     end
     if(marker == 3) %Palm only
-        output_array = [0 0 0 pls_move_x pls_move_y pls_move_z 0 0 0 ple_move_x ple_move_y ple_move_z 0 0 0 pl_max_vel_index_x pl_max_vel_index_y pl_max_vel_index_z 0 0 0 pl_peakAccel_index_x pl_peakAccel_index_y pl_peakAccel_index_z 0 0 0 pl_peakDeccel_index_x pl_peakDeccel_index_y pl_peakDeccel_index_z 0 pl_max_v_vel_index 0 0 0 0 0 0 0 0 0 0 0 0 pl_x_50n pl_y_50n pl_z_50n pl_x_50p pl_y_50p pl_z_50p pl_x_100n pl_y_100n pl_z_100n pl_x_100p pl_y_100p pl_z_100p]; 
+        output_array = [1 1 1 pls_move_x pls_move_y pls_move_z 1 1 1 ple_move_x ple_move_y ple_move_z 1 1 1 pl_max_vel_index_x pl_max_vel_index_y pl_max_vel_index_z 1 1 1 pl_peakAccel_index_x pl_peakAccel_index_y pl_peakAccel_index_z 1 1 1 pl_peakDeccel_index_x pl_peakDeccel_index_y pl_peakDeccel_index_z 1 pl_max_v_vel_index 1 1 1 1 1 1 1 1 1 1 1 1 pl_x_50n pl_y_50n pl_z_50n pl_x_50p pl_y_50p pl_z_50p pl_x_100n pl_y_100n pl_z_100n pl_x_100p pl_y_100p pl_z_100p]; 
     end
     varargout = num2cell( output_array, [1 2]);
 end
