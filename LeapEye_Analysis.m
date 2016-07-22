@@ -144,6 +144,7 @@ if (handles.extract == 0)
                     plot(handles.Raw_XYZ(:,7), handles.Raw_XYZ(:,1),'-r');
                     plot(handles.Raw_XYZ(:,7), handles.Raw_XYZ(:,2),'-g');
                     plot(handles.Raw_XYZ(:,7), handles.Raw_XYZ(:,3),'-b');
+                    ylabel(handles.Top_Graph,'Position (mm)');
 
                     axes(handles.Middle_Graph);
                     plot(handles.Raw_Velocity_XYZ(:,7), handles.Raw_Velocity_XYZ(:,1),'-r');
@@ -161,7 +162,7 @@ if (handles.extract == 0)
                     plot(handles.Resampled_XYZ(:,7), handles.Resampled_XYZ(:,1),'-r');
                     plot(handles.Resampled_XYZ(:,7), handles.Resampled_XYZ(:,2),'-g');
                     plot(handles.Resampled_XYZ(:,7), handles.Resampled_XYZ(:,3),'-b');
-
+                    ylabel(handles.Top_Graph,'Position (mm)');
 
                     axes(handles.Middle_Graph);
                     plot(handles.Resampled_Velocity_XYZ(:,7), handles.Resampled_Velocity_XYZ(:,1),'-r');
@@ -179,7 +180,8 @@ if (handles.extract == 0)
                     plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,1),'-r');
                     plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,2),'-g');
                     plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,3),'-b');
-
+                    ylabel(handles.Top_Graph,'Position (mm)');
+                    
                     axes(handles.Middle_Graph);
                     plot(handles.Filtered_Velocity_XYZ(:,7), handles.Filtered_Velocity_XYZ(:,1),'-r');
                     plot(handles.Filtered_Velocity_XYZ(:,7), handles.Filtered_Velocity_XYZ(:,2),'-g');
@@ -197,7 +199,7 @@ if (handles.extract == 0)
                     plot(handles.Raw_XYZ(:,1), handles.Raw_XYZ(:,2),'-r');
                     plot(handles.Raw_XYZ(:,1), handles.Raw_XYZ(:,3),'-g');
                     plot(handles.Raw_XYZ(:,1), handles.Raw_XYZ(:,4),'-b');
-
+                    ylabel(handles.Top_Graph,'Position (mm)');
 
                     axes(handles.Middle_Graph);
                     plot(handles.Raw_Velocity_XYZ(:,1), handles.Raw_Velocity_XYZ(:,2),'-r');
@@ -215,6 +217,7 @@ if (handles.extract == 0)
                     plot(handles.Resampled_XYZ(:,1), handles.Resampled_XYZ(:,2),'-r');
                     plot(handles.Resampled_XYZ(:,1), handles.Resampled_XYZ(:,3),'-g');
                     plot(handles.Resampled_XYZ(:,1), handles.Resampled_XYZ(:,4),'-b');
+                    ylabel(handles.Top_Graph,'Position (mm)');
                     
                     axes(handles.Middle_Graph);
                     plot(handles.Resampled_Velocity_XYZ(:,1), handles.Resampled_Velocity_XYZ(:,2),'-r');
@@ -231,7 +234,8 @@ if (handles.extract == 0)
                     plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,2),'-r');
                     plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,3),'-g');
                     plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,4),'-b');
-
+                    ylabel(handles.Top_Graph,'Position (mm)');
+                    
                     axes(handles.Middle_Graph);
                     plot(handles.Filtered_Velocity_XYZ(:,1), handles.Filtered_Velocity_XYZ(:,2),'-r');
                     plot(handles.Filtered_Velocity_XYZ(:,1), handles.Filtered_Velocity_XYZ(:,3),'-g');
@@ -300,7 +304,7 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
             plot(handles.Raw_XYZ(:,7), handles.Raw_XYZ(:,4),'-r');
             plot(handles.Raw_XYZ(:,7), handles.Raw_XYZ(:,5),'-g');
             plot(handles.Raw_XYZ(:,7), handles.Raw_XYZ(:,6),'-b');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
 
             axes(handles.Middle_Graph);
             plot(handles.Raw_Velocity_XYZ(:,7), handles.Raw_Velocity_XYZ(:,4),'-r');
@@ -318,7 +322,7 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
             plot(handles.Resampled_XYZ(:,7), handles.Resampled_XYZ(:,4),'-r');
             plot(handles.Resampled_XYZ(:,7), handles.Resampled_XYZ(:,5),'-g');
             plot(handles.Resampled_XYZ(:,7), handles.Resampled_XYZ(:,6),'-b');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
 
             axes(handles.Middle_Graph);
             plot(handles.Resampled_Velocity_XYZ(:,7), handles.Resampled_Velocity_XYZ(:,4),'-r');
@@ -336,7 +340,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
             plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,4),'-r');
             plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,5),'-g');
             plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,6),'-b');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Filtered_Velocity_XYZ(:,7), handles.Filtered_Velocity_XYZ(:,4),'-r');
             plot(handles.Filtered_Velocity_XYZ(:,7), handles.Filtered_Velocity_XYZ(:,5),'-g');
@@ -356,7 +361,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
               plot(handles.Raw_XYZ(:,1), handles.Raw_XYZ(:,5),'-r');
               plot(handles.Raw_XYZ(:,1), handles.Raw_XYZ(:,6),'-g');
               plot(handles.Raw_XYZ(:,1), handles.Raw_XYZ(:,7),'-b');
-
+              ylabel(handles.Top_Graph,'Position (mm)');
+              
               axes(handles.Middle_Graph);
               plot(handles.Raw_Velocity_XYZ(:,1), handles.Raw_Velocity_XYZ(:,5),'-r');
               plot(handles.Raw_Velocity_XYZ(:,1), handles.Raw_Velocity_XYZ(:,6),'-g');
@@ -373,7 +379,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
               plot(handles.Resampled_XYZ(:,1), handles.Resampled_XYZ(:,5),'-r');
               plot(handles.Resampled_XYZ(:,1), handles.Resampled_XYZ(:,6),'-g');
               plot(handles.Resampled_XYZ(:,1), handles.Resampled_XYZ(:,7),'-b');
-                    
+              ylabel(handles.Top_Graph,'Position (mm)');
+              
               axes(handles.Middle_Graph);
               plot(handles.Resampled_Velocity_XYZ(:,1), handles.Resampled_Velocity_XYZ(:,5),'-r');
               plot(handles.Resampled_Velocity_XYZ(:,1), handles.Resampled_Velocity_XYZ(:,6),'-g');
@@ -390,7 +397,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
               plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,5),'-r');
               plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,6),'-g');
               plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,7),'-b');
-
+              ylabel(handles.Top_Graph,'Position (mm)');
+              
               axes(handles.Middle_Graph);
               plot(handles.Filtered_Velocity_XYZ(:,1), handles.Filtered_Velocity_XYZ(:,5),'-r');
               plot(handles.Filtered_Velocity_XYZ(:,1), handles.Filtered_Velocity_XYZ(:,6),'-g');
@@ -457,6 +465,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
             axes(handles.Top_Graph);
             plot(handles.Raw_SagPos(:,5), handles.Raw_SagPos(:,1), '-r');
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Raw_Velocity (:,5), handles.Raw_Velocity(:,1), '-r');
             axes(handles.Bottom_Graph);
@@ -465,6 +475,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
             axes(handles.Top_Graph);
             plot(handles.Resampled_SagPos (:,5), handles.Resampled_SagPos(:,1), '-g');
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Resampled_Velocity (:,5), handles.Resampled_Velocity(:,1), '-g');
             axes(handles.Bottom_Graph);
@@ -473,6 +485,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          if (handles.Raw_disp (1,3) ==1) %plot Filtered Values 
             axes(handles.Top_Graph);
             plot(handles.Filtered_SagPos (:,5), handles.Filtered_SagPos(:,1), '-b');
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Filtered_Velocity (:,5), handles.Filtered_Velocity(:,1), '-b');
             axes(handles.Bottom_Graph);
@@ -483,6 +497,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
             axes(handles.Top_Graph);
             plot(handles.Raw_SagPos(:,1), handles.Raw_SagPos(:,2), '-r');
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Raw_Velocity (:,1), handles.Raw_Velocity(:,2), '-r');
             axes(handles.Bottom_Graph);
@@ -491,6 +507,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
             axes(handles.Top_Graph);
             plot(handles.Resampled_SagPos (:,1), handles.Resampled_SagPos(:,2), '-g');
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Resampled_Velocity (:,1), handles.Resampled_Velocity(:,2), '-g');
             axes(handles.Bottom_Graph);
@@ -499,6 +517,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          if (handles.Raw_disp (1,3) ==1) %plot Filtered Values 
             axes(handles.Top_Graph);
             plot(handles.Filtered_SagPos (:,1), handles.Filtered_SagPos(:,2), '-b');
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Filtered_Velocity (:,1), handles.Filtered_Velocity(:,2), '-b');
             axes(handles.Bottom_Graph);
@@ -558,7 +578,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
             axes(handles.Top_Graph);
             plot(handles.Raw_SagPos(:,5), handles.Raw_SagPos(:,2), '-r');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Raw_Velocity (:,5), handles.Raw_Velocity(:,2), '-r');
 
@@ -569,7 +590,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
             axes(handles.Top_Graph);
             plot(handles.Resampled_SagPos (:,5), handles.Resampled_SagPos(:,2), '-g');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Resampled_Velocity (:,5), handles.Resampled_Velocity(:,2), '-g');
 
@@ -580,7 +602,8 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          if (handles.Raw_disp (1,3) ==1) %plot Filtered Values 
             axes(handles.Top_Graph);
             plot(handles.Filtered_SagPos (:,5), handles.Filtered_SagPos(:,2), '-b');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Filtered_Velocity (:,5), handles.Filtered_Velocity(:,2), '-b');
 
@@ -642,7 +665,8 @@ axes(handles.Bottom_Graph);
          if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
             axes(handles.Top_Graph);
             plot(handles.Raw_SagPos(:,5), handles.Raw_SagPos(:,4), '-r');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Raw_Velocity (:,5), handles.Raw_Velocity(:,4), '-r');
 
@@ -653,7 +677,8 @@ axes(handles.Bottom_Graph);
          if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
             axes(handles.Top_Graph);
             plot(handles.Resampled_SagPos (:,5), handles.Resampled_SagPos(:,4), '-g');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Resampled_Velocity (:,5), handles.Resampled_Velocity(:,4), '-g');
 
@@ -664,7 +689,8 @@ axes(handles.Bottom_Graph);
          if (handles.Raw_disp (1,3) ==1) %plot Filtered Values 
             axes(handles.Top_Graph);
             plot(handles.Filtered_SagPos (:,5), handles.Filtered_SagPos(:,4), '-b');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Filtered_Velocity (:,5), handles.Filtered_Velocity(:,4), '-b');
 
@@ -676,7 +702,8 @@ axes(handles.Bottom_Graph);
          if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
             axes(handles.Top_Graph);
             plot(handles.Raw_SagPos(:,1), handles.Raw_SagPos(:,3), '-r');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Raw_Velocity (:,1), handles.Raw_Velocity(:,3), '-r');
 
@@ -687,7 +714,8 @@ axes(handles.Bottom_Graph);
          if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
             axes(handles.Top_Graph);
             plot(handles.Resampled_SagPos (:,5), handles.Resampled_SagPos(:,4), '-g');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Resampled_Velocity (:,5), handles.Resampled_Velocity(:,4), '-g');
 
@@ -698,7 +726,8 @@ axes(handles.Bottom_Graph);
          if (handles.Raw_disp (1,3) ==1) %plot Filtered Values 
             axes(handles.Top_Graph);
             plot(handles.Filtered_SagPos (:,1), handles.Filtered_SagPos(:,3), '-b');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Filtered_Velocity (:,1), handles.Filtered_Velocity(:,3), '-b');
 
@@ -757,7 +786,8 @@ axes(handles.Bottom_Graph);
          if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
             axes(handles.Top_Graph);
             plot(handles.Raw_SagPos(:,5), handles.Raw_SagPos(:,3), '-r');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Raw_Velocity (:,5), handles.Raw_Velocity(:,3), '-r');
 
@@ -768,7 +798,8 @@ axes(handles.Bottom_Graph);
          if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
             axes(handles.Top_Graph);
             plot(handles.Resampled_SagPos (:,5), handles.Resampled_SagPos(:,3), '-g');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Resampled_Velocity (:,5), handles.Resampled_Velocity(:,3), '-g');
 
@@ -779,7 +810,8 @@ axes(handles.Bottom_Graph);
          if (handles.Raw_disp(1,3) ==1) %plot Filtered Values
             axes(handles.Top_Graph);
             plot(handles.Filtered_SagPos (:,5), handles.Filtered_SagPos(:,3), '-b');
-
+            ylabel(handles.Top_Graph,'Position (mm)');
+            
             axes(handles.Middle_Graph);
             plot(handles.Filtered_Velocity (:,5), handles.Filtered_Velocity(:,3), '-b');
 
@@ -928,17 +960,17 @@ if(handles.system ==1)
 end
 if (handles.system ==2) %Optotrak
     %Time, Index, Palm
-    handles.Raw_SagPos = zeros(length(handles.Master_array), 3); 
-    handles.Raw_Velocity = zeros (length (handles.Master_array)-1,3); 
-    handles.Raw_Accel = zeros (length(handles.Master_array)-2, 3); 
+    handles.Raw_SagPos = zeros(length(handles.Master_array), 4); 
+    handles.Raw_Velocity = zeros (length (handles.Master_array)-1,4); 
+    handles.Raw_Accel = zeros (length(handles.Master_array)-2, 4); 
 
-    handles.Resampled_SagPos = zeros(length(handles.Master_array), 3); 
-    handles.Resampled_Velocity = zeros (length (handles.Master_array)-1,3);
-    handles.Resampled_Accel = zeros (length(handles.Master_array)-2, 3);
+    handles.Resampled_SagPos = zeros(length(handles.Master_array), 4); 
+    handles.Resampled_Velocity = zeros (length (handles.Master_array)-1,4);
+    handles.Resampled_Accel = zeros (length(handles.Master_array)-2, 4);
 
-    handles.Filtered_SagPos = zeros(length(handles.Master_array), 3);
-    handles.Filtered_Velocity = zeros (length (handles.Master_array)-1,3);
-    handles.Filtered_Accel = zeros (length(handles.Master_array)-2, 3);
+    handles.Filtered_SagPos = zeros(length(handles.Master_array), 4);
+    handles.Filtered_Velocity = zeros (length (handles.Master_array)-1,4);
+    handles.Filtered_Accel = zeros (length(handles.Master_array)-2, 4);
     
     %Time, Index (XYZ), Palm (XYZ)
     handles.Raw_XYZ = zeros(length(handles.Master_array), 7);
@@ -983,7 +1015,7 @@ if(handles.system ==1) %Leap
             handles.Raw_SagPos(i,3) =  sqrt((handles.Master_array(i,10))^2 + (handles.Master_array(i,11)-index_y)^2 + (index_z-handles.Master_array(i,12))^2); %Wrist
             handles.Raw_SagPos(i,4) =  sqrt((handles.Master_array(i,4))^2 + (handles.Master_array(i,5)-index_y)^2 + (index_z-handles.Master_array(i,6))^2); %Palm
             handles.Raw_SagPos (i,5) = handles.Master_array(i,13);
-            handles.Raw_SagPos (1,6) = sqrt((handles.Master_array(i,1)-handles.Master_array(i,7))^2 + (handles.Master_array(i,2)-handles.Master_array(i,8))^2 + (handles.Master_array(i,3)-handles.Master_array(1,9))^2);
+            handles.Raw_SagPos (i,6) = sqrt((handles.Master_array(i,1)-handles.Master_array(i,7))^2 + (handles.Master_array(i,2)-handles.Master_array(i,8))^2 + (handles.Master_array(i,3)-handles.Master_array(1,9))^2);
             
             handles.Raw_XYZ (i,1) = handles.Master_array(i,1); %index position
             handles.Raw_XYZ (i,2) = handles.Master_array(i,2)-index_y;
@@ -1074,6 +1106,7 @@ if(handles.system ==2) %Optotrak
         handles.Raw_SagPos(num,2) = sqrt((handles.Master_array(num,2))^2 + (handles.Master_array(num,3)-index_y)^2 + (index_z-handles.Master_array(num,4))^2); %Index Sag Pos
         handles.Raw_SagPos(num,3) = sqrt((handles.Master_array(num,5))^2 + (handles.Master_array(num,6)-index_y)^2 + (index_z-handles.Master_array(num,7))^2); %Palm Sag Pos
         handles.Raw_SagPos(num,1) = handles.Master_array(num,1); %Time in ms
+        handles.Raw_SagPos(num,4) = sqrt((handles.Master_array(num,2) - handles.Master_array(num,5))^2 + (handles.Master_array(num,3) - handles.Master_array(num,6))^2 + (handles.Master_array(num,4) - handles.Master_array(num,7))^2); %Grasp Aperture
     
         handles.Raw_XYZ (num,1) = handles.Master_array(num,1); %Time in ms
         handles.Raw_XYZ (num,2) = handles.Master_array(num,2); %Index (x)
@@ -1093,6 +1126,7 @@ if(handles.system ==2) %Optotrak
         palmtemp_2 = sqrt(handles.Master_array(num+1,5)^2 + handles.Master_array(num+1,6)^2 + handles.Master_array(num+1,7)^2); %palm position
         palmtemp_1 = sqrt(handles.Master_array(num,5)^2 + handles.Master_array(num,6)^2 + handles.Master_array(num,7)^2);
         handles.Raw_Velocity(num,3) = (palmtemp_2 - palmtemp_1) /delta_time;
+        handles.Raw_Velocity(num,4) = (handles.Raw_SagPos(num+1,4) - handles.Raw_SagPos(num,4))/delta_time; %Grip Aperture velocity
 
         handles.Raw_Velocity_XYZ(num,1) = (handles.Raw_XYZ (num,1)); % time
         handles.Raw_Velocity_XYZ(num,2) = (handles.Raw_XYZ(num+1,2)-handles.Raw_XYZ(num,2))/delta_time; %index velocity X
@@ -1113,6 +1147,7 @@ if(handles.system ==2) %Optotrak
         palmtemp_2 = handles.Raw_Velocity(num+1,3); %palm velocity
         palmtemp_1 = handles.Raw_Velocity(num,3);
         handles.Raw_Accel (num,3) = (palmtemp_2 - palmtemp_1) /delta_time;
+        handles.Raw_Accel (num,3) = (handles.Raw_Velocity(num+1,4) - handles.Raw_Velocity(num,4))/delta_time; %Grip Aperture Acceleration
         
         handles.Raw_Accel_XYZ(num,1) = (handles.Raw_Velocity (num,1)); % time
         handles.Raw_Accel_XYZ(num,2) = (handles.Raw_Velocity_XYZ(num+1,2)-handles.Raw_Velocity_XYZ(num,2))/delta_time; %index accel X
@@ -1308,8 +1343,8 @@ if(handles.system ==2) %Optotrak
        
         handles.Resampled_SagPos(i,2) =  sqrt((handles.Master_array(i,2))^2 + (handles.Master_array(i,3)-index_y)^2 + (index_z-handles.Master_array(i,4))^2); %Index
         handles.Resampled_SagPos(i,3) =  sqrt((handles.Master_array(i,5))^2 + (handles.Master_array(i,6)-index_y)^2 + (index_z-handles.Master_array(i,7))^2); %Palm
-
         handles.Resampled_SagPos(i,1) = handles.Master_array(i,1); %Time
+        handles.Resampled_SagPos(i,4) = sqrt((handles.Master_array(i,2) - handles.Master_array(i,5))^2 + (handles.Master_array(i,3) - handles.Master_array(i,6))^2 + (handles.Master_array(i,4) - handles.Master_array(i,7))^2); %Grip Aperture
             
         %handles.Resampled_XYZ (i,1) = (handles.Master_array(i,1)/handles.frequency)*1e3; %Time
         handles.Resampled_XYZ (i,1) = handles.Master_array(i,1); %Time
@@ -1330,6 +1365,7 @@ if(handles.system ==2) %Optotrak
         palmtemp_2 = sqrt(handles.Master_array(i+1,5)^2 + handles.Master_array(i+1,6)^2 + handles.Master_array(i+1,7)^2); %palm position
         palmtemp_1 = sqrt(handles.Master_array(i,5)^2 + handles.Master_array(i,6)^2 + handles.Master_array(i,7)^2);
         handles.Resampled_Velocity(i,3) = (palmtemp_2 - palmtemp_1) /delta_time;
+        handles.Resampled_Velocity(i,4) = (handles.Resampled_SagPos(i+1,4) - handles.Resampled_SagPos(i,4))/delta_time; %Grip Aperture Velocity
 
         handles.Resampled_Velocity_XYZ(i,1) = (handles.Resampled_XYZ (i,1)); % time
         handles.Resampled_Velocity_XYZ(i,2) = (handles.Resampled_XYZ(i+1,2)-handles.Resampled_XYZ(i,2))/delta_time; %index velocity X
@@ -1344,13 +1380,13 @@ if(handles.system ==2) %Optotrak
         delta_time = handles.Resampled_Velocity(i+1, 1) - handles.Resampled_Velocity(i,1);
         
         handles.Resampled_Accel(i,1) = handles.Resampled_Velocity(i,1);
-
         indextemp_2 = handles.Resampled_Velocity(i+1,2); %index velocity
         indextemp_1 = handles.Resampled_Velocity(i,2);
         handles.Resampled_Accel (i,2) = (indextemp_2-indextemp_1)/delta_time;   
         palmtemp_2 = handles.Resampled_Velocity(i+1,3); %palm velocity
         palmtemp_1 = handles.Resampled_Velocity(i,3);
         handles.Resampled_Accel (i,3) = (palmtemp_2 - palmtemp_1) /delta_time;
+        handles.Resamplede_Accel (i,4) = (handles.Resampled_Velocity(i+1,4) - handles.Resampled_Velocity(i,4)) /delta_time;
         
         handles.Resampled_Accel_XYZ(i,1) = (handles.Resampled_Velocity (i,1)); % time
         handles.Resampled_Accel_XYZ(i,2) = (handles.Resampled_Velocity_XYZ(i+1,2)-handles.Resampled_Velocity_XYZ(i,2))/delta_time; %index velocity X
@@ -1501,11 +1537,10 @@ if(handles.system ==2) %Optotrak
        
         handles.Filtered_SagPos(i,2) =  sqrt((handles.Master_array(i,2))^2 + (handles.Master_array(i,3)-index_y)^2 + (index_z-handles.Master_array(i,4))^2); %Index
         handles.Filtered_SagPos(i,3) =  sqrt((handles.Master_array(i,5))^2 + (handles.Master_array(i,6)-index_y)^2 + (index_z-handles.Master_array(i,7))^2); %Palm
-
         handles.Filtered_SagPos(i,1) = handles.Master_array(i,1); %Time
+        handles.Filtered_SagPos(i,4) = sqrt((handles.Master_array(i,2) - handles.Master_array(i,5))^2 + (handles.Master_array(i,3) - handles.Master_array(i,6))^2 + (handles.Master_array(i,4) - handles.Master_array(i,7))^2);
             
         handles.Filtered_XYZ (i,1) = (handles.Master_array(i,1)); %Time
-        
         handles.Filtered_XYZ (i,2) = handles.Master_array(i,2); %Index (x)
         handles.Filtered_XYZ (i,3) = handles.Master_array(i,3); %(y)
         handles.Filtered_XYZ (i,4) = handles.Master_array(i,4); %(z)
@@ -1523,6 +1558,7 @@ if(handles.system ==2) %Optotrak
         palmtemp_2 = sqrt(handles.Master_array(i+1,5)^2 + handles.Master_array(i+1,6)^2 + handles.Master_array(i+1,7)^2); %palm position
         palmtemp_1 = sqrt(handles.Master_array(i,5)^2 + handles.Master_array(i,6)^2 + handles.Master_array(i,7)^2);
         handles.Filtered_Velocity(i,3) = (palmtemp_2 - palmtemp_1) /delta_time;
+        handles.Filtered_Velocity(i,4) = (handles.Filtered_SagPos(i+1,4) - handles.Filtered_SagPos(i,4))/delta_time;
 
         handles.Filtered_Velocity_XYZ(i,1) = (handles.Filtered_XYZ (i,1)); % time
         handles.Filtered_Velocity_XYZ(i,2) = (handles.Filtered_XYZ(i+1,2)-handles.Filtered_XYZ(i,2))/delta_time; %index velocity X
@@ -1543,6 +1579,7 @@ if(handles.system ==2) %Optotrak
         palmtemp_2 = handles.Filtered_Velocity(i+1,3); %palm position
         palmtemp_1 = handles.Filtered_Velocity(i,3);
         handles.Filtered_Accel (i,3) = (palmtemp_2 - palmtemp_1) /delta_time;
+        handles.Filtered_Accel(i,4) = (handles.Filtered_Velocity(i+1,4) - handles.Filtered_Velocity(i,4))/delta_time;
         
         handles.Filtered_Accel_XYZ(i,1) = (handles.Filtered_Velocity (i,1)); % time
         handles.Filtered_Accel_XYZ(i,2) = (handles.Filtered_Velocity_XYZ(i+1,2)-handles.Filtered_Velocity_XYZ(i,2))/delta_time; %index velocity X
@@ -2110,40 +2147,78 @@ axes(handles.Bottom_Graph);
      if(handles.system ==1 )%Leap
          if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
             axes(handles.Top_Graph);
-            plot(handles.Raw_XYZ(:,7), handles.Raw_XYZ(:,11), '-r');
+            plot(handles.Raw_SagPos(:,5), handles.Raw_SagPos(:,6), '-r');
             ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
 
             axes(handles.Middle_Graph);
-            plot(handles.Raw_Velocity_XYZ (:,7), handles.Raw_Velocity_XYZ(:,11), '-r');
+            plot(handles.Raw_Velocity(:,5), handles.Raw_Velocity(:,6), '-r');
 
             axes(handles.Bottom_Graph);
-            plot(handles.Raw_Accel_XYZ (:,7), handles.Raw_Accel_XYZ(:,11), '-r');
+            plot(handles.Raw_Accel(:,5), handles.Raw_Accel(:,6), '-r');
          end
 
          if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
             axes(handles.Top_Graph);
-            plot(handles.Resampled_XYZ (:,7), handles.Resampled_XYZ(:,11), '-g');
-
+            plot(handles.Resampled_SagPos(:,5), handles.Resampled_SagPos(:,6),'-g');
+            ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+            
             axes(handles.Middle_Graph);
-            plot(handles.Resampled_Velocity_XYZ (:,7), handles.Resampled_Velocity_XYZ(:,11), '-g');
+            plot(handles.Resampled_Velocity(:,5), handles.Resampled_Velocity(:,6),'-g');
 
             axes(handles.Bottom_Graph);
-            plot(handles.Resampled_Accel_XYZ (:,7), handles.Resampled_Accel_XYZ(:,11), '-g');
+            plot(handles.Resampled_Accel(:,5), handles.Resampled_Accel(:,6),'-r');
          end
 
          if (handles.Raw_disp(1,3) ==1) %plot Filtered Values 
             axes(handles.Top_Graph);
-            plot(handles.Filtered_XYZ (:,7), handles.Filtered_XYZ(:,11), '-b');
-
+            plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,6),'-b');
+            ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+            
             axes(handles.Middle_Graph);
-            plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,11), '-b');
+            plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,6), '-b');
 
             axes(handles.Bottom_Graph);
-            plot(handles.Filtered_Accel_XYZ (:,7), handles.Filtered_Accel_XYZ(:,11), '-b');
+            plot(handles.Filtered_Accel(:,5), handles.Filtered_Accel(:,6), '-b');
          end
      end
      if(handles.system == 2) %Optotrak
-         
+         if(handles.point == 1) %Grasping
+              if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
+                axes(handles.Top_Graph);
+                plot(handles.Raw_SagPos(:,1), handles.Raw_SagPos(:,4), '-r');
+                ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+
+                axes(handles.Middle_Graph);
+                plot(handles.Raw_Velocity(:,1), handles.Raw_Velocity(:,4), '-r');
+
+                axes(handles.Bottom_Graph);
+                plot(handles.Raw_Accel(:,1), handles.Raw_Accel(:,4), '-r');
+             end
+
+             if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
+                axes(handles.Top_Graph);
+                plot(handles.Resampled_SagPos(:,1), handles.Resampled_SagPos(:,4),'-g');
+                ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+                
+                axes(handles.Middle_Graph);
+                plot(handles.Resampled_Velocity(:,1), handles.Resampled_Velocity(:,4),'-g');
+
+                axes(handles.Bottom_Graph);
+                plot(handles.Resampled_Accel(:,1), handles.Resampled_Accel(:,4),'-r');
+             end
+
+             if (handles.Raw_disp(1,3) ==1) %plot Filtered Values 
+                axes(handles.Top_Graph);
+                plot(handles.Filtered_SagPos(:,1), handles.Filtered_SagPos(:,4),'-b');
+                ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+                
+                axes(handles.Middle_Graph);
+                plot(handles.Filtered_Velocity(:,1), handles.Filtered_Velocity(:,4), '-b');
+
+                axes(handles.Bottom_Graph);
+                plot(handles.Filtered_Accel(:,1), handles.Filtered_Accel(:,4), '-b');
+             end
+         end
      end
      if(handles.system == 3) %Eyelink
      end
