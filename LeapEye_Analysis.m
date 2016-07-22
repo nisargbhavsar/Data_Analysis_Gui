@@ -1717,28 +1717,63 @@ if(handles.system ==1) %Leap
     end
 
     if(handles.extract == 0 && handles.point == 1) %Grasping
+        if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
+        	axes(handles.Top_Graph);
+        	plot(handles.Raw_SagPos(:,5), handles.Raw_SagPos(:,6), '-r');
+        	ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+
+        	axes(handles.Middle_Graph);
+            plot(handles.Raw_Velocity(:,5), handles.Raw_Velocity(:,6), '-r');
+
+            axes(handles.Bottom_Graph);
+        	plot(handles.Raw_Accel(:,5), handles.Raw_Accel(:,6), '-r');
+        end
+
+        if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
+        	axes(handles.Top_Graph);
+        	plot(handles.Resampled_SagPos(:,5), handles.Resampled_SagPos(:,6),'-g');
+        	ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+
+         	axes(handles.Middle_Graph);
+        	plot(handles.Resampled_Velocity(:,5), handles.Resampled_Velocity(:,6),'-g');
+
+         	axes(handles.Bottom_Graph);
+        	plot(handles.Resampled_Accel(:,5), handles.Resampled_Accel(:,6),'-g');
+        end
+
+        if (handles.Raw_disp(1,3) ==1) %plot Filtered Values 
+        	axes(handles.Top_Graph);
+        	plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,6),'-b');
+        	ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+
+        	axes(handles.Middle_Graph);
+        	plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,6), '-b');
+
+        	axes(handles.Bottom_Graph);
+        	plot(handles.Filtered_Accel(:,5), handles.Filtered_Accel(:,6), '-b');
+        end
         set(handles.warning_text, 'String','Please choose the start of the target approach phase.');
-        [x,y]=ginputax(handles.axes1,1);
+        [x,y]=ginputax(handles.Top_Graph,1);
         plot(x,y,'ro');
         [~,tap_start_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
         
         set(handles.warning_text, 'String','Please choose the end of the target approach phase.');
-        [x,y] = ginputax(handles.axes1,1);
+        [x,y] = ginputax(handles.Top_Graph,1);
         plot(x,y,'ro');
         [~, tap_end_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
         
         set(handles.warning_text, 'String','Please choose the start of the return phase.');
-        [x,y] = ginputax(handles.axes1,1);
+        [x,y] = ginputax(handles.Top_Graph,1);
         plot(x,y,'ro');
         [~, trp_start_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
         
         set(handles.warning_text, 'String','Please choose the end of the return phase');
-        [x,y] = ginputax(handles.axes1,1);
+        [x,y] = ginputax(handles.Top_Graph,1);
         plot(x,y,'ro');
         [~,trp_end_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
         
         handles.kin_array = zeros (1,32);
-        side = handles.event_data{handles.Trial_Num, 4};
+        side = handles.event_data(handles.Trial_Num, 4);
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height, tap_start_index, tap_end_index, trp_start_index, trp_end_index];
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
@@ -2144,84 +2179,84 @@ axes(handles.Bottom_Graph);
         cla;        
 
  if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
-     if(handles.system ==1 )%Leap
-         if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
-            axes(handles.Top_Graph);
-            plot(handles.Raw_SagPos(:,5), handles.Raw_SagPos(:,6), '-r');
-            ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
-
-            axes(handles.Middle_Graph);
-            plot(handles.Raw_Velocity(:,5), handles.Raw_Velocity(:,6), '-r');
-
-            axes(handles.Bottom_Graph);
-            plot(handles.Raw_Accel(:,5), handles.Raw_Accel(:,6), '-r');
-         end
-
-         if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
-            axes(handles.Top_Graph);
-            plot(handles.Resampled_SagPos(:,5), handles.Resampled_SagPos(:,6),'-g');
-            ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
-            
-            axes(handles.Middle_Graph);
-            plot(handles.Resampled_Velocity(:,5), handles.Resampled_Velocity(:,6),'-g');
-
-            axes(handles.Bottom_Graph);
-            plot(handles.Resampled_Accel(:,5), handles.Resampled_Accel(:,6),'-r');
-         end
-
-         if (handles.Raw_disp(1,3) ==1) %plot Filtered Values 
-            axes(handles.Top_Graph);
-            plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,6),'-b');
-            ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
-            
-            axes(handles.Middle_Graph);
-            plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,6), '-b');
-
-            axes(handles.Bottom_Graph);
-            plot(handles.Filtered_Accel(:,5), handles.Filtered_Accel(:,6), '-b');
-         end
-     end
-     if(handles.system == 2) %Optotrak
-         if(handles.point == 1) %Grasping
-              if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
+    if(handles.point ==1)
+         if(handles.system ==1 )%Leap
+             if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
                 axes(handles.Top_Graph);
-                plot(handles.Raw_SagPos(:,1), handles.Raw_SagPos(:,4), '-r');
+                plot(handles.Raw_SagPos(:,5), handles.Raw_SagPos(:,6), '-r');
                 ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
 
                 axes(handles.Middle_Graph);
-                plot(handles.Raw_Velocity(:,1), handles.Raw_Velocity(:,4), '-r');
+                plot(handles.Raw_Velocity(:,5), handles.Raw_Velocity(:,6), '-r');
 
                 axes(handles.Bottom_Graph);
-                plot(handles.Raw_Accel(:,1), handles.Raw_Accel(:,4), '-r');
+                plot(handles.Raw_Accel(:,5), handles.Raw_Accel(:,6), '-r');
              end
 
              if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
                 axes(handles.Top_Graph);
-                plot(handles.Resampled_SagPos(:,1), handles.Resampled_SagPos(:,4),'-g');
+                plot(handles.Resampled_SagPos(:,5), handles.Resampled_SagPos(:,6),'-g');
                 ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
-                
+
                 axes(handles.Middle_Graph);
-                plot(handles.Resampled_Velocity(:,1), handles.Resampled_Velocity(:,4),'-g');
+                plot(handles.Resampled_Velocity(:,5), handles.Resampled_Velocity(:,6),'-g');
 
                 axes(handles.Bottom_Graph);
-                plot(handles.Resampled_Accel(:,1), handles.Resampled_Accel(:,4),'-r');
+                plot(handles.Resampled_Accel(:,5), handles.Resampled_Accel(:,6),'-g');
              end
 
              if (handles.Raw_disp(1,3) ==1) %plot Filtered Values 
                 axes(handles.Top_Graph);
-                plot(handles.Filtered_SagPos(:,1), handles.Filtered_SagPos(:,4),'-b');
+                plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,6),'-b');
                 ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
-                
+
                 axes(handles.Middle_Graph);
-                plot(handles.Filtered_Velocity(:,1), handles.Filtered_Velocity(:,4), '-b');
+                plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,6), '-b');
 
                 axes(handles.Bottom_Graph);
-                plot(handles.Filtered_Accel(:,1), handles.Filtered_Accel(:,4), '-b');
+                plot(handles.Filtered_Accel(:,5), handles.Filtered_Accel(:,6), '-b');
              end
          end
-     end
-     if(handles.system == 3) %Eyelink
-     end
+         if(handles.system == 2) %Optotrak
+                  if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
+                    axes(handles.Top_Graph);
+                    plot(handles.Raw_SagPos(:,1), handles.Raw_SagPos(:,4), '-r');
+                    ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+
+                    axes(handles.Middle_Graph);
+                    plot(handles.Raw_Velocity(:,1), handles.Raw_Velocity(:,4), '-r');
+
+                    axes(handles.Bottom_Graph);
+                    plot(handles.Raw_Accel(:,1), handles.Raw_Accel(:,4), '-r');
+                 end
+
+                 if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
+                    axes(handles.Top_Graph);
+                    plot(handles.Resampled_SagPos(:,1), handles.Resampled_SagPos(:,4),'-g');
+                    ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+
+                    axes(handles.Middle_Graph);
+                    plot(handles.Resampled_Velocity(:,1), handles.Resampled_Velocity(:,4),'-g');
+
+                    axes(handles.Bottom_Graph);
+                    plot(handles.Resampled_Accel(:,1), handles.Resampled_Accel(:,4),'-g');
+                 end
+
+                 if (handles.Raw_disp(1,3) ==1) %plot Filtered Values 
+                    axes(handles.Top_Graph);
+                    plot(handles.Filtered_SagPos(:,1), handles.Filtered_SagPos(:,4),'-b');
+                    ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
+
+                    axes(handles.Middle_Graph);
+                    plot(handles.Filtered_Velocity(:,1), handles.Filtered_Velocity(:,4), '-b');
+
+                    axes(handles.Bottom_Graph);
+                    plot(handles.Filtered_Accel(:,1), handles.Filtered_Accel(:,4), '-b');
+                 end
+         end
+         if(handles.system == 3) %Eyelink
+         end
+    end
     aCheckbox = findobj('Tag','Index_Accel_Check');
     bCheckbox = findobj('Tag','Thumb_Accel_Check');
     cCheckbox = findobj('Tag','Palm_Accel_Check');
@@ -2244,10 +2279,8 @@ axes(handles.Bottom_Graph);
     axes(handles.Bottom_Graph);
     cla;
   end  
-
+drawnow; pause(0.05);  % this innocent line prevents the Matlab hang
 end
-
-
 
 function Vel_Tolerance_Edit_Callback(hObject, eventdata, handles)
 % hObject    handle to Vel_Tolerance_Edit (see GCBO)
@@ -2275,8 +2308,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 end
 
-
-
 function VelEnd_Tol_Edit_Callback(hObject, eventdata, handles)
 % hObject    handle to VelEnd_Tol_Edit (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -2301,7 +2332,6 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 end
-
 
 % --- Executes on button press in Accept_Trial_Button.
 function Accept_Trial_Button_Callback(hObject, eventdata, handles)
