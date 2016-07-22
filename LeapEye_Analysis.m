@@ -1673,7 +1673,7 @@ axes(handles.Bottom_Graph);
 if(handles.system ==1) %Leap
     if(handles.extract == 0 && handles.point ==0)%Pointing
         handles.kin_array = zeros (1,56);
-        side = handles.event_data{handles.Trial_Num, 6};
+        side = handles.event_data{handles.Trial_Num, 4}; %-1-> subject pointing to the left, 1-> subject pointing to the right
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ,handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel,handles.th_vec_vel, 0);
         disp(handles.kin_array);
         handles.extract =1;
@@ -1701,7 +1701,7 @@ if(handles.system ==1) %Leap
         [~,trp_end_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
         
         handles.kin_array = zeros (1,32);
-        side = handles.event_data{handles.Trial_Num, 6};
+        side = handles.event_data{handles.Trial_Num, 4};
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height, tap_start_index, tap_end_index, trp_start_index, trp_end_index];
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
@@ -1838,14 +1838,14 @@ end
 if(handles.system ==2) %Optotrak
     if(handles.extract == 0 && handles.point ==0)%Pointing
         handles.kin_array = zeros (1,56);
-        side = handles.event_data(handles.Trial_Num, 6);
+        side = handles.event_data(handles.Trial_Num, 4);
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ,handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel,handles.th_vec_vel, 0);
         handles.extract =1;
     end
 
     if(handles.extract == 0 && handles.point == 1) %Grasping
         handles.kin_array = zeros (1,32);
-        side = handles.event_data(handles.Trial_Num, 6);
+        side = handles.event_data(handles.Trial_Num, 4);
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
@@ -2309,7 +2309,7 @@ if(handles.system == 1) %Leap
         movement_time_thumb_z = (handles.Master_array(handles.kin_array(1,12),13)-handles.Master_array(handles.kin_array(1,6),13))/1000 * thumb; 
 
         %disp(handles.Trial_Num);
-        targetloc = handles.event_data{handles.Trial_Num, 7}; %assume target location is inputted as a numerical value following the order during calibration
+        targetloc = handles.event_data{handles.Trial_Num, 6}; %assume target location is inputted as a numerical value following the order during calibration
         targetloc = str2double (targetloc);
 
         targetx = handles.Calibration_array (targetloc+1, 1);

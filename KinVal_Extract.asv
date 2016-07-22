@@ -110,10 +110,10 @@ if (type ==0 && system ==1) %Pointing Leap
         
         % Peak XYZ velocities
         %index finger max velocity (X)
-    %     if(side>0) %Subject pointing to the right (1)
+    %     if(side>2) %Subject pointing in positive x direction
     %         if_max_vel = max((velocity(ifs_move_x:ife_move_x,1)));
     %     end
-    %     if(side <0)  %Subject pointing to the left (-1)
+    %     if(side <3)  %Subject pointing in negative x direction
             if_max_vel = min((velocity(ifs_move_x:ife_move_x,1)));
     %     end
         if_max_vel_index_x = find((velocity(:,1)) == if_max_vel);
@@ -1280,10 +1280,10 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         ple_move_y = ple_move_z;
         
         %palm max velocity (X)
-        if(side>0) %Sbject pointing to the right (1)
+        if(side>2) %Sbject pointing to the right
             pl_max_vel = max((velocity(pls_move_x:ple_move_x,5)));
         end
-        if(side <0) %Subject pointing to the left (-1)
+        if(side <3) %Subject pointing to the left
             pl_max_vel = min((velocity(pls_move_x:ple_move_x,5)));
         end
         pl_max_vel_index_x = find((velocity(:,5)) == pl_max_vel);
@@ -1297,9 +1297,9 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         if(isempty(temp_array))
             temp_array = accel(pl_max_vel_index_x:pls_move_x, 5);
         end
-        if(side >0) %Subject pointing to the right (1)
+        if(side >2)
             peakAccel = max(temp_array);
-        else %if(side<0) %Subejct pointing to the left (-1)
+        else %if(side<3)
          peakAccel = min(temp_array);
         end
         pl_peakAccel_index_x = find(accel(:,5) == peakAccel);
@@ -1334,11 +1334,11 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         end
         peakDeccel = min(temp_array);
         if(side<3)
-%          temp = accel(pl_max_vel_index_x:ple_move_x, 5);
-%              if(isempty(temp))
-%                 temp = accel(ple_move_x:pl_max_vel_index_x, 5);
-%              end
-            peakDeccel = max(temp_array);
+         temp = accel(pl_max_vel_index_x:ple_move_x, 5);
+             if(isempty(temp))
+                temp = accel(ple_move_x:pl_max_vel_index_x, 5);
+             end
+         peakDeccel = max(temp);
         end   
         pl_peakDeccel_index_x = find(accel(:,5) == peakDeccel);
 
