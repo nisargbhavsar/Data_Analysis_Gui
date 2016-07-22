@@ -1311,8 +1311,8 @@ if(handles.system ==2) %Optotrak
 
         handles.Resampled_SagPos(i,1) = handles.Master_array(i,1); %Time
             
-        handles.Resampled_XYZ (i,1) = (handles.Master_array(i,1)/handles.frequency)*1e3; %Time
-        
+        %handles.Resampled_XYZ (i,1) = (handles.Master_array(i,1)/handles.frequency)*1e3; %Time
+        handles.Resampled_XYZ (i,1) = handles.Master_array(i,1); %Time
         handles.Resampled_XYZ (i,2) = handles.Master_array(i,2); %Index (x)
         handles.Resampled_XYZ (i,3) = handles.Master_array(i,3); %(y)
         handles.Resampled_XYZ (i,4) = handles.Master_array(i,4); %(z)
@@ -1344,7 +1344,7 @@ if(handles.system ==2) %Optotrak
         delta_time = handles.Resampled_Velocity(i+1, 1) - handles.Resampled_Velocity(i,1);
         
         handles.Resampled_Accel(i,1) = handles.Resampled_Velocity(i,1);
-        disp(i);
+
         indextemp_2 = handles.Resampled_Velocity(i+1,2); %index velocity
         indextemp_1 = handles.Resampled_Velocity(i,2);
         handles.Resampled_Accel (i,2) = (indextemp_2-indextemp_1)/delta_time;   
