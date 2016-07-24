@@ -994,7 +994,7 @@ h = findobj(0, 'tag', 'figure1');
 handles.extract = 0;
 handles.kin_var_select = 1;
 handles.edited = 0;
-handles.point= 0;
+%handles.point= 0;
 handles.curr_col = 1;
 
 handles.Calibration_array = h(1).UserData;
@@ -1027,7 +1027,7 @@ if(handles.system ==1) %Leap
             handles.Raw_XYZ (i,8) = sqrt((handles.Raw_XYZ(i,1)-handles.Raw_XYZ(i,4))^2); %Grip aperture (x)
             handles.Raw_XYZ (i,9) = sqrt((handles.Raw_XYZ(i,2)-handles.Raw_XYZ(1,5))^2); %Grip aperture (y)
             handles.Raw_XYZ (i,10) = sqrt((handles.Raw_XYZ(i,3)-handles.Raw_XYZ(i,6))^2);%Grip aperture (z)
-            handles.Raw_XYZ (i,11) = sqrt((handles.Raw_XYZ(i,8))^2+(handles.Raw_XYZ(i,9))^2 + (handles.Raw_XYZ(i,10))^2);  %Grip aperture
+            handles.Raw_XYZ (i,11) = handles.Raw_SagPos(i,6);  %Grip aperture
         end
       for i=1: (length(handles.Master_array)-1)
             indextemp_2 = sqrt(handles.Master_array(i+1,1)^2 + handles.Master_array(i+1,2)^2 + handles.Master_array(i+1,3)^2); %index position
@@ -3364,6 +3364,7 @@ function radiobutton4_Callback(hObject, eventdata, handles)
 if (get(hObject,'Value') == get(hObject,'Max'))
     handles.point = 0; 
     set(handles.radiobutton5,'Value',0);
+    set(handles.text14,'String','Max Index Velocity: ');
 end
 if (get(hObject,'Value') == get(hObject,'Min'))
     handles.point = -1;
@@ -3383,6 +3384,9 @@ function radiobutton5_Callback(hObject, eventdata, handles)
 if (get(hObject,'Value') == get(hObject,'Max'))
     handles.point = 1;
    set(handles.radiobutton4,'Value',0);
+   set(handles.text14,'String','Max Index Velocity: ');
+   set(handles.markers_popupmenu,'String',{'Grasping'});
+   handles.marker_select = 1;
 end
 if (get(hObject,'Value') == get(hObject,'Min'))
     handles.point = -1;
