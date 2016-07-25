@@ -977,14 +977,14 @@ if (type ==1 && system ==1) %Grasping motion Leap
         %Else the grip aperture is greater than 4/3*obj_dia
     end
     
-    objective_f_gav = zeros (length(velocity), 1); %Grip Aperture should be decreasing, therefore grip velocity should be negative
+    objective_f_gav = zeros (length(pos(:,1)),1); %Grip Aperture should be decreasing, therefore grip velocity should be negative
     for i =1:length (velocity)
         if velocity(i,6) < 0
             objective_f_gav(i,1)= 1;
         end
     end
     
-    objective_f_gaa = zeros(length(accel),1); %Grip aperture should be decelerating, not accelerating, therefore postive acceleration
+    objective_f_gaa = zeros(length(pos(:,1)),1); %Grip aperture should be decelerating, not accelerating, therefore postive acceleration
     for i =1:length (accel)
         if accel(i,6) > 0
             objective_f_gaa(i,1)= 1;
@@ -992,17 +992,27 @@ if (type ==1 && system ==1) %Grasping motion Leap
     end
     %speed of wrist low upon movement ending
     max_wrist_velocity = max(velocity(:,3));
-    objective_f_ws = abs(velocity(:,3));
+    objective_f_ws = zeros(length(pos(:,1)),1);
+%     objective_f_ws = abs(velocity(:,3));
     %assign more importance to lower wrist speeds
-    objective_f_ws = 1-(objective_f_ws(:,1)/max_wrist_velocity);
+    for( i=1: length(velocity(:,3)))
+        objective_f_ws(i,1) = 1-(velocity(i,3)/ max_wrist_velocity);
+    end
+    %objective_f_ws = 1-(objective_f_ws(:,1)/max_wrist_velocity);
     
     %Average height of the thumb and index finger must be bigger than 3/4 of the
     %height of the object from the Leap Detector
-    objective_f_h = zeros(length(vel_tolerance(:,1)),1);
+    objective_f_h = zeros(length(pos(:,1)),1);
     
+%     obj_height = varargin(1,5)*3/4;
+%     for i=1: length(vel_tolerance(:,1))
+%         if (vel_tolerance (i,2) > obj_height)
+%             objective_f_h (i,1) = 1;
+%         end
+%     end
     obj_height = varargin(1,5)*3/4;
-    for i=1: length(vel_tolerance(:,1))
-        if (vel_tolerance (i,2) > obj_height)
+    for i=1: length(pos(:,1))
+        if (pos (i,2) > obj_height)
             objective_f_h (i,1) = 1;
         end
     end
@@ -1019,7 +1029,7 @@ if (type ==1 && system ==1) %Grasping motion Leap
 %    master_obj_function = zeros(length(objective_f_gaa(:,1)),1);
 
 %    master_obj_function(:,1) = objective_f_gaa(:,1) * objective_f_h(:,1) * objective_f_ws(:,1) * objective_f_ga(:,1) * objective_f_gav(:,1) * objective_f_d(:,1);
-    master_obj_function(:,1) = objective_f_gaa(:,1) * objective_f_h(:,1) * objective_f_ws(:,1) * objective_f_ga(:,1) * objective_f_gav(:,1);   
+    master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ws(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);   
     max_i = max(master_obj_function);
     index = find(master_obj_function(:,1) == max_i);
    
