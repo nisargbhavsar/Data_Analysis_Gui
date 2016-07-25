@@ -996,7 +996,7 @@ if (type ==1 && system ==1) %Grasping motion Leap
 %     objective_f_ws = abs(velocity(:,3));
     %assign more importance to lower wrist speeds
     for( i=1: length(velocity(:,3)))
-        objective_f_ws(i,1) = 1-(velocity(i,3)/ max_wrist_velocity);
+        objective_f_ws(i,1) = 1-(abs(velocity(i,3))/ max_wrist_velocity);
     end
     %objective_f_ws = 1-(objective_f_ws(:,1)/max_wrist_velocity);
     
@@ -1029,7 +1029,8 @@ if (type ==1 && system ==1) %Grasping motion Leap
 %    master_obj_function = zeros(length(objective_f_gaa(:,1)),1);
 
 %    master_obj_function(:,1) = objective_f_gaa(:,1) * objective_f_h(:,1) * objective_f_ws(:,1) * objective_f_ga(:,1) * objective_f_gav(:,1) * objective_f_d(:,1);
-    master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ws(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);   
+   % master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ws(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);
+    master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);
     max_i = max(master_obj_function);
     index = find(master_obj_function(:,1) == max_i);
    

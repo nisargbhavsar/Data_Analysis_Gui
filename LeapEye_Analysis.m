@@ -1461,7 +1461,8 @@ if (handles.system ==1) %Leap
             handles.Filtered_XYZ (i,8) = sqrt((handles.Filtered_XYZ(i,1)-handles.Filtered_XYZ(i,4))^2); %Grip aperture (x)
             handles.Filtered_XYZ (i,9) = sqrt((handles.Filtered_XYZ(i,2)-handles.Filtered_XYZ(1,5))^2); %Grip aperture (y)
             handles.Filtered_XYZ (i,10) = sqrt((handles.Filtered_XYZ(i,3)-handles.Filtered_XYZ(i,6))^2);%Grip aperture (z)
-            handles.Filtered_XYZ (i,11) = sqrt((handles.Filtered_XYZ(i,8))^2+(handles.Filtered_XYZ(i,9))^2 + (handles.Filtered_XYZ(i,10))^2);  
+            handles.Filtered_XYZ (i,11) = handles.Filtered_SagPos(i,6);
+            %handles.Filtered_XYZ (i,11) = sqrt((handles.Filtered_XYZ(i,8))^2+(handles.Filtered_XYZ(i,9))^2 + (handles.Filtered_XYZ(i,10))^2);  
         end
         for i=1: (length(handles.Master_array(:,1))-1)
             indextemp_2 = sqrt(handles.Master_array(i+1,1)^2 + handles.Master_array(i+1,2)^2 + handles.Master_array(i+1,3)^2); %index position
@@ -1889,7 +1890,6 @@ if(handles.system ==1) %Leap
                 axes(handles.Middle_Graph);
                 plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,2),'-r');
                 hold on;
-                disp(handles.Filtered_Velocity(handles.kin_array(1,32),2));
                 plot(handles.Filtered_SagPos(handles.kin_array(1,32),5),handles.Filtered_Velocity(handles.kin_array(1,32),2),'or');
            end
        end
@@ -2027,11 +2027,11 @@ if(handles.system ==1) %Leap
             plot(handles.Filtered_XYZ(:, 7), handles.Filtered_XYZ(:, 11), '-r');
             hold on;
             plot(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), 'squarer'); %Grip begin
-            text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), '\leftarrow Grip Begin')
+            text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), '\leftarrow GB')
             plot(handles.Filtered_XYZ(handles.kin_array(1, 62), 7), handles.Filtered_XYZ(handles.kin_array(1, 62), 11), 'squarer'); %Obj placement end
-            text(handles.Filtered_XYZ(handles.kin_array(1, 62), 7), handles.Filtered_XYZ(handles.kin_array(1, 62), 11), '\leftarrow Object Placement End')
+            text(handles.Filtered_XYZ(handles.kin_array(1, 62), 7), handles.Filtered_XYZ(handles.kin_array(1, 62), 11), '\leftarrow OPE')
             plot(handles.Filtered_XYZ(handles.kin_array(1, 61), 7), handles.Filtered_XYZ(handles.kin_array(1, 61), 11), 'squarer'); %Obj placement start
-            text(handles.Filtered_XYZ(handles.kin_array(1, 61), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 61), 11), '\leftarrow Object Placement Begin')           
+            text(handles.Filtered_XYZ(handles.kin_array(1, 61), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 61), 11), '\leftarrow OPB')           
         end
     end
 end
@@ -2535,10 +2535,14 @@ axes(handles.Bottom_Graph);
     bCheckbox = findobj('Tag','Thumb_Accel_Check');
     cCheckbox = findobj('Tag','Palm_Accel_Check');
     dCheckbox = findobj('Tag','Wrist_Accel_Check');
+    eCheckbox = findobj('Tag','Index_XYZ_Check');
+    fCheckbox = findobj('Tag','Thumb_XYZ_Check');
     set(aCheckbox,'value',0);
     set(bCheckbox,'value',0);
     set(cCheckbox,'value',0);
     set(dCheckbox,'value',0);
+    set(eCheckbox,'value',0);
+    set(fCheckbox,'value',0);
  end
  
   guidata(hObject, handles); %Update GUI
