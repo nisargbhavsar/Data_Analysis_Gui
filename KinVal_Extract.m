@@ -1387,6 +1387,7 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
     end
     varargout = num2cell( output_array, [1 2]);
 end
+
 if(type == 1 && system ==2) %Optotrak grasping
     
     varargin=(cell2mat(varargin)); 

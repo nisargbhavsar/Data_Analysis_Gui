@@ -930,7 +930,7 @@ if(handles.system ==1) %Leap
 end
 if(handles.system ==2) %Optotrak
     [handles.frequency, handles.Trial_Num, handles.Master_array] = load_LEAP_data_gui(3); %Load Optotrak data
-    handles.Resample_Rate = handles.frequency;
+     %handles.Resample_Rate = handles.frequency;
 end
 
 if(handles.system ==1)
@@ -958,6 +958,7 @@ if(handles.system ==1)
     handles.Filtered_Velocity_XYZ = zeros (length (handles.Master_array)-1,11); % Index, Thumb, Time
     handles.Filtered_Accel_XYZ = zeros (length (handles.Master_array)-2, 11); % Index, Thumb,Time
 end
+
 if (handles.system ==2) %Optotrak
     %Time, Index, Palm
     handles.Raw_SagPos = zeros(length(handles.Master_array), 4); 
@@ -985,6 +986,7 @@ if (handles.system ==2) %Optotrak
     handles.Filtered_Velocity_XYZ = zeros (length (handles.Master_array)-1,7); 
     handles.Filtered_Accel_XYZ = zeros (length(handles.Master_array)-2, 7);
 end
+
 handles.Raw_disp = zeros(1,3);
 handles.Vel_Tol = 0.02;
 handles.VelEnd_Tol = 0.1;
@@ -1245,10 +1247,10 @@ end
 
 if(handles.system==1) %Leap
         for i = 1: length(handles.Master_array(:,1))
-            handles.Resampled_SagPos(i,1) =  sqrt((handles.Master_array(i,1))^2 + (handles.Master_array(i,2)-index_y)^2 + (index_z-handles.Master_array(i,3))^2); %Index
-            handles.Resampled_SagPos(i,2) =  sqrt((handles.Master_array(i,7))^2 + (handles.Master_array(i,8)-index_y)^2 + (index_z-handles.Master_array(i,9))^2); %Thumb
-            handles.Resampled_SagPos(i,3) =  sqrt((handles.Master_array(i,10))^2 + (handles.Master_array(i,11)-index_y)^2 + (index_z-handles.Master_array(i,12))^2); %Wrist
-            handles.Resampled_SagPos(i,4) =  sqrt((handles.Master_array(i,4))^2 + (handles.Master_array(i,5)-index_y)^2 + (index_z-handles.Master_array(i,6))^2); %Palm
+            handles.Resampled_SagPos(i,1) = sqrt((handles.Master_array(i,1))^2 + (handles.Master_array(i,2)-index_y)^2 + (index_z-handles.Master_array(i,3))^2); %Index
+            handles.Resampled_SagPos(i,2) = sqrt((handles.Master_array(i,7))^2 + (handles.Master_array(i,8)-index_y)^2 + (index_z-handles.Master_array(i,9))^2); %Thumb
+            handles.Resampled_SagPos(i,3) = sqrt((handles.Master_array(i,10))^2 + (handles.Master_array(i,11)-index_y)^2 + (index_z-handles.Master_array(i,12))^2); %Wrist
+            handles.Resampled_SagPos(i,4) = sqrt((handles.Master_array(i,4))^2 + (handles.Master_array(i,5)-index_y)^2 + (index_z-handles.Master_array(i,6))^2); %Palm
             handles.Resampled_SagPos(i,5) = handles.Master_array(i,13);
             handles.Resampled_SagPos(i,6) = sqrt((handles.Master_array(i,1)-handles.Master_array(i,7))^2 + (handles.Master_array(i,2)-handles.Master_array(i,8))^2 + (handles.Master_array(i,3)-handles.Master_array(1,9))^2);
             
@@ -1287,7 +1289,7 @@ if(handles.system==1) %Leap
             handles.Resampled_Velocity(i,5) = (handles.Master_array (i,13)); %time
             handles.Resampled_Velocity(i,6) = (handles.Resampled_SagPos(i+1,6)-handles.Resampled_SagPos(i,6))/delta_time;
             
-             handles.Resampled_Velocity_XYZ(i,1) = (handles.Resampled_XYZ(i+1,1)-handles.Resampled_XYZ(i,1))/delta_time; %index velocity X
+            handles.Resampled_Velocity_XYZ(i,1) = (handles.Resampled_XYZ(i+1,1)-handles.Resampled_XYZ(i,1))/delta_time; %index velocity X
             handles.Resampled_Velocity_XYZ(i,2) = (handles.Resampled_XYZ(i+1,2)-handles.Resampled_XYZ(i,2))/delta_time; %index velocity Y
             handles.Resampled_Velocity_XYZ(i,3) = (handles.Resampled_XYZ(i+1,3)-handles.Resampled_XYZ(i,3))/delta_time; %index velocity X
             handles.Resampled_Velocity_XYZ(i,4) = (handles.Resampled_XYZ(i+1,4)-handles.Resampled_XYZ(i,4))/delta_time; %Thumb velocity X
@@ -1386,7 +1388,7 @@ if(handles.system ==2) %Optotrak
         palmtemp_2 = handles.Resampled_Velocity(i+1,3); %palm velocity
         palmtemp_1 = handles.Resampled_Velocity(i,3);
         handles.Resampled_Accel (i,3) = (palmtemp_2 - palmtemp_1) /delta_time;
-        handles.Resamplede_Accel (i,4) = (handles.Resampled_Velocity(i+1,4) - handles.Resampled_Velocity(i,4)) /delta_time;
+        handles.Resampled_Accel (i,4) = (handles.Resampled_Velocity(i+1,4) - handles.Resampled_Velocity(i,4)) /delta_time;
         
         handles.Resampled_Accel_XYZ(i,1) = (handles.Resampled_Velocity (i,1)); % time
         handles.Resampled_Accel_XYZ(i,2) = (handles.Resampled_Velocity_XYZ(i+1,2)-handles.Resampled_Velocity_XYZ(i,2))/delta_time; %index velocity X
@@ -1409,7 +1411,7 @@ if(handles.system == 1 || handles.system == 2|| handles.system == 3) %if(handles
     handles.Resampled_Velocity_XYZ(all(handles.Resampled_Velocity_XYZ==0,2),:)=[];
     handles.Resampled_Accel_XYZ(all(handles.Resampled_Accel_XYZ == 0,2),:) =[];
     
-    name = strcat('Trial # : ',num2str(handles.Trial_Num), ' Resampled at: ', num2str(handles.Resample_Rate), ' Hz');
+    name = strcat('Trial # : ',num2str(handles.Trial_Num), ' Resampled at: ', num2str(handles.Resample_Rate), ' Hz');   
     set(handles.Trial_Num_Text, 'String',name);
     handles.extract =0;
 end
@@ -1441,12 +1443,12 @@ end
 
 if (handles.system ==1) %Leap
         for i = 1: length(handles.Master_array(:,1))
-            handles.Filtered_SagPos(i,1) =  sqrt((handles.Master_array(i,1))^2 + (handles.Master_array(i,2)-index_y)^2 + (index_z-handles.Master_array(i,3))^2); %Index
-            handles.Filtered_SagPos(i,2) =  sqrt((handles.Master_array(i,7))^2 + (handles.Master_array(i,8)-index_y)^2 + (index_z-handles.Master_array(i,9))^2); %Thumb
-            handles.Filtered_SagPos(i,3) =  sqrt((handles.Master_array(i,10))^2 + (handles.Master_array(i,11)-index_y)^2 + (index_z-handles.Master_array(i,12))^2); %Wrist
-            handles.Filtered_SagPos(i,4) =  sqrt((handles.Master_array(i,4))^2 + (handles.Master_array(i,5)-index_y)^2 + (index_z-handles.Master_array(i,6))^2); %Palm
+            handles.Filtered_SagPos(i,1) = sqrt((handles.Master_array(i,1))^2 + (handles.Master_array(i,2)-index_y)^2 + (index_z-handles.Master_array(i,3))^2); %Index
+            handles.Filtered_SagPos(i,2) = sqrt((handles.Master_array(i,7))^2 + (handles.Master_array(i,8)-index_y)^2 + (index_z-handles.Master_array(i,9))^2); %Thumb
+            handles.Filtered_SagPos(i,3) = sqrt((handles.Master_array(i,10))^2 + (handles.Master_array(i,11)-index_y)^2 + (index_z-handles.Master_array(i,12))^2); %Wrist
+            handles.Filtered_SagPos(i,4) = sqrt((handles.Master_array(i,4))^2 + (handles.Master_array(i,5)-index_y)^2 + (index_z-handles.Master_array(i,6))^2); %Palm
             handles.Filtered_SagPos(i,5) = handles.Master_array(i,13);
-            handles.Filtered_SagPos (i,6) = sqrt((handles.Master_array(i,1)-handles.Master_array(i,7))^2 + (handles.Master_array(i,2)-handles.Master_array(i,8))^2 + (handles.Master_array(i,3)-handles.Master_array(1,9))^2);
+            handles.Filtered_SagPos(i,6) = sqrt((handles.Master_array(i,1)-handles.Master_array(i,7))^2 + (handles.Master_array(i,2)-handles.Master_array(i,8))^2 + (handles.Master_array(i,3)-handles.Master_array(1,9))^2);
         
             handles.Filtered_XYZ (i,1) = handles.Master_array(i,1); %index position
             handles.Filtered_XYZ (i,2) = handles.Master_array(i,2)-index_y;
@@ -1484,7 +1486,7 @@ if (handles.system ==1) %Leap
             
             handles.Filtered_Velocity_XYZ(i,1) = (handles.Filtered_XYZ(i+1,1)-handles.Filtered_XYZ(i,1))/delta_time; %index velocity X
             handles.Filtered_Velocity_XYZ(i,2) = (handles.Filtered_XYZ(i+1,2)-handles.Filtered_XYZ(i,2))/delta_time; %index velocity Y
-            handles.Filtered_Velocity_XYZ(i,3) = (handles.Filtered_XYZ(i+1,3)-handles.Filtered_XYZ(i,3))/delta_time; %index velocity X
+            handles.Filtered_Velocity_XYZ(i,3) = (handles.Filtered_XYZ(i+1,3)-handles.Filtered_XYZ(i,3))/delta_time; %index velocity Z
             handles.Filtered_Velocity_XYZ(i,4) = (handles.Filtered_XYZ(i+1,4)-handles.Filtered_XYZ(i,4))/delta_time; %Thumb velocity X
             handles.Filtered_Velocity_XYZ(i,5) = (handles.Filtered_XYZ(i+1,5)-handles.Filtered_XYZ(i,5))/delta_time; %Thumb velocity Y
             handles.Filtered_Velocity_XYZ(i,6) = (handles.Filtered_XYZ(i+1,6)-handles.Filtered_XYZ(i,6))/delta_time; %Thumb velocity Z
@@ -1706,7 +1708,7 @@ if(handles.system ==1) %Leap
         handles.kin_array = zeros (1,56);
         side = handles.event_data{handles.Trial_Num, 4}; %(-1)-> subject pointing to the left, (1)-> subject pointing to the right
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ,handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel,handles.th_vec_vel, 0);
-        disp(handles.kin_array);
+        %disp(handles.kin_array);
         handles.extract =1;
     end
 
@@ -1770,7 +1772,8 @@ if(handles.system ==1) %Leap
         side = handles.event_data(handles.Trial_Num, 4);
         %input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height, tap_start_index, tap_end_index, trp_start_index, trp_end_index];
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
-        handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
+        handles.kin_array = kinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel, handles.th_vec_vel, input_array);
+        %handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol,0, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0, handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
     end
 
@@ -2857,6 +2860,7 @@ if(handles.system == 1) %Leap
     str2 = strcat('H',num);
     xlswrite(handles.events_filename,output_array, 1,str2);
 end
+
 if(handles.system ==2) %Optotrak: handles.marker_select ->1 (index +palm) handles.marker_select ->2 (index only) handles.marker_select ->3 (palm only) 
     handles.edited =0;
     index = 1;
