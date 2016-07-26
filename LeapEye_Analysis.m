@@ -3549,12 +3549,19 @@ if(handles.system ==1 || handles.system ==2)
     try
         event_d = getfield(event_data, C{1});
         handles.event_data = event_d;
+        disp('1');
     catch
-        %event_d = event_data;
-        handles.event_data = event_data;
+        try
+            event_d = getfield(event_data,'unnamed');
+            disp('2');
+        catch
+            event_d = unnamed;
+            disp('3');
+        end
+        handles.event_data = event_d;
     end
-    %a_event_d = num2cell(event_d);
-    set(handles.table1,'Data',num2cell(handles.event_data));
+    temp_event_d = num2cell(handles.event_data);
+    set(handles.table1,'Data',temp_event_d);
     set(handles.table1,'ColumnName',{'Trial #';'Stimulus';'Delay'; 'Location';'Side';'Calibration Value'});
    
     handles.curr_col = length(handles.event_data(:,1));
