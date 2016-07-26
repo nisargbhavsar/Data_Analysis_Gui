@@ -3546,8 +3546,13 @@ if(handles.system ==1 || handles.system ==2)
         handles.events_filename = strcat(C{1},'_Optotrak.xls');
     end
     event_data = load('-mat',filename);
-    event_d = getfield(event_data, C{1});
-    handles.event_data = event_d;
+    try
+        event_d = getfield(event_data, C{1});
+        handles.event_data = event_d;
+    catch
+        %event_d = event_data;
+        handles.event_data = event_data;
+    end
     a_event_d = num2cell(event_d);
     set(handles.table1,'Data',a_event_d);
     set(handles.table1,'ColumnName',{'Trial #';'Stimulus';'Delay'; 'Location';'Side';'Calibration Value'});
