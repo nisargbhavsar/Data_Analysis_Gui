@@ -3553,8 +3553,8 @@ if(handles.system ==1 || handles.system ==2)
         %event_d = event_data;
         handles.event_data = event_data;
     end
-    a_event_d = num2cell(event_d);
-    set(handles.table1,'Data',a_event_d);
+    %a_event_d = num2cell(event_d);
+    set(handles.table1,'Data',num2cell(handles.event_data));
     set(handles.table1,'ColumnName',{'Trial #';'Stimulus';'Delay'; 'Location';'Side';'Calibration Value'});
    
     handles.curr_col = length(handles.event_data(:,1));
