@@ -996,7 +996,12 @@ h = findobj(0, 'tag', 'figure1');
 handles.extract = 0;
 handles.kin_var_select = 1;
 handles.edited = 0;
-%handles.point= 0;
+if (get(handles.radiobutton5,'Value') == get(handles.radiobutton5,'Max')) %Grasping
+    handles.point = 1;
+end
+if (get(handles.radiobutton4,'Value') == get(handles.radiobutton4,'Max')) %Pointing
+    handles.point = 0;
+end
 handles.curr_col = 1;
 
 handles.Calibration_array = h(1).UserData;
@@ -1182,10 +1187,13 @@ handles.Raw_disp = zeros (1,3);
     
     axes(handles.Top_Graph);
         cla;
+        xlim auto;
     axes(handles.Middle_Graph);
-        cla;        
+        cla;    
+        xlim auto;
     axes(handles.Bottom_Graph);
-        cla;   
+        cla; 
+        xlim auto;
         
         A = strcat('Trial #:', num2str(handles.Trial_Num));
 set(handles.trial_num_edit,'String',A);
@@ -2048,7 +2056,7 @@ if(handles.system ==2) %Optotrak
         handles.kin_array = zeros (1,32);
         side = handles.event_data(handles.Trial_Num, 4);
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
-        handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
+        %handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
     end
 
