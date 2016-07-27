@@ -1545,7 +1545,6 @@ if (handles.system ==1) %Leap
 end
 if(handles.system ==2) %Optotrak
     for (i =1: length(handles.Master_array(:,1)))
-       
         handles.Filtered_SagPos(i,2) =  sqrt((handles.Master_array(i,2))^2 + (handles.Master_array(i,3)-index_y)^2 + (index_z-handles.Master_array(i,4))^2); %Index
         handles.Filtered_SagPos(i,3) =  sqrt((handles.Master_array(i,5))^2 + (handles.Master_array(i,6)-index_y)^2 + (index_z-handles.Master_array(i,7))^2); %Palm
         handles.Filtered_SagPos(i,1) = handles.Master_array(i,1); %Time
@@ -1715,11 +1714,7 @@ axes(handles.Bottom_Graph);
 if(handles.system ==1) %Leap
     if(handles.extract == 0 && handles.point ==0)%Pointing
         handles.kin_array = zeros (1,56);
-        try
-            side = handles.event_data{handles.Trial_Num, 4}; %(-1)-> subject pointing to the left, (1)-> subject pointing to the right
-        catch
-            side = handles.event_data(handles.Trial_Num, 4);
-        end
+        side = handles.event_data(handles.Trial_Num, 4);
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ,handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel,handles.th_vec_vel, 0);
         %disp(handles.kin_array);
         handles.extract =1;
@@ -1782,11 +1777,7 @@ if(handles.system ==1) %Leap
 %         [~,trp_end_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
         
         handles.kin_array = zeros (1,32);
-        try
-            side = handles.event_data{handles.Trial_Num, 4};
-        catch
-            side = handles.event_data(handles.Trial_Num, 4);
-        end
+        side = handles.event_data(handles.Trial_Num, 4);
         %input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height, tap_start_index, tap_end_index, trp_start_index, trp_end_index];
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel, handles.th_vec_vel, input_array);
@@ -2055,22 +2046,14 @@ end
 if(handles.system ==2) %Optotrak
     if(handles.extract == 0 && handles.point ==0)%Pointing
         handles.kin_array = zeros (1,56);
-        try
-            side = handles.event_data {handles.Trial_Num,4};
-        catch
-            side = handles.event_data(handles.Trial_Num, 4);
-        end
+        side = handles.event_data(handles.Trial_Num, 4);
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ,handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel,handles.th_vec_vel, 0);
         handles.extract =1;
     end
 
     if(handles.extract == 0 && handles.point == 1) %Grasping
         handles.kin_array = zeros (1,32);
-        try
-            side = handles.event_data{handles.Trial_Num,4};
-        catch
-            side = handles.event_data(handles.Trial_Num, 4);
-        end
+        side = handles.event_data(handles.Trial_Num, 4);
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
         %handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
@@ -2654,7 +2637,6 @@ if(handles.system == 1) %Leap
         movement_time_index_z = (handles.Master_array(handles.kin_array(1,9),13)-handles.Master_array(handles.kin_array(1,3),13))/1000 * index; %used this as movement time (sec)
 
         targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
-        targetloc = str2double (targetloc);
 
         targetx = handles.Calibration_array (targetloc+1, 1);
         targety = handles.Calibration_array (targetloc+1, 2);
@@ -2704,8 +2686,7 @@ if(handles.system == 1) %Leap
 
         index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1,31),1) *index; 
 
-        output_array = [trial_validity hand_latency movement_time_index_z accuracyx accuracyy accuracyz index_x_PA index_y_PA index_z_PA time_index_PA_z index_x_pos_PA index_y_pos_PA index_z_pos_PA index_x_PV index_y_PV index_z_PV time_index_PV_z index_x_pos_PV index_y_pos_PV index_z_pos_PV index_x_PD index_y_PD index_z_PD time_index_PD_z index_x_pos_PD index_y_pos_PD index_z_pos_PD index_end_pos_x index_end_pos_y index_end_pos_z 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 index_peak_vel_vec 0 handles.kin_array(1,33)*index handles.kin_array(1,34)*index handles.kin_array(1,35)*index handles.kin_array(1,36)*index handles.kin_array(1,37)*index handles.kin_array(1,38)*index handles.kin_array(1,39)*index handles.kin_array(1,40)*index handles.kin_array(1,41)*index handles.kin_array(1,42)*index handles.kin_array(1,43)*index handles.kin_array(1,44)*index 0 0 0 0 0 0 0 0 0 0 0 0 index_begin_pos_x index_begin_pos_y index_begin_pos_z 0 0 0];
-        
+        output_array = [trial_validity hand_latency movement_time_index_z accuracyx accuracyy accuracyz index_x_PA index_y_PA index_z_PA time_index_PA_z index_x_pos_PA index_y_pos_PA index_z_pos_PA index_x_PV index_y_PV index_z_PV time_index_PV_z index_x_pos_PV index_y_pos_PV index_z_pos_PV index_x_PD index_y_PD index_z_PD time_index_PD_z index_x_pos_PD index_y_pos_PD index_z_pos_PD index_end_pos_x index_end_pos_y index_end_pos_z 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 index_peak_vel_vec 0 handles.kin_array(1,33)*index handles.kin_array(1,34)*index handles.kin_array(1,35)*index handles.kin_array(1,36)*index handles.kin_array(1,37)*index handles.kin_array(1,38)*index handles.kin_array(1,39)*index handles.kin_array(1,40)*index handles.kin_array(1,41)*index handles.kin_array(1,42)*index handles.kin_array(1,43)*index handles.kin_array(1,44)*index 0 0 0 0 0 0 0 0 0 0 0 0 index_begin_pos_x index_begin_pos_y index_begin_pos_z 0 0 0]; 
     end
 
     if(handles.marker_select ==3) %Thumb only selected
@@ -2714,14 +2695,6 @@ if(handles.system == 1) %Leap
         trial_validity = 1;
         hand_latency = handles.Master_array(handles.kin_array(1,4),13)/1000; 
         movement_time_thumb_z = (handles.Master_array(handles.kin_array(1,12),13)-handles.Master_array(handles.kin_array(1,6),13))/1000 * thumb; 
-
-        %disp(handles.Trial_Num);
-        targetloc = handles.event_data{handles.Trial_Num, 6}; %assume target location is inputted as a numerical value following the order during calibration
-        targetloc = str2double (targetloc);
-
-        targetx = handles.Calibration_array (targetloc+1, 1);
-        targety = handles.Calibration_array (targetloc+1, 2);
-        targetz = handles.Calibration_array (targetloc+1, 3);
 
         thumb_end_pos_x = handles.Filtered_XYZ(handles.kin_array(1,10),4)* thumb;%thumb x value when kept still
         thumb_end_pos_y = handles.Filtered_XYZ(handles.kin_array(1,11),5)* thumb;
@@ -2766,9 +2739,8 @@ if(handles.system == 1) %Leap
         thumb_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1,32),2) *thumb; 
 
         output_array = [trial_validity hand_latency movement_time_thumb_z 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 thumb_x_PA thumb_y_PA thumb_z_PA time_thumb_PA_z thumb_x_pos_PA thumb_y_pos_PA thumb_z_pos_PA thumb_x_PV thumb_y_PV thumb_z_PV time_thumb_PV_z thumb_x_pos_PV thumb_y_pos_PV thumb_z_pos_PV thumb_x_PD thumb_y_PD thumb_z_PD time_thumb_PD_z thumb_x_pos_PD thumb_y_pos_PD thumb_z_pos_PD thumb_end_pos_x thumb_end_pos_y thumb_end_pos_z index_peak_vel_vec thumb_peak_vel_vec 0 0 0 0 0 0 0 0 0 0 0 0 handles.kin_array(1,45)*thumb handles.kin_array(1,46)*thumb handles.kin_array(1,47)*thumb handles.kin_array(1,48)*thumb handles.kin_array(1,49)*thumb handles.kin_array(1,50)*thumb handles.kin_array(1,51)*thumb handles.kin_array(1,52)*thumb handles.kin_array(1,53)*thumb handles.kin_array(1,54)*thumb handles.kin_array(1,55)*thumb handles.kin_array(1,56)*thumb 0 0 0 thumb_begin_pos_x thumb_begin_pos_y thumb_begin_pos_z];
-
-        
     end
+    
     if(handles.marker_select ==1) %Thumb and Index selected
         %handles.event_data
         %processing the accepted markers
@@ -2780,11 +2752,8 @@ if(handles.system == 1) %Leap
         if(movement_time_index_z ==0) %if index finger not selected, use thumb movement start time
             movement_time_index_z = movement_time_thumb_z;
         end
-
-        %disp(handles.Trial_Num);
+        
         targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
-        targetloc = str2double (targetloc);
-
         targetx = handles.Calibration_array (targetloc+1, 1);
         targety = handles.Calibration_array (targetloc+1, 2);
         targetz = handles.Calibration_array (targetloc+1, 3);
@@ -2800,12 +2769,6 @@ if(handles.system == 1) %Leap
         accuracyx = (index_end_pos_x-targetx); %accuracy of 
         accuracyy = (index_end_pos_y-targety);
         accuracyz = (index_end_pos_z-targetz);
-    % 
-    %     if (index_end_pos_x ==0 && index_end_pos_y ==0 && index_end_pos_z ==0) %if index not selected, calculating the accuracy is nto feasible with the thumb (i think)
-    %         accuracyx = 0; %accuracy of 
-    %         accuracyy = 0;
-    %         accuracyz = 0;
-    %     end    
 
         index_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1,19),1) * index;
         index_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1,20),2) * index;
@@ -2913,11 +2876,10 @@ if(handles.system ==2) %Optotrak: handles.marker_select ->1 (index +palm) handle
     end
 
     targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
-    %targetloc = str2double (targetloc);
-    
-    targetx = handles.Calibration_array (targetloc, 1);
-    targety = handles.Calibration_array (targetloc, 2);
-    targetz = handles.Calibration_array (targetloc, 3);
+
+    targetx = handles.Calibration_array (targetloc+1, 1);
+    targety = handles.Calibration_array (targetloc+1, 2);
+    targetz = handles.Calibration_array (targetloc+1, 3);
 
     index_end_pos_x = (handles.Filtered_XYZ(handles.kin_array(1,7),1)); %index x values when kept still
     index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1,8),2));

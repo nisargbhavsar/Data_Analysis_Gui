@@ -982,9 +982,9 @@ if (type ==1 && system ==1) %Grasping motion Leap
     plot(pos(:,7),objective_f_ga(:,1));
     
     
-    objective_f_gav = zeros (length(pos(:,1)),1); %Grip Aperture should be decreasing, therefore grip velocity should be negative (added a buffer of 0.1)
+    objective_f_gav = zeros (length(pos(:,1)),1); %Grip Aperture should be decreasing, therefore grip velocity should be negative (added a buffer of 0.05)
     for i =1:length (velocity)
-        if velocity(i,6) < 0.1
+        if velocity(i,6) < 0.05
             objective_f_gav(i,1)= 1;
         end
     end
@@ -1034,15 +1034,15 @@ if (type ==1 && system ==1) %Grasping motion Leap
     
     
     
-%     %Sagittal position of the index must be more than half of the object
-%     %distance from the needle
-%     objective_f_d = zeros(length(pos(:,6)),1);
-%     obj_dist = varargin(1,4)/2;
-%     for i=1: length(pos(:,6))
-%         if(pos(i,6) > obj_dist)
-%             objective_f_d (i,1) = 1;
-%         end
-%     end
+    %Sagittal position of the index must be more than half of the object
+    %distance from the needle
+    objective_f_d = zeros(length(pos(:,6)),1);
+    obj_dist = varargin(1,4)/2;
+    for i=1: length(pos(:,6))
+        if(pos(i,6) > obj_dist)
+            objective_f_d (i,1) = 1;
+        end
+    end
 %    master_obj_function = zeros(length(objective_f_gaa(:,1)),1);
 
 %    master_obj_function(:,1) = objective_f_gaa(:,1) * objective_f_h(:,1) * objective_f_ws(:,1) * objective_f_ga(:,1) * objective_f_gav(:,1) * objective_f_d(:,1);
