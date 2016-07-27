@@ -815,16 +815,16 @@ if (type ==1 && system ==1) %Grasping motion Leap
     
     %%Return Phase
     % Index finger velocity peak (z)
-    [~, indices] = findpeaks(-velocity(ife_move_z:end, 3), 'MinPeakHeight', if_vector_vel_tol); %Negative peak of index velocity (z)
-    if_max_vel_index_z= indices (1, 1);
-%     if_max_v_vel_index = min(vector_vel(varargin(1,8):varargin(1,9),2)); 
-%     if_max_v_vel_index = find(vector_vel(:,1) == if_max_v_vel_index);
+%     [~, indices] = findpeaks(-velocity(ife_move_z:end, 3), 'MinPeakHeight', if_vector_vel_tol); %Negative peak of index velocity (z)
+%     if_max_vel_index_z= indices (1, 1);
+    if_max_v_vel_index = min(velocity(ife_move_z:end,3)); 
+    if_max_vel_index_z = find(velocity(:,3) == if_max_v_vel_index);
     
     %Thumb velocity peak (z)
-    [~, indices] = findpeaks(-velocity(the_move_z:end,6),'MinPeakHeight', th_vector_vel_tol); %Negative peak of thumb velocity (z)
-    th_max_vel_index_z = indices (1, 1);
-%     th_max_v_vel = min(vector_vel(varargin(1,8):varargin(1,9),3)); 
-%     th_max_v_vel_index = find(vector_vel(:,2) == th_max_v_vel);
+%     [~, indices] = findpeaks(-velocity(the_move_z:end,6),'MinPeakHeight', th_vector_vel_tol); %Negative peak of thumb velocity (z)
+%     th_max_vel_index_z = indices (1, 1);
+    th_max_v_vel = min(velocity(the_move_z:end,6)); 
+    th_max_vel_index_z = find(velocity(:,6) == th_max_v_vel);
 
     %Return phase start
     ifs_move_rp = if_max_vel_index_z;
@@ -968,21 +968,29 @@ if (type ==1 && system ==1) %Grasping motion Leap
 %    obj_dia = varargin(1,3)*1/4;
     obj_dia = varargin(1,3);
     for i=1: length(pos(:,1))
-        if(pos(i,6) < obj_dia) 
-            objective_f_ga(i,1) = pos(i,6)/obj_dia;
+        if(pos(i,11) < obj_dia) 
+            objective_f_ga(i,1) = pos(i,11)/obj_dia;
         end
-        if(pos(i,6) >= obj_dia && pos(i,6) <= 4/3*obj_dia)
-            objective_f_ga(i,1) = (4*obj_dia - 3*pos(i,6)) / obj_dia;
+        if(pos(i,6) >= obj_dia && pos(i,11) <= 4/3*obj_dia)
+            objective_f_ga(i,1) = (4*obj_dia - 3*pos(i,11)) / obj_dia;
         end
         %Else the grip aperture is greater than 4/3*obj_dia
     end
     
-    objective_f_gav = zeros (length(pos(:,1)),1); %Grip Aperture should be decreasing, therefore grip velocity should be negative
+    figure()
+    subplot(4,1,1);
+    plot(pos(:,7),objective_f_ga(:,1));
+    
+    
+    objective_f_gav = zeros (length(pos(:,1)),1); %Grip Aperture should be decreasing, therefore grip velocity should be negative (added a buffer of 0.1)
     for i =1:length (velocity)
-        if velocity(i,6) < 0
+        if velocity(i,6) < 0.1
             objective_f_gav(i,1)= 1;
         end
     end
+    
+    subplot(4,1,2);
+    plot(pos(:,7),objective_f_gav);
     
     objective_f_gaa = zeros(length(pos(:,1)),1); %Grip aperture should be decelerating, not accelerating, therefore postive acceleration
     for i =1:length (accel)
@@ -990,6 +998,10 @@ if (type ==1 && system ==1) %Grasping motion Leap
             objective_f_gaa(i,1)= 1;
         end
     end
+    
+    subplot(4,1,3);
+    plot(pos(:,7),objective_f_gaa);
+    
     %speed of wrist low upon movement ending
     max_wrist_velocity = max(velocity(:,3));
     objective_f_ws = zeros(length(pos(:,1)),1);
@@ -1000,7 +1012,7 @@ if (type ==1 && system ==1) %Grasping motion Leap
     end
     %objective_f_ws = 1-(objective_f_ws(:,1)/max_wrist_velocity);
     
-    %Average height of the thumb and index finger must be bigger than 3/4 of the
+    %Average height of the thumb and index finger must be bigger than 1/2 of the
     %height of the object from the Leap Detector
     objective_f_h = zeros(length(pos(:,1)),1);
     
@@ -1010,12 +1022,17 @@ if (type ==1 && system ==1) %Grasping motion Leap
 %             objective_f_h (i,1) = 1;
 %         end
 %     end
-    obj_height = varargin(1,5)*3/4;
+    obj_height = varargin(1,5)*1/2;
     for i=1: length(pos(:,1))
         if (pos (i,2) > obj_height)
             objective_f_h (i,1) = 1;
         end
     end
+    
+    subplot(4,1,4);
+    plot(pos(:,7), objective_f_h);
+    
+    
     
 %     %Sagittal position of the index must be more than half of the object
 %     %distance from the needle
@@ -1031,8 +1048,15 @@ if (type ==1 && system ==1) %Grasping motion Leap
 %    master_obj_function(:,1) = objective_f_gaa(:,1) * objective_f_h(:,1) * objective_f_ws(:,1) * objective_f_ga(:,1) * objective_f_gav(:,1) * objective_f_d(:,1);
    % master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ws(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);
     master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);
+    %Replace all zeros with Nan
+    master_obj_function(master_obj_function == 0) = NaN;
     max_i = max(master_obj_function);
     index = find(master_obj_function(:,1) == max_i);
+   
+    figure()
+    plot(pos(:,7), master_obj_function(:,1), 'squarer');
+    figure()
+    plot(pos(:,7), objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1));
    
     final_output = [approach_output return_output index];
     
