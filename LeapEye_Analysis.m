@@ -1102,10 +1102,10 @@ if(handles.system ==1) %Leap
             handles.Raw_Accel_XYZ(i,6) = (handles.Raw_Velocity_XYZ(i+1,6)-handles.Raw_Velocity_XYZ(i,6))/delta_time *1000;
             handles.Raw_Accel_XYZ (i,7) = handles.Master_array (i,13);
             
-            handles.Raw_Accel_XYZ (i,8) = (handles.Raw_Velocity_XYZ(i+1,8)-handles.Raw_Velocity_XYZ(i,8))/delta_time; %Grip aperture velocity (x)
-            handles.Raw_Accel_XYZ (i,9) = (handles.Raw_Velocity_XYZ(i+1,9)-handles.Raw_Velocity_XYZ(i,9))/delta_time; %Grip aperture velocity(y)
-            handles.Raw_Accel_XYZ (i,10) = (handles.Raw_Velocity_XYZ(i+1,10)-handles.Raw_Velocity_XYZ(i,10))/delta_time;%Grip aperture velocity(z)
-            handles.Raw_Accel_XYZ (i,11) = (handles.Raw_Velocity_XYZ(i+1,11)-handles.Raw_Velocity_XYZ(i,11))/delta_time;
+            handles.Raw_Accel_XYZ (i,8) = (handles.Raw_Velocity_XYZ(i+1,8)-handles.Raw_Velocity_XYZ(i,8))/delta_time *1000; %Grip aperture velocity (x)
+            handles.Raw_Accel_XYZ (i,9) = (handles.Raw_Velocity_XYZ(i+1,9)-handles.Raw_Velocity_XYZ(i,9))/delta_time *1000; %Grip aperture velocity(y)
+            handles.Raw_Accel_XYZ (i,10) = (handles.Raw_Velocity_XYZ(i+1,10)-handles.Raw_Velocity_XYZ(i,10))/delta_time *1000;%Grip aperture velocity(z)
+            handles.Raw_Accel_XYZ (i,11) = (handles.Raw_Velocity_XYZ(i+1,11)-handles.Raw_Velocity_XYZ(i,11))/delta_time *1000;
         end
 end
 if(handles.system ==2) %Optotrak
@@ -1150,19 +1150,19 @@ if(handles.system ==2) %Optotrak
         handles.Raw_Accel(num,1) = handles.Raw_Velocity(num,1); %Time in ms
         indextemp_2 = handles.Raw_Velocity(num+1,2); %index velocity
         indextemp_1 = handles.Raw_Velocity(num,2); 
-        handles.Raw_Accel (num,2) = (indextemp_2-indextemp_1)/delta_time;   
+        handles.Raw_Accel (num,2) = (indextemp_2-indextemp_1)/delta_time *1000;   
         palmtemp_2 = handles.Raw_Velocity(num+1,3); %palm velocity
         palmtemp_1 = handles.Raw_Velocity(num,3);
-        handles.Raw_Accel (num,3) = (palmtemp_2 - palmtemp_1) /delta_time;
-        handles.Raw_Accel (num,4) = (handles.Raw_Velocity(num+1,4) - handles.Raw_Velocity(num,4))/delta_time; %Grip Aperture Acceleration
+        handles.Raw_Accel (num,3) = (palmtemp_2 - palmtemp_1) /delta_time *1000;
+        handles.Raw_Accel (num,4) = (handles.Raw_Velocity(num+1,4) - handles.Raw_Velocity(num,4))/delta_time *1000; %Grip Aperture Acceleration
         
         handles.Raw_Accel_XYZ(num,1) = (handles.Raw_Velocity (num,1)); % time
-        handles.Raw_Accel_XYZ(num,2) = (handles.Raw_Velocity_XYZ(num+1,2)-handles.Raw_Velocity_XYZ(num,2))/delta_time; %index accel X
-        handles.Raw_Accel_XYZ(num,3) = (handles.Raw_Velocity_XYZ(num+1,3)-handles.Raw_Velocity_XYZ(num,3))/delta_time; %index accel Y
-        handles.Raw_Accel_XYZ(num,4) = (handles.Raw_Velocity_XYZ(num+1,4)-handles.Raw_Velocity_XYZ(num,4))/delta_time; %index accel Z
-        handles.Raw_Accel_XYZ(num,5) = (handles.Raw_Velocity_XYZ(num+1,5)-handles.Raw_Velocity_XYZ(num,5))/delta_time; %palm accel X
-        handles.Raw_Accel_XYZ(num,6) = (handles.Raw_Velocity_XYZ(num+1,6)-handles.Raw_Velocity_XYZ(num,6))/delta_time; %palm accel Y
-        handles.Raw_Accel_XYZ(num,7) = (handles.Raw_Velocity_XYZ(num+1,7)-handles.Raw_Velocity_XYZ(num,7))/delta_time; %palm accel Z
+        handles.Raw_Accel_XYZ(num,2) = (handles.Raw_Velocity_XYZ(num+1,2)-handles.Raw_Velocity_XYZ(num,2))/delta_time *1000; %index accel X
+        handles.Raw_Accel_XYZ(num,3) = (handles.Raw_Velocity_XYZ(num+1,3)-handles.Raw_Velocity_XYZ(num,3))/delta_time *1000; %index accel Y
+        handles.Raw_Accel_XYZ(num,4) = (handles.Raw_Velocity_XYZ(num+1,4)-handles.Raw_Velocity_XYZ(num,4))/delta_time *1000; %index accel Z
+        handles.Raw_Accel_XYZ(num,5) = (handles.Raw_Velocity_XYZ(num+1,5)-handles.Raw_Velocity_XYZ(num,5))/delta_time *1000; %palm accel X
+        handles.Raw_Accel_XYZ(num,6) = (handles.Raw_Velocity_XYZ(num+1,6)-handles.Raw_Velocity_XYZ(num,6))/delta_time *1000; %palm accel Y
+        handles.Raw_Accel_XYZ(num,7) = (handles.Raw_Velocity_XYZ(num+1,7)-handles.Raw_Velocity_XYZ(num,7))/delta_time *1000; %palm accel Z
     end
 end
  
@@ -1341,10 +1341,10 @@ if(handles.system==1) %Leap
             handles.Resampled_Accel_XYZ(i,6) = (handles.Resampled_Velocity_XYZ(i+1,6)-handles.Resampled_Velocity_XYZ(i,6))/delta_time *1000;
             handles.Resampled_Accel_XYZ (i,7) = handles.Master_array (i,13);
             
-            handles.Resampled_Accel_XYZ (i,8) = (handles.Resampled_Velocity_XYZ(i+1,8)-handles.Resampled_Velocity_XYZ(i,8))/delta_time; %Grip aperture velocity (x)
-            handles.Resampled_Accel_XYZ (i,9) = (handles.Resampled_Velocity_XYZ(i+1,9)-handles.Resampled_Velocity_XYZ(i,9))/delta_time; %Grip aperture velocity(y)
-            handles.Resampled_Accel_XYZ (i,10) = (handles.Resampled_Velocity_XYZ(i+1,10)-handles.Resampled_Velocity_XYZ(i,10))/delta_time;%Grip aperture velocity(z)
-            handles.Resampled_Accel_XYZ (i,11) = (handles.Resampled_Velocity_XYZ(i+1,11)-handles.Resampled_Velocity_XYZ(i,11))/delta_time;
+            handles.Resampled_Accel_XYZ (i,8) = (handles.Resampled_Velocity_XYZ(i+1,8)-handles.Resampled_Velocity_XYZ(i,8))/delta_time *1000; %Grip aperture accel (x)
+            handles.Resampled_Accel_XYZ (i,9) = (handles.Resampled_Velocity_XYZ(i+1,9)-handles.Resampled_Velocity_XYZ(i,9))/delta_time *1000; %Grip aperture accel(y)
+            handles.Resampled_Accel_XYZ (i,10) = (handles.Resampled_Velocity_XYZ(i+1,10)-handles.Resampled_Velocity_XYZ(i,10))/delta_time *1000;%Grip aperture accel(z)
+            handles.Resampled_Accel_XYZ (i,11) = (handles.Resampled_Velocity_XYZ(i+1,11)-handles.Resampled_Velocity_XYZ(i,11))/delta_time *1000;
             
         end
 end
@@ -1392,20 +1392,20 @@ if(handles.system ==2) %Optotrak
         handles.Resampled_Accel(i,1) = handles.Resampled_Velocity(i,1);
         indextemp_2 = handles.Resampled_Velocity(i+1,2); %index velocity
         indextemp_1 = handles.Resampled_Velocity(i,2);
-        handles.Resampled_Accel (i,2) = (indextemp_2-indextemp_1)/delta_time;   
+        handles.Resampled_Accel (i,2) = (indextemp_2-indextemp_1)/delta_time *1000;   
         palmtemp_2 = handles.Resampled_Velocity(i+1,3); %palm velocity
         palmtemp_1 = handles.Resampled_Velocity(i,3);
-        handles.Resampled_Accel (i,3) = (palmtemp_2 - palmtemp_1) /delta_time;
-        handles.Resampled_Accel (i,4) = (handles.Resampled_Velocity(i+1,4) - handles.Resampled_Velocity(i,4)) /delta_time;
+        handles.Resampled_Accel (i,3) = (palmtemp_2 - palmtemp_1) /delta_time *1000;
+        handles.Resampled_Accel (i,4) = (handles.Resampled_Velocity(i+1,4) - handles.Resampled_Velocity(i,4)) /delta_time *1000;
         
         handles.Resampled_Accel_XYZ(i,1) = (handles.Resampled_Velocity (i,1)); % time
-        handles.Resampled_Accel_XYZ(i,2) = (handles.Resampled_Velocity_XYZ(i+1,2)-handles.Resampled_Velocity_XYZ(i,2))/delta_time; %index velocity X
-        handles.Resampled_Accel_XYZ(i,3) = (handles.Resampled_Velocity_XYZ(i+1,3)-handles.Resampled_Velocity_XYZ(i,3))/delta_time; %index velocity Y
-        handles.Resampled_Accel_XYZ(i,4) = (handles.Resampled_Velocity_XYZ(i+1,4)-handles.Resampled_Velocity_XYZ(i,4))/delta_time; %index velocity Z
+        handles.Resampled_Accel_XYZ(i,2) = (handles.Resampled_Velocity_XYZ(i+1,2)-handles.Resampled_Velocity_XYZ(i,2))/delta_time *1000; %index velocity X
+        handles.Resampled_Accel_XYZ(i,3) = (handles.Resampled_Velocity_XYZ(i+1,3)-handles.Resampled_Velocity_XYZ(i,3))/delta_time *1000; %index velocity Y
+        handles.Resampled_Accel_XYZ(i,4) = (handles.Resampled_Velocity_XYZ(i+1,4)-handles.Resampled_Velocity_XYZ(i,4))/delta_time *1000; %index velocity Z
         
-        handles.Resampled_Accel_XYZ(i,5) = (handles.Resampled_Velocity_XYZ(i+1,5)-handles.Resampled_Velocity_XYZ(i,5))/delta_time; %palm velocity X
-        handles.Resampled_Accel_XYZ(i,6) = (handles.Resampled_Velocity_XYZ(i+1,6)-handles.Resampled_Velocity_XYZ(i,6))/delta_time; %palm velocity Y
-        handles.Resampled_Accel_XYZ(i,7) = (handles.Resampled_Velocity_XYZ(i+1,7)-handles.Resampled_Velocity_XYZ(i,7))/delta_time; %palm velocity Z
+        handles.Resampled_Accel_XYZ(i,5) = (handles.Resampled_Velocity_XYZ(i+1,5)-handles.Resampled_Velocity_XYZ(i,5))/delta_time *1000; %palm velocity X
+        handles.Resampled_Accel_XYZ(i,6) = (handles.Resampled_Velocity_XYZ(i+1,6)-handles.Resampled_Velocity_XYZ(i,6))/delta_time *1000; %palm velocity Y
+        handles.Resampled_Accel_XYZ(i,7) = (handles.Resampled_Velocity_XYZ(i+1,7)-handles.Resampled_Velocity_XYZ(i,7))/delta_time *1000; %palm velocity Z
     end
 
 end
@@ -1503,12 +1503,11 @@ if (handles.system ==1) %Leap
             
             handles.Filtered_Velocity_XYZ (i,8) = (handles.Filtered_XYZ(i+1,8)-handles.Filtered_XYZ(i,8))/delta_time; %Grip aperture velocity (x)
             handles.Filtered_Velocity_XYZ (i,9) = (handles.Filtered_XYZ(i+1,9)-handles.Filtered_XYZ(i,9))/delta_time; %Grip aperture velocity(y)
-            handles.Filtered_Velocity_XYZ (i,10) = (handles.Filtered_XYZ(i+1,10)-handles.Filtered_XYZ(i,10))/delta_time;%Grip aperture velocity(z)
-            handles.Filtered_Velocity_XYZ (i,11) =(handles.Filtered_XYZ(i+1,11)-handles.Filtered_XYZ(i,11))/delta_time;
+            handles.Filtered_Velocity_XYZ (i,10) = (handles.Filtered_XYZ(i+1,10)-handles.Filtered_XYZ(i,10))/delta_time; %Grip aperture velocity(z)
+            handles.Filtered_Velocity_XYZ (i,11) =(handles.Filtered_XYZ(i+1,11)-handles.Filtered_XYZ(i,11))/delta_time; %Grip aperture velocity
         end
         
         for i=1: (length(handles.Master_array(:,1))-2)
-           
             indextemp_2 = handles.Filtered_Velocity(i+1,1);
             indextemp_1 = handles.Filtered_Velocity(i,1);
             delta_time = handles.Filtered_Velocity (i+1,5) - handles.Filtered_Velocity(i,5);
@@ -1532,15 +1531,15 @@ if (handles.system ==1) %Leap
             handles.Filtered_Accel_XYZ(i,1) = (handles.Filtered_Velocity_XYZ(i+1,1)-handles.Filtered_Velocity_XYZ(i,1))/delta_time *1000; %index accel X
             handles.Filtered_Accel_XYZ(i,2) = (handles.Filtered_Velocity_XYZ(i+1,2)-handles.Filtered_Velocity_XYZ(i,2))/delta_time *1000;
             handles.Filtered_Accel_XYZ(i,3) = (handles.Filtered_Velocity_XYZ(i+1,3)-handles.Filtered_Velocity_XYZ(i,3))/delta_time *1000;
-            handles.Filtered_Accel_XYZ(i,4) = (handles.Filtered_Velocity_XYZ(i+1,4)-handles.Filtered_Velocity_XYZ(i,4))/delta_time *1000;
+            handles.Filtered_Accel_XYZ(i,4) = (handles.Filtered_Velocity_XYZ(i+1,4)-handles.Filtered_Velocity_XYZ(i,4))/delta_time *1000; %thumb Accel X
             handles.Filtered_Accel_XYZ(i,5) = (handles.Filtered_Velocity_XYZ(i+1,5)-handles.Filtered_Velocity_XYZ(i,5))/delta_time *1000;
             handles.Filtered_Accel_XYZ(i,6) = (handles.Filtered_Velocity_XYZ(i+1,6)-handles.Filtered_Velocity_XYZ(i,6))/delta_time *1000;
             handles.Filtered_Accel_XYZ (i,7) = handles.Master_array (i,13);
             
-            handles.Filtered_Accel_XYZ (i,8) = (handles.Filtered_Velocity_XYZ(i+1,8)-handles.Filtered_Velocity_XYZ(i,8))/delta_time; %Grip aperture velocity (x)
-            handles.Filtered_Accel_XYZ (i,9) = (handles.Filtered_Velocity_XYZ(i+1,9)-handles.Filtered_Velocity_XYZ(i,9))/delta_time; %Grip aperture velocity(y)
-            handles.Filtered_Accel_XYZ (i,10) = (handles.Filtered_Velocity_XYZ(i+1,10)-handles.Filtered_Velocity_XYZ(i,10))/delta_time;%Grip aperture velocity(z)
-            handles.Filtered_Accel_XYZ (i,11) = (handles.Filtered_Velocity_XYZ(i+1,11)-handles.Filtered_Velocity_XYZ(i,11))/delta_time;
+            handles.Filtered_Accel_XYZ (i,8) = (handles.Filtered_Velocity_XYZ(i+1,8)-handles.Filtered_Velocity_XYZ(i,8))/delta_time *1000; %Grip aperture accel (x)
+            handles.Filtered_Accel_XYZ (i,9) = (handles.Filtered_Velocity_XYZ(i+1,9)-handles.Filtered_Velocity_XYZ(i,9))/delta_time *1000; %Grip aperture accel (y)
+            handles.Filtered_Accel_XYZ (i,10) = (handles.Filtered_Velocity_XYZ(i+1,10)-handles.Filtered_Velocity_XYZ(i,10))/delta_time *1000;%Grip aperture accel (z)
+            handles.Filtered_Accel_XYZ (i,11) = (handles.Filtered_Velocity_XYZ(i+1,11)-handles.Filtered_Velocity_XYZ(i,11))/delta_time *1000; %Grip aperture accel
         end
 end
 if(handles.system ==2) %Optotrak
@@ -1585,22 +1584,21 @@ if(handles.system ==2) %Optotrak
         handles.Filtered_Accel(i,1) = handles.Filtered_Velocity(i,1);
         indextemp_2 = handles.Filtered_Velocity(i+1,2)^2; %index position
         indextemp_1 = handles.Filtered_Velocity(i,2)^2;
-        handles.Filtered_Accel (i,2) = (indextemp_2-indextemp_1)/delta_time;   
+        handles.Filtered_Accel (i,2) = (indextemp_2-indextemp_1)/delta_time *1000;   
         palmtemp_2 = handles.Filtered_Velocity(i+1,3); %palm position
         palmtemp_1 = handles.Filtered_Velocity(i,3);
-        handles.Filtered_Accel (i,3) = (palmtemp_2 - palmtemp_1) /delta_time;
-        handles.Filtered_Accel(i,4) = (handles.Filtered_Velocity(i+1,4) - handles.Filtered_Velocity(i,4))/delta_time;
+        handles.Filtered_Accel (i,3) = (palmtemp_2 - palmtemp_1) /delta_time *1000;
+        handles.Filtered_Accel(i,4) = (handles.Filtered_Velocity(i+1,4) - handles.Filtered_Velocity(i,4))/delta_time *1000;
         
         handles.Filtered_Accel_XYZ(i,1) = (handles.Filtered_Velocity (i,1)); % time
-        handles.Filtered_Accel_XYZ(i,2) = (handles.Filtered_Velocity_XYZ(i+1,2)-handles.Filtered_Velocity_XYZ(i,2))/delta_time; %index velocity X
-        handles.Filtered_Accel_XYZ(i,3) = (handles.Filtered_Velocity_XYZ(i+1,3)-handles.Filtered_Velocity_XYZ(i,3))/delta_time; %index velocity Y
-        handles.Filtered_Accel_XYZ(i,4) = (handles.Filtered_Velocity_XYZ(i+1,4)-handles.Filtered_Velocity_XYZ(i,4))/delta_time; %index velocity Z
+        handles.Filtered_Accel_XYZ(i,2) = (handles.Filtered_Velocity_XYZ(i+1,2)-handles.Filtered_Velocity_XYZ(i,2))/delta_time *1000; %index velocity X
+        handles.Filtered_Accel_XYZ(i,3) = (handles.Filtered_Velocity_XYZ(i+1,3)-handles.Filtered_Velocity_XYZ(i,3))/delta_time *1000; %index velocity Y
+        handles.Filtered_Accel_XYZ(i,4) = (handles.Filtered_Velocity_XYZ(i+1,4)-handles.Filtered_Velocity_XYZ(i,4))/delta_time *1000; %index velocity Z
         
-        handles.Filtered_Accel_XYZ(i,5) = (handles.Filtered_Velocity_XYZ(i+1,5)-handles.Filtered_Velocity_XYZ(i,5))/delta_time; %palm velocity X
-        handles.Filtered_Accel_XYZ(i,6) = (handles.Filtered_Velocity_XYZ(i+1,6)-handles.Filtered_Velocity_XYZ(i,6))/delta_time; %palm velocity Y
-        handles.Filtered_Accel_XYZ(i,7) = (handles.Filtered_Velocity_XYZ(i+1,7)-handles.Filtered_Velocity_XYZ(i,7))/delta_time; %palm velocity Z
+        handles.Filtered_Accel_XYZ(i,5) = (handles.Filtered_Velocity_XYZ(i+1,5)-handles.Filtered_Velocity_XYZ(i,5))/delta_time *1000; %palm velocity X
+        handles.Filtered_Accel_XYZ(i,6) = (handles.Filtered_Velocity_XYZ(i+1,6)-handles.Filtered_Velocity_XYZ(i,6))/delta_time *1000; %palm velocity Y
+        handles.Filtered_Accel_XYZ(i,7) = (handles.Filtered_Velocity_XYZ(i+1,7)-handles.Filtered_Velocity_XYZ(i,7))/delta_time *1000; %palm velocity Z
     end
-
 end
 
 %Get rid of all unfilled data spaces in arrays
@@ -1618,7 +1616,6 @@ set(handles.Trial_Num_Text, 'String',name);
 
 guidata(hObject, handles);
 drawnow; pause(0.05);  % this innocent line prevents the Matlab hang
-
 end
 
 
@@ -1786,7 +1783,7 @@ if(handles.system ==1) %Leap
     end
 
 
-    if(handles.point ==0)    
+    if(handles.point ==0) %Pointing
        if (get(handles.Index_XYZ_Check,'Value') == get(handles.Index_XYZ_Check,'Max'))%changing Index kin vars
            if(handles.marker_select == 1 || handles.marker_select == 2)
                 axes(handles.Top_Graph);
@@ -1832,6 +1829,7 @@ if(handles.system ==1) %Leap
        if (get(handles.Thumb_XYZ_Check,'Value') == get(handles.Thumb_XYZ_Check,'Max')) %changing Thumb kin vars
             if(handles.marker_select == 3 || handles.marker_select == 1) 
                 axes(handles.Top_Graph);
+                cla;
                 plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,4), '-r');
                 hold on;
                 plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,5), '-g');
@@ -1906,6 +1904,7 @@ if(handles.system ==1) %Leap
         if (get(handles.Index_XYZ_Check,'Value') == get(handles.Index_XYZ_Check,'Max'))%changing Index kin vars
            if(handles.marker_select == 1 || handles.marker_select == 2)
                 axes(handles.Top_Graph);
+                cla;
                 plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,1), '-r');
                 hold on;
                 plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,2), '-g');
@@ -1918,13 +1917,14 @@ if(handles.system ==1) %Leap
                 plot(handles.Filtered_XYZ(handles.kin_array(1,7),7), handles.Filtered_XYZ(handles.kin_array(1,7),1), 'squarer'); %Movement end X outgoing
                 plot(handles.Filtered_XYZ(handles.kin_array(1,8),7), handles.Filtered_XYZ(handles.kin_array(1,8),2), 'squareg'); %Movement end Y outgoing
                 plot(handles.Filtered_XYZ(handles.kin_array(1,9),7), handles.Filtered_XYZ(handles.kin_array(1,9),3), 'squareb'); %Movement end Z outgoing
-                
-                plot(handles.Filtered_XYZ(handles.kin_array(1, 56), 7), handles.Filtered_XYZ(handles.kin_array(1, 56), 3), 'squareb'); 
-                text(handles.Filtered_XYZ(handles.kin_array(1, 56), 7), handles.Filtered_XYZ(handles.kin_array(1, 56), 3), '\leftarrow Return Phase Begin');
-                plot(handles.Filtered_XYZ(handles.kin_array(1, 58), 7), handles.Filtered_XYZ(handles.kin_array(1, 58), 3), 'squareb');
-                text(handles.Filtered_XYZ(handles.kin_array(1, 58), 7), handles.Filtered_XYZ(handles.kin_array(1, 58), 3), '\leftarrow Return Phase End');
+                disp(handles.kin_array(1, 56));
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 3), 'squareb'); 
+                text(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 3), '\leftarrow Return Phase Begin');
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 3), 'squareb');
+                text(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 3), '\leftarrow Return Phase End');
 
                 axes(handles.Middle_Graph);
+                cla;
                 plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,1), '-r'); 
                 hold on;
                 plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,2), '-g'); 
@@ -1935,6 +1935,7 @@ if(handles.system ==1) %Leap
                 plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),3), 'squareb'); % Peak velocity index z
 
                 axes(handles.Bottom_Graph);
+                cla;
                 plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,1),'-r');
                 hold on;
                 plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,2),'-g');
@@ -2034,11 +2035,15 @@ if(handles.system ==1) %Leap
             plot(handles.Filtered_XYZ(:, 7), handles.Filtered_XYZ(:, 11), '-r');
             hold on;
             plot(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), 'squarer'); %Grip begin
-            text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), '\leftarrow GB')
+            text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), '\leftarrow GB');
             plot(handles.Filtered_XYZ(handles.kin_array(1, 62), 7), handles.Filtered_XYZ(handles.kin_array(1, 62), 11), 'squarer'); %Obj placement end
-            text(handles.Filtered_XYZ(handles.kin_array(1, 62), 7), handles.Filtered_XYZ(handles.kin_array(1, 62), 11), '\leftarrow OPE')
+            text(handles.Filtered_XYZ(handles.kin_array(1, 62), 7), handles.Filtered_XYZ(handles.kin_array(1, 62), 11), '\leftarrow OPE');
             plot(handles.Filtered_XYZ(handles.kin_array(1, 61), 7), handles.Filtered_XYZ(handles.kin_array(1, 61), 11), 'squarer'); %Obj placement start
-            text(handles.Filtered_XYZ(handles.kin_array(1, 61), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 61), 11), '\leftarrow OPB')           
+            text(handles.Filtered_XYZ(handles.kin_array(1, 61), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 61), 11), '\leftarrow OPB');
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 11), 'squarer');
+            text(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 11), '\leftarrow Returnphase start');
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 11), 'squarer');
+            text(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 11), '\leftarrow Returnphase end');            
         end
     end
 end
@@ -2646,7 +2651,7 @@ if(handles.system == 1) %Leap
         index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1,8),2));
         index_end_pos_z = (handles.Filtered_XYZ(handles.kin_array(1,9),3));
 
-        index_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1,3)-1,1) *index; %index xyz values when movement starts (used movement start z index)
+        index_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1,3)-1,1) *index; %index xyz values when movement starts one frame before (used movement start z index)
         index_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1,3)-1,2) *index;
         index_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1,3)-1,3) *index;
 
@@ -2876,18 +2881,18 @@ if(handles.system ==2) %Optotrak: handles.marker_select ->1 (index +palm) handle
     end
 
     targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
-
+    
     targetx = handles.Calibration_array (targetloc+1, 1);
     targety = handles.Calibration_array (targetloc+1, 2);
     targetz = handles.Calibration_array (targetloc+1, 3);
 
-    index_end_pos_x = (handles.Filtered_XYZ(handles.kin_array(1,7),1)); %index x values when kept still
-    index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1,8),2));
-    index_end_pos_z = (handles.Filtered_XYZ(handles.kin_array(1,9),3));
+    index_end_pos_x = (handles.Filtered_XYZ(handles.kin_array(1,7),2)); %index x values when kept still
+    index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1,8),3)); %index y values when back at the needle
+    index_end_pos_z = (handles.Filtered_XYZ(handles.kin_array(1,9),4)); %index z values when back at the needle
 
-    index_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1,3)-1,1) *index; %index xyz values when movement starts (used movement start z index)
-    index_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1,3)-1,2) *index;
-    index_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1,3)-1,3) *index;
+    index_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1,3)-1,2) *index; %index xyz values when 1 frame before movement starts (used movement start z index)
+    index_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1,3)-1,3) *index;
+    index_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1,3)-1,4) *index;
 
     accuracyx = (index_end_pos_x-targetx); %accuracy of 
     accuracyy = (index_end_pos_y-targety);
