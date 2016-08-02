@@ -22,7 +22,7 @@ function varargout = Calibration_gui(varargin)
 
 % Edit the above text to modify the response to help Calibration_gui
 
-% Last Modified by GUIDE v2.5 29-Jun-2016 09:52:22
+% Last Modified by GUIDE v2.5 31-Jul-2016 14:43:12
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -99,14 +99,6 @@ if(handles.sys ==2) %Optotrak
 end
 handles.start =1;
 handles.count =1;
-% max_time = handles.raw_array(end,4)/1e3;
-% time = (0:1/50:max_time) * 1e3;
-%             
-% predicted_x = (pchip( handles.raw_array(:,4),handles.raw_array(:,1), time))';
-% predicted_y = (pchip( handles.raw_array(:,4),handles.raw_array(:,2), time))';
-% predicted_z = (pchip( handles.raw_array(:,4),handles.raw_array(:,3), time))'; 
-% 
-% handles.Cal_array = [predicted_x predicted_y predicted_z time'];
 
 %Get rid of all unfilled data spaces in arrays
 handles.Cal_array(all(handles.Cal_array==0,2),:)=[];
@@ -133,102 +125,6 @@ if(handles.count ==1)
     handles.values = cell(handles.num_cal,9);
 end
 space = repmat('  ',[handles.num_cal 1]);
-
-% for i=1:handles.num_cal
-%     hold(handles.axes1,'on')
-%        [x(i,1),y(i,1)]=ginputax(handles.axes1,1);
-%        
-%        plot(x(i,1),y(i,1),'ro');
-%        [x(i,2),y(i,2)]=ginputax(handles.axes1,1);
-%        plot(x(i,2),y(i,2),'ro');
-%        [~, index] = min(abs(handles.Cal_array(:,4)-x(i,1)));
-%        [~, index2] = min(abs(handles.Cal_array(:,4)-x(i,2)));
-% 
-%        x(i,1) = handles.Cal_array(index,4); %time
-%        x(i,2) = handles.Cal_array(index2,4);
-% 
-%        handles.values{i,1} = handles.Cal_array(index2,1)-handles.Cal_array(index,1);
-%        handles.values{i,2} = handles.Cal_array(index2,2)-handles.Cal_array(index,2);
-%        handles.values{i,3} = handles.Cal_array(index2,3)-handles.Cal_array(index,3);
-% %        set(handles.Points_Text, 'String', handles.values{:,1});
-% %        set(handles.text6, 'String', handles.values{:,2});
-% %        set(handles.text7, 'String', handles.values{:,3});
-%        
-%        meanx = mean(handles.Cal_array(index:index2,1));
-%        meany = mean(handles.Cal_array(index:index2,2));
-%        meanz = mean(handles.Cal_array(index:index2,3));
-%        
-%        handles.values{i,4} = meanx;
-%        handles.values{i,5} = meany;
-%        handles.values{i,6} = meanz;
-%        
-%        handles.values{i,7} = std(handles.Cal_array(index:index2,1));
-%        handles.values{i,8} = std(handles.Cal_array(index:index2,2));
-%        handles.values{i,9} = std(handles.Cal_array(index:index2,3));
-%        set(handles.uitable1,'Data',handles.values);
-%        %stats = strcat('Mean: ', num2str(meanx),' ', num2str(meany),' ', num2str(meanz));
-%        
-% %        set(handles.text9, 'String', stats);
-%        pause('on');
-%        if(handles.start == 1)
-%        pause('off');
-%        end
-% %        str = 'Calibration Points: '; 
-% %        a = num2str(handles.num_cal-i);
-% %        b = num2str (x);
-%        
-%        %set(handles.Points_Text, 'String', [b]);
-%        
-% %        hold(handles.axes1,'on')
-% % 
-% %        hold off
-%        
-% end
-% handles.xpos = x;
-% handles.ypos = y;
-% %disp(handles.xpos);
-% 
-% 
-% 
-% for i =1: length(x(:,1))
-%     
-% 
-%     [~, index] = min(abs(handles.Cal_array(:,4)-x(i,1)));
-%     [~, index2] = min(abs(handles.Cal_array(:,4)-x(i,2)));
-% %     time1 = handles.Cal_array(index,4);
-% %     time2 = handles.Cal_array(index2, 4);
-% 
-%     %time1 = find( abs(handles.Cal_array(:,4)-x(i,1))==min(abs(handles.Cal_array(:,4)-x(i,1))));
-%     %time2 = find( abs(handles.Cal_array(:,4)-x(i,2))==min(abs(handles.Cal_array(:,4)-x(i,2)))); 
-%     x(i,1) = index;
-%     x(i,2) = index2;
-%     
-% end
-% 
-% %disp(x);
-% 
-% temp_array = zeros (length(x(:,1)), 3);
-% 
-% for i = 1: length(x(:,1))
-%    
-%    temp_x = handles.Cal_array(x(i,1):x(i,2), 1); %x data
-%    temp_y = handles.Cal_array(x(i,1):x(i,2), 2); %x data
-%    temp_z = handles.Cal_array(x(i,1):x(i,2), 3); %x data
-%    temp_array(i,1)=  mean(temp_x);
-%    temp_array(i,2) = mean(temp_y);
-%    temp_array(i,3) = mean(temp_z);    
-% end
-% %disp(temp_array);
-% 
-% cal= temp_array;
-% 
-% guidata(hObject, handles);
-% hMainGui = getappdata(0, 'hMainGui');
-% cal_update = getappdata(hMainGui, 'cal_update');
-% 
-% setappdata(hMainGui, 'cal', cal);
-% 
-% feval(cal_update);
 guidata(hObject, handles);
 
 end
@@ -402,7 +298,6 @@ pan off;
 if(handles.count <= handles.num_cal)
     if(handles.sys == 1) %Leap
        i = handles.count;
-% for i=1:handles.num_cal
        hold(handles.axes1,'on')
        [x,y]=ginputax(handles.axes1,1);
        handles.x(i,1) = x;
@@ -419,9 +314,7 @@ if(handles.count <= handles.num_cal)
        handles.values{i,1} = handles.Cal_array(index2,1)-handles.Cal_array(index,1);
        handles.values{i,2} = handles.Cal_array(index2,2)-handles.Cal_array(index,2);
        handles.values{i,3} = handles.Cal_array(index2,3)-handles.Cal_array(index,3);
-%        set(handles.Points_Text, 'String', handles.values{:,1});
-%        set(handles.text6, 'String', handles.values{:,2});
-%        set(handles.text7, 'String', handles.values{:,3});
+       
        if(index2>index)
            meanx = mean(handles.Cal_array(index:index2,1));
            meany = mean(handles.Cal_array(index:index2,2));
@@ -445,22 +338,6 @@ if(handles.count <= handles.num_cal)
            handles.values{i,9} = std(handles.Cal_array(index2:index,3));
        end
        set(handles.uitable1,'Data',handles.values);
-       %stats = strcat('Mean: ', num2str(meanx),' ', num2str(meany),' ', num2str(meanz));
-       
-%        set(handles.text9, 'String', stats);
-%        pause('on');
-%        if(handles.start == 1)
-%        pause('off');
-%        end
-%        str = 'Calibration Points: '; 
-%        a = num2str(handles.num_cal-i);
-%        b = num2str (x);
-       
-       %set(handles.Points_Text, 'String', [b]);
-       
-%        hold(handles.axes1,'on')
-% 
-%        hold off
        handles.count = handles.count + 1;
        guidata(hObject, handles);
        return;
@@ -475,16 +352,19 @@ if(handles.count <= handles.num_cal)
        plot(handles.x(i,2),handles.y(i,2),'ro');
        [~, index] = min(abs(handles.Cal_array(:,1)-handles.x(i,1)));
        [~, index2] = min(abs(handles.Cal_array(:,1)-handles.x(i,2)));
-
+        %index = find(handles.Cal_array(:,1) == index);
+        %index2 = find(handles.Cal_array(:,1) == index2);
+       disp(index);
+       disp(index2);
+       
        handles.x(i,1) = handles.Cal_array(index,1); %time
        handles.x(i,2) = handles.Cal_array(index2,1);
 
-       handles.values{i,1} = handles.Cal_array(index2,2)-handles.Cal_array(index,2);
+       handles.values{i,1} = handles.Cal_array(index2,2)-handles.Cal_array(index,2);%XYZ Differences
        handles.values{i,2} = handles.Cal_array(index2,3)-handles.Cal_array(index,3);
        handles.values{i,3} = handles.Cal_array(index2,4)-handles.Cal_array(index,4);
-%        set(handles.Points_Text, 'String', handles.values{:,1});
-%        set(handles.text6, 'String', handles.values{:,2});
-%        set(handles.text7, 'String', handles.values{:,3});
+
+       
        if(index2>index)
            meanx = mean(handles.Cal_array(index:index2,2));
            meany = mean(handles.Cal_array(index:index2,3));
@@ -509,22 +389,6 @@ if(handles.count <= handles.num_cal)
            handles.values{i,9} = std(handles.Cal_array(index2:index,4));
        end
        set(handles.uitable1,'Data',handles.values);
-       %stats = strcat('Mean: ', num2str(meanx),' ', num2str(meany),' ', num2str(meanz));
-       
-%        set(handles.text9, 'String', stats);
-%        pause('on');
-%        if(handles.start == 1)
-%        pause('off');
-%        end
-%        str = 'Calibration Points: '; 
-%        a = num2str(handles.num_cal-i);
-%        b = num2str (x);
-       
-       %set(handles.Points_Text, 'String', [b]);
-       
-%        hold(handles.axes1,'on')
-% 
-%        hold off
        handles.count = handles.count + 1;
        guidata(hObject, handles);
        return;
@@ -535,32 +399,51 @@ end
 % %disp(handles.xpos);
 
 if(handles.count > handles.num_cal)
-    for i =1: length(handles.x(:,1))
-        [~, index] = min(abs(handles.Cal_array(:,1)-handles.x(i,1)));
-        [~, index2] = min(abs(handles.Cal_array(:,1)-handles.x(i,2)));
-        handles.x(i,1) = index;
-        handles.x(i,2) = index2;
+    if(handles.sys== 1) % Leap
+        for(i=1: length(handles.x(:,1)))
+            [~, index] = min(abs(handles.Cal_array(:,4) - handles.x(i,1)));
+            [~, index2] = min(abs(handles.Cal_array(:,4) - handles.x(i,1)));
+            handles.x(i,1) = index;
+            handles.x(i,2) = index2;
+        end
+        temp_array = zeros(length(handles.x(:,1)),3);
+        
+        for(i= 1: length(handles.x(:, 1)))
+            temp_x = handles.Cal_array(handles.x(i, 1), handles.x(i, 2), 2); %x data
+            temp_y = handles.Cal_array(handles.x(i, 1), handles.x(i, 2), 3); %y data
+            temp_z = handles.Cal_array(handles.x(i, 1), handles.x(i, 2), 4); %z data
+            
+            temp_array(i, 1) = mean(temp_x);
+            temp_array(i, 2) = mean(temp_y);
+            temp_array(i, 3) = mean(temp_z); 
+        end
     end
-    temp_array = zeros (length(handles.x(:,1)), 3);
+    if(handles.sys== 2) %Optotrak
+        for i =1: length(handles.x(:,1))
+            [~, index] = min(abs(handles.Cal_array(:,1)-handles.x(i,1)));
+            [~, index2] = min(abs(handles.Cal_array(:,1)-handles.x(i,2)));
+            handles.x(i,1) = index;
+            handles.x(i,2) = index2;
+        end
+        temp_array = zeros (length(handles.x(:,1)), 3);
 
-    for i = 1: length(handles.x(:,1))
-       temp_x = handles.Cal_array(handles.x(i,1):handles.x(i,2), 2); %x data
-       temp_y = handles.Cal_array(handles.x(i,1):handles.x(i,2), 3); %x data
-       temp_z = handles.Cal_array(handles.x(i,1):handles.x(i,2), 4); %x data
-       temp_array(i,1) = mean(temp_x);
-       temp_array(i,2) = mean(temp_y);
-       temp_array(i,3) = mean(temp_z);    
+        for i = 1: length(handles.x(:,1))
+           temp_x = handles.Cal_array(handles.x(i,1):handles.x(i,2), 2); %x data
+           temp_y = handles.Cal_array(handles.x(i,1):handles.x(i,2), 3); %y data
+           temp_z = handles.Cal_array(handles.x(i,1):handles.x(i,2), 4); %z data
+           temp_array(i,1) = mean(temp_x);
+           temp_array(i,2) = mean(temp_y);
+           temp_array(i,3) = mean(temp_z);    
+        end
     end
-    temp_array = cell2mat(handles.values(:,1:3));
+    %temp_array = cell2mat(handles.values(:,1:3));
     cal= temp_array;
-    varargout = temp_array;
-    %disp(varargout);
+    varargout = num2cell(temp_array,[1 2]);
     guidata(hObject, handles);
     hMainGui = getappdata(0, 'hMainGui');
-    cal_update = getappdata(hMainGui, 'cal_update');
-
     setappdata(hMainGui, 'cal', cal);
 
+    cal_update = getappdata(hMainGui, 'cal_update');
     feval(cal_update);
 end
 end

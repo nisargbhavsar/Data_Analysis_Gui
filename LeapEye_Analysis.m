@@ -22,7 +22,7 @@ function varargout = LeapEye_Analysis(varargin)
 
 % Edit the above text to modify the response to help LeapEye_Analysis
 
-% Last Modified by GUIDE v2.5 07-Jul-2016 15:11:33
+% Last Modified by GUIDE v2.5 31-Jul-2016 15:51:29
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -1624,16 +1624,11 @@ function Calibration_Button_Callback(hObject, eventdata, handles)
 % hObject    handle to Calibration_Button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% Calibration_gui;
-% 
-% handles.Calibration_array = findobj('Calibration_array','Calibration_gui');
 
 hMainGui = getappdata(0, 'hMainGui');
 Calibration_gui(handles.system);
-
 cal = getappdata(hMainGui, 'cal');
 handles.Calibration_array = cal;
-disp(handles.Calibration_array);
 guidata(hObject, handles);
 drawnow; pause(0.05);  % this innocent line prevents the Matlab hang
 end
@@ -1641,7 +1636,7 @@ end
 function updateCal %Used by Calibration_gui to transfer data and close itself
 hMainGui = getappdata(0, 'hMainGui');
 cal = getappdata(hMainGui, 'cal');
-h = findobj(0, 'tag', 'figure1');
+h = findobj(0, 'tag', 'figure1'); %Main Gui
 h(2).UserData = cal;
 hf=findobj('Name','Calibration_gui');
 close(hf);
@@ -2628,6 +2623,9 @@ function Accept_Trial_Button_Callback(hObject, eventdata, handles)
 % hObject    handle to Accept_Trial_Button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+h = findobj(0, 'tag', 'figure1');
+handles.Calibration_array = h.UserData;
+disp(handles.Calibration_array);
 
 if(handles.system == 1) %Leap
     handles.edited =0;
@@ -2759,7 +2757,7 @@ if(handles.system == 1) %Leap
         end
         
         targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
-        targetx = handles.Calibration_array (targetloc+1, 1);
+        targetx = handles.Calibration_array (targetloc+1, 1); %targetloc+1 because the first row of handles.Calibration_array contains the startign coordinates
         targety = handles.Calibration_array (targetloc+1, 2);
         targetz = handles.Calibration_array (targetloc+1, 3);
 
@@ -3524,9 +3522,11 @@ if(handles.system ==1 || handles.system ==2)
     C= strsplit(filename, '.');
     if(handles.system ==1) %Leap
         handles.events_filename = strcat(C{1},'_Leap.xls');
+        output_headers ={'Pointing Valid Data 1/0','Hand Latency (sec)','Movement Time (sec)','Index X Accuracy','Index Y Accuracy','Index Z Accuracy','Peak Acceleration Index X','Peak Acceleration Index Y','Peak Acceleration Index Z','Time from onset to PA_Z','Index Position X @ PA_Z','Index Position Y @ PA_Z','Index Position Z @ PA_Z','Peak Velocity Index X','Peak Velocity Index Y','Peak Velocity Index Z','Time from onset to PV_Z','Index Position X @ PV_Z','Index Position Y @ PV_Z','Index Position Z @ PV_Z','Peak Deceleration Index X','Peak Deceleration Index Y','Peak Deceleration Index Z','Time from onset to PD_Z',	'Index Position X @ PD_Z',	'Index Position Y @ PD_Z',	'Index Position Z @ PD_Z',	'Index End Position X',	'Index End Position Y',	'Index End Position Z',	'Peak Acceleration thumb X','Peak Acceleration thumb Y','Peak Acceleration thumb Z','Time from onset to PA thumb Z','Finger Position X @ PA thumb Z','Finger Position Y @ PA thumb Z','Finger Position Z @ PA thumb Z','Peak Velocity thumb X','Peak Velocity thumb Y','Peak Velocity thumb Z',	'Time from onset to PV thumb Z','Finger Position X @ PV thumb Z','Finger Position Y @ PV thumb Z','Finger Position Z @ PV thumb Z',	'Peak Deceleration thumb X','Peak Deceleration thumb Y','Peak Deceleration thumb Z','Time from onset to PD thumb Z','Thumb Position X @ PD thumb Z','Thumb Position Y @ PD_Z','Thumb Position Z @ PD thumb Z','thumb End Position X','thumb End Position Y','thumb End Position z', 'Index Peak Velocity (Vector)','Thumb Peak Velocity (Vector)', 'Index (x) 50 msec before PV', 'Index (y) 50 msec before PV', 'Index (z) 50 msec before PV', 'Index (x) 50 msec after PV', 'Index (y) 50 msec after PV', 'Index (z) 50 msec after PV', 'Index (x) 100 msec before PV','Index (y) 100msec before PV','Index (z) 100 msec before PV','Index (x) 100 msec after PV','Index (y) 100 msec after PV','Index (z) 100 msec after PV','Thumb (x) 50 msec before PV', 'Thumb (y) 50 msec before PV', 'Thumb (z) 50 msec before PV', 'Thumb (x) 50 msec after PV', 'Thumb (y) 50 msec after PV', 'Thumb (z) 50 msec after PV', 'Thumb (x) 100 msec before PV','Thumb (y) 100msec before PV','Thumb (z) 100 msec before PV','Thumb (x) 100 msec after PV','Thumb (y) 100 msec after PV','Thumb (z) 100 msec after PV','Index (x) pos ofbs','Index(y) pos ofbs','Index (z) pos ofbs','Thumb (x) pos ofbs','Thumb (y) pos ofbs','Thumb (z) pos ofbs'};
     end
     if(handles.system ==2) %Optotrak
         handles.events_filename = strcat(C{1},'_Optotrak.xls');
+        output_headers ={'Pointing Valid Data 1/0','Hand Latency (sec)','Movement Time (sec)','Index X Accuracy','Index Y Accuracy','Index Z Accuracy','Peak Acceleration Index X','Peak Acceleration Index Y','Peak Acceleration Index Z','Time from onset to PA_Z','Index Position X @ PA_Z','Index Position Y @ PA_Z','Index Position Z @ PA_Z','Peak Velocity Index X','Peak Velocity Index Y','Peak Velocity Index Z','Time from onset to PV_Z','Index Position X @ PV_Z','Index Position Y @ PV_Z','Index Position Z @ PV_Z','Peak Deceleration Index X','Peak Deceleration Index Y','Peak Deceleration Index Z','Time from onset to PD_Z',	'Index Position X @ PD_Z',	'Index Position Y @ PD_Z',	'Index Position Z @ PD_Z',	'Index End Position X',	'Index End Position Y',	'Index End Position Z',	'Peak Acceleration Palm X','Peak Acceleration Palm Y','Peak Acceleration Palm Z','Time from onset to PA Palm Z','Finger Position X @ PA Palm Z','Finger Position Y @ PA Palm Z','Finger Position Z @ PA Palm Z','Peak Velocity Palm X','Peak Velocity Palm Y','Peak Velocity Palm Z',	'Time from onset to PV Palm Z','Finger Position X @ PV Palm Z','Finger Position Y @ PV Palm Z','Finger Position Z @ PV Palm Z',	'Peak Deceleration Palm X','Peak Deceleration Palm Y','Peak Deceleration Palm Z','Time from onset to PD Palm Z','Palm Position X @ PD Palm Z','Palm Position Y @ PD_Z','Palm Position Z @ PD Palm Z','Palm End Position X','Palm End Position Y','Palm End Position z', 'Index Peak Velocity (Vector)','Palm Peak Velocity (Vector)', 'Index (x) 50 msec before PV', 'Index (y) 50 msec before PV', 'Index (z) 50 msec before PV', 'Index (x) 50 msec after PV', 'Index (y) 50 msec after PV', 'Index (z) 50 msec after PV', 'Index (x) 100 msec before PV','Index (y) 100msec before PV','Index (z) 100 msec before PV','Index (x) 100 msec after PV','Index (y) 100 msec after PV','Index (z) 100 msec after PV','Palm (x) 50 msec before PV', 'Palm (y) 50 msec before PV', 'Palm (z) 50 msec before PV', 'Palm (x) 50 msec after PV', 'Palm (y) 50 msec after PV', 'Palm (z) 50 msec after PV', 'Palm (x) 100 msec before PV','Palm (y) 100msec before PV','Palm (z) 100 msec before PV','Palm (x) 100 msec after PV','Palm (y) 100 msec after PV','Palm (z) 100 msec after PV','Index (x) pos ofbs','Index(y) pos ofbs','Index (z) pos ofbs','Palm (x) pos ofbs','Palm (y) pos ofbs','Palm (z) pos ofbs'};
     end
     event_data = load('-mat',filename);
     try
@@ -3553,7 +3553,6 @@ if(handles.system ==1 || handles.system ==2)
     xlswrite(handles.events_filename,{'Calibration Value'}, 1,'F1'); %loaded events file information
     xlswrite(handles.events_filename, handles.event_data, 1,'A2'); %loaded events file information
 
-    output_headers ={'Pointing Valid Data 1/0','Hand Latency (sec)','Movement Time (sec)','Index X Accuracy','Index Y Accuracy','Index Z Accuracy','Peak Acceleration Index X','Peak Acceleration Index Y','Peak Acceleration Index Z','Time from onset to PA_Z','Index Position X @ PA_Z','Index Position Y @ PA_Z','Index Position Z @ PA_Z','Peak Velocity Index X','Peak Velocity Index Y','Peak Velocity Index Z','Time from onset to PV_Z','Index Position X @ PV_Z','Index Position Y @ PV_Z','Index Position Z @ PV_Z','Peak Deceleration Index X','Peak Deceleration Index Y','Peak Deceleration Index Z','Time from onset to PD_Z',	'Index Position X @ PD_Z',	'Index Position Y @ PD_Z',	'Index Position Z @ PD_Z',	'Index End Position X',	'Index End Position Y',	'Index End Position Z',	'Peak Acceleration thumb X','Peak Acceleration thumb Y','Peak Acceleration thumb Z','Time from onset to PA thumb Z','Finger Position X @ PA thumb Z','Finger Position Y @ PA thumb Z','Finger Position Z @ PA thumb Z','Peak Velocity thumb X','Peak Velocity thumb Y','Peak Velocity thumb Z',	'Time from onset to PV thumb Z','Finger Position X @ PV thumb Z','Finger Position Y @ PV thumb Z','Finger Position Z @ PV thumb Z',	'Peak Deceleration thumb X','Peak Deceleration thumb Y','Peak Deceleration thumb Z','Time from onset to PD thumb Z','Thumb Position X @ PD thumb Z','Thumb Position Y @ PD_Z','Thumb Position Z @ PD thumb Z','thumb End Position X','thumb End Position Y','thumb End Position z', 'Index Peak Velocity (Vector)','Thumb Peak Velocity (Vector)', 'Index (x) 50 msec before PV', 'Index (y) 50 msec before PV', 'Index (z) 50 msec before PV', 'Index (x) 50 msec after PV', 'Index (y) 50 msec after PV', 'Index (z) 50 msec after PV', 'Index (x) 100 msec before PV','Index (y) 100msec before PV','Index (z) 100 msec before PV','Index (x) 100 msec after PV','Index (y) 100 msec after PV','Index (z) 100 msec after PV','Thumb (x) 50 msec before PV', 'Thumb (y) 50 msec before PV', 'Thumb (z) 50 msec before PV', 'Thumb (x) 50 msec after PV', 'Thumb (y) 50 msec after PV', 'Thumb (z) 50 msec after PV', 'Thumb (x) 100 msec before PV','Thumb (y) 100msec before PV','Thumb (z) 100 msec before PV','Thumb (x) 100 msec after PV','Thumb (y) 100 msec after PV','Thumb (z) 100 msec after PV','Index (x) pos ofbs','Index(y) pos ofbs','Index (z) pos ofbs','Thumb (x) pos ofbs','Thumb (y) pos ofbs','Thumb (z) pos ofbs'};
     xlswrite(handles.events_filename,output_headers, 1,'H1:CO1');
     guidata(hObject, handles);
 end
@@ -3585,7 +3584,7 @@ function kin_var_menu_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
-set(hObject,'String',{'Movement Start X';'Movement Start Y';'Movement Start Z';'Movement End X'; 'Movement End Y';'Movement End Z';'Peak Velocity X';'Peak Velocity Y';'Peak Velocity Z';'Peak Acceleration X';'Peak Acceleration Y';'Peak Acceleration Z';'Peak Deceleration X';'Peak Deceleration Y';'Peak Deceleration Z';'Index Peak Velocity (Vector)';'Thumb Peak Velocity (Vector)'});
+set(hObject,'String',{'Movement Start X';'Movement Start Y';'Movement Start Z';'Movement End X'; 'Movement End Y';'Movement End Z';'Peak Velocity X';'Peak Velocity Y';'Peak Velocity Z';'Peak Acceleration X';'Peak Acceleration Y';'Peak Acceleration Z';'Peak Deceleration X';'Peak Deceleration Y';'Peak Deceleration Z';'Index Peak Velocity (Vector)';'Palm Peak Velocity (Vector)'});
 handles.kin_var_select = 1;
 guidata(hObject, handles);
 end
@@ -3649,6 +3648,14 @@ if (get(hObject,'Value') == get(hObject,'Max'))
     handles.point = 0; 
     set(handles.radiobutton5,'Value',0);
     set(handles.text14,'String','Max Index Velocity: ');
+    if(handles.system ==1)
+        set(handles.markers_popupmenu,'String',{'Index & Thumb';'Index Only';'Thumb Only'});
+        handles.marker_select = 1;
+    end
+    if(handles.system == 2)
+        set(handles.markers_popupmenu,'String',{'Index & Palm';'Index Only';'Palm Only'});
+        handles.marker_select = 1;
+    end
 end
 if (get(hObject,'Value') == get(hObject,'Min'))
     handles.point = -1;
