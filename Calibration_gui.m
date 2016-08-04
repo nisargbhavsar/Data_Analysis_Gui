@@ -101,17 +101,17 @@ handles.start =1;
 handles.count =1;
 
 %Get rid of all unfilled data spaces in arrays
-handles.Cal_array(all(handles.Cal_array==0,2),:)=[];
+handles.Cal_array(all(handles.Cal_array== 0, 2), :)= [];
 
 
 guidata(hObject, handles);
 axes(handles.axes1);
 cla;
 if(handles.sys == 1) %Leap
-    plot(handles.Cal_array (:,4), handles.Cal_array(:,1), '.r');
+    plot(handles.Cal_array (:,4), handles.Cal_array(:,1), '.r'); %x
     hold(handles.axes1,'on')
-    plot(handles.Cal_array (:,4), handles.Cal_array(:,2), '.g');
-    plot(handles.Cal_array (:,4), handles.Cal_array(:,3), '.b');
+    plot(handles.Cal_array (:,4), handles.Cal_array(:,2), '.g'); %y
+    plot(handles.Cal_array (:,4), handles.Cal_array(:,3), '.b'); %z
 end
 if(handles.sys ==2) %Optotrak
     plot(handles.Cal_array(:,1),handles.Cal_array(:,2),'.r');
@@ -311,31 +311,31 @@ if(handles.count <= handles.num_cal)
        handles.x(i,1) = handles.Cal_array(index,4); %time
        handles.x(i,2) = handles.Cal_array(index2,4);
 
-       handles.values{i,1} = handles.Cal_array(index2,1)-handles.Cal_array(index,1);
-       handles.values{i,2} = handles.Cal_array(index2,2)-handles.Cal_array(index,2);
-       handles.values{i,3} = handles.Cal_array(index2,3)-handles.Cal_array(index,3);
+       handles.values{i,1} = handles.Cal_array(index2, 1)-handles.Cal_array(index, 1); %Differences
+       handles.values{i,2} = handles.Cal_array(index2, 2)-handles.Cal_array(index, 2);
+       handles.values{i,3} = handles.Cal_array(index2, 3)-handles.Cal_array(index, 3);
        
        if(index2>index)
-           meanx = mean(handles.Cal_array(index:index2,1));
-           meany = mean(handles.Cal_array(index:index2,2));
-           meanz = mean(handles.Cal_array(index:index2,3));
+           meanx = mean(handles.Cal_array(index: index2, 1));
+           meany = mean(handles.Cal_array(index: index2, 2));
+           meanz = mean(handles.Cal_array(index: index2, 3));
        else
-           meanx = mean(handles.Cal_array(index2:index,1));
-           meany = mean(handles.Cal_array(index2:index,2));
-           meanz = mean(handles.Cal_array(index2:index,3));
+           meanx = mean(handles.Cal_array(index2: index, 1));
+           meany = mean(handles.Cal_array(index2: index, 2));
+           meanz = mean(handles.Cal_array(index2: index, 3));
        end
        
-       handles.values{i,4} = meanx;
-       handles.values{i,5} = meany;
-       handles.values{i,6} = meanz;
+       handles.values{i, 4} = meanx; %Means
+       handles.values{i, 5} = meany;
+       handles.values{i, 6} = meanz;
        if(index2>index)
-           handles.values{i,7} = std(handles.Cal_array(index:index2,1));
-           handles.values{i,8} = std(handles.Cal_array(index:index2,2));
-           handles.values{i,9} = std(handles.Cal_array(index:index2,3));
+           handles.values{i, 7} = std(handles.Cal_array(index: index2, 1)); %Standard deviations
+           handles.values{i, 8} = std(handles.Cal_array(index: index2, 2));
+           handles.values{i, 9} = std(handles.Cal_array(index: index2, 3));
        else
-           handles.values{i,7} = std(handles.Cal_array(index2:index,1));
-           handles.values{i,8} = std(handles.Cal_array(index2:index,2));
-           handles.values{i,9} = std(handles.Cal_array(index2:index,3));
+           handles.values{i, 7} = std(handles.Cal_array(index2: index, 1));
+           handles.values{i, 8} = std(handles.Cal_array(index2: index, 2));
+           handles.values{i, 9} = std(handles.Cal_array(index2: index, 3));
        end
        set(handles.uitable1,'Data',handles.values);
        handles.count = handles.count + 1;
@@ -354,8 +354,6 @@ if(handles.count <= handles.num_cal)
        [~, index2] = min(abs(handles.Cal_array(:,1)-handles.x(i,2)));
         %index = find(handles.Cal_array(:,1) == index);
         %index2 = find(handles.Cal_array(:,1) == index2);
-       disp(index);
-       disp(index2);
        
        handles.x(i,1) = handles.Cal_array(index,1); %time
        handles.x(i,2) = handles.Cal_array(index2,1);
@@ -399,44 +397,57 @@ end
 % %disp(handles.xpos);
 
 if(handles.count > handles.num_cal)
-    if(handles.sys== 1) % Leap
-        for(i=1: length(handles.x(:,1)))
-            [~, index] = min(abs(handles.Cal_array(:,4) - handles.x(i,1)));
-            [~, index2] = min(abs(handles.Cal_array(:,4) - handles.x(i,1)));
-            handles.x(i,1) = index;
-            handles.x(i,2) = index2;
-        end
-        temp_array = zeros(length(handles.x(:,1)),3);
-        
-        for(i= 1: length(handles.x(:, 1)))
-            temp_x = handles.Cal_array(handles.x(i, 1), handles.x(i, 2), 2); %x data
-            temp_y = handles.Cal_array(handles.x(i, 1), handles.x(i, 2), 3); %y data
-            temp_z = handles.Cal_array(handles.x(i, 1), handles.x(i, 2), 4); %z data
-            
-            temp_array(i, 1) = mean(temp_x);
-            temp_array(i, 2) = mean(temp_y);
-            temp_array(i, 3) = mean(temp_z); 
-        end
-    end
-    if(handles.sys== 2) %Optotrak
-        for i =1: length(handles.x(:,1))
-            [~, index] = min(abs(handles.Cal_array(:,1)-handles.x(i,1)));
-            [~, index2] = min(abs(handles.Cal_array(:,1)-handles.x(i,2)));
-            handles.x(i,1) = index;
-            handles.x(i,2) = index2;
-        end
-        temp_array = zeros (length(handles.x(:,1)), 3);
-
-        for i = 1: length(handles.x(:,1))
-           temp_x = handles.Cal_array(handles.x(i,1):handles.x(i,2), 2); %x data
-           temp_y = handles.Cal_array(handles.x(i,1):handles.x(i,2), 3); %y data
-           temp_z = handles.Cal_array(handles.x(i,1):handles.x(i,2), 4); %z data
-           temp_array(i,1) = mean(temp_x);
-           temp_array(i,2) = mean(temp_y);
-           temp_array(i,3) = mean(temp_z);    
-        end
-    end
+%     if(handles.sys== 1) % Leap
+%         for(i=1: length(handles.x(:,1)))
+%             [~, index] = min(abs(handles.Cal_array(:,4) - handles.x(i,1)));
+%             [~, index2] = min(abs(handles.Cal_array(:,4) - handles.x(i,1)));
+%             handles.x(i,1) = index;
+%             handles.x(i,2) = index2;
+%         end
+%         temp_array = zeros(length(handles.x(:,1)),3);
+%         temp_array(:, 1) = handles.values{:, 4};
+%         temp_array(:, 2) = handles.values{:, 5};
+%         temp_array(:, 3) = handles.values{:, 6};
+% %         for(i= 1: length(handles.x(:, 1)))
+% %             temp_x = handles.Cal_array(handles.x(i, 1): handles.x(i, 2), 1); %x data
+% %             temp_y = handles.Cal_array(handles.x(i, 1): handles.x(i, 2), 2); %y data
+% %             temp_z = handles.Cal_array(handles.x(i, 1): handles.x(i, 2), 3); %z data
+% %             
+% %             temp_array(i, 1) = mean(temp_x);
+% %             temp_array(i, 2) = mean(temp_y);
+% %             temp_array(i, 3) = mean(temp_z); 
+% %             temp_array(i, 1) = handles.values{i, 4};
+% %             temp_array(i, 2) = handles.values{i, 5};
+% %             temp_array(i, 3) = handles.values{i, 6};
+% %         end
+%     end
+%     if(handles.sys== 2) %Optotrak
+%         for i =1: length(handles.x(:,1))
+%             [~, index] = min(abs(handles.Cal_array(:,1)-handles.x(i,1)));
+%             [~, index2] = min(abs(handles.Cal_array(:,1)-handles.x(i,2)));
+%             handles.x(i,1) = index;
+%             handles.x(i,2) = index2;
+%         end
+%         temp_array = zeros (length(handles.x(:,1)), 3);
+%         temp_array(:, 1) = handles.values{
+% 
+%         for i = 1: length(handles.x(:,1))
+%            temp_x = handles.Cal_array(handles.x(i, 1): handles.x(i, 2), 2); %x data
+%            temp_y = handles.Cal_array(handles.x(i, 1): handles.x(i, 2), 3); %y data
+%            temp_z = handles.Cal_array(handles.x(i, 1): handles.x(i, 2), 4); %z data
+%            temp_array(i,1) = mean(temp_x);
+%            temp_array(i,2) = mean(temp_y);
+%            temp_array(i,3) = mean(temp_z);    
+%         end
+%     end
     %temp_array = cell2mat(handles.values(:,1:3));
+    temp_array = zeros(length(handles.x(:, 1)), 3);
+    for(i= 1: length(handles.x(:, 1)))
+        temp_array(i, 1) = handles.values{i, 4};
+        temp_array(i, 2) = handles.values{i, 5};
+        temp_array(i, 3) = handles.values{i, 6};
+    end
+    
     cal= temp_array;
     varargout = num2cell(temp_array,[1 2]);
     guidata(hObject, handles);

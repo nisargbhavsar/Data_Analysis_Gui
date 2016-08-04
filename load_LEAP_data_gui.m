@@ -34,14 +34,13 @@ function [frequency, trial_num,varargout ] = load_LEAP_data_gui( varargin )
             array = array';
         end
         array(:,13) = array(:,13) - array(1,13); %ensure first time point is zero
-                %[rows coloumns] = size(master_array);
 
-                str = regexprep(filename,'Trial_','');
-                str = regexprep(str,'.txt','');
+        str = regexprep(filename,'Trial_','');
+        str = regexprep(str,'.txt','');
 
-                trial_num = str2double(str);
-                frequency = trial_num;
-            varargout = num2cell(array, [1 2]);
+        trial_num = str2double(str);
+        frequency = trial_num;
+        varargout = num2cell(array, [1 2]);
    end
     if (varargin{1} == 0) %Leap Calibration
         [calfile, ~] = uigetfile('*.txt', 'Select a Calibration File');
@@ -57,7 +56,7 @@ function [frequency, trial_num,varargout ] = load_LEAP_data_gui( varargin )
         i=1;
         while (count <2)
             if(cal_array(i,4) == 0)
-            count = count +1;
+                count = count +1;
             end
             i = i+1;
         end
@@ -66,29 +65,29 @@ function [frequency, trial_num,varargout ] = load_LEAP_data_gui( varargin )
         max_time = cal_array(end,4)/1e3;
        
         time = (0:1/50:max_time)*1e3;
-        predicted_x_index = (pchip( cal_array(:,4),cal_array(:,1), time))';
-        predicted_y_index = (pchip( cal_array(:,4),cal_array(:,2), time))';
-        predicted_z_index = (pchip( cal_array(:,4),cal_array(:,3), time))'; 
+        predicted_x_index = (pchip( cal_array(:, 4),cal_array(:, 1), time))';
+        predicted_y_index = (pchip( cal_array(:, 4),cal_array(:, 2), time))';
+        predicted_z_index = (pchip( cal_array(:, 4),cal_array(:, 3), time))'; 
         
         new_cal_array = zeros (length (predicted_x_index), 4);
         
-        new_cal_array(:,1) = predicted_x_index;
-        new_cal_array(:,2) = predicted_y_index;
-        new_cal_array(:,3) = predicted_z_index;
-        new_cal_array(:,4) = time'; 
+        new_cal_array(:, 1) = predicted_x_index;
+        new_cal_array(:, 2) = predicted_y_index;
+        new_cal_array(:, 3) = predicted_z_index;
+        new_cal_array(:, 4) = time'; 
         
         [b,a] = butter(3,0.4);
 
-        filt_cal_array(:,1)= filtfilt(b,a,new_cal_array(:,1));
-        filt_cal_array(:,2) = filtfilt(b,a,new_cal_array(:,2));
-        filt_cal_array(:,3) = filtfilt(b,a,new_cal_array(:,3));
-        output_array = zeros (length(filt_cal_array),4);
-        output_array(:,1) = filt_cal_array(:,1);
-        output_array(:,2) = filt_cal_array(:,2);
-        output_array(:,3) = filt_cal_array(:,3);
-        output_array(:,4) = time';
-        trial_num =0;
-        frequency =0;
+        filt_cal_array(:, 1)= filtfilt(b, a, new_cal_array(:, 1));
+        filt_cal_array(:, 2) = filtfilt(b, a, new_cal_array(:, 2));
+        filt_cal_array(:, 3) = filtfilt(b, a, new_cal_array(:, 3));
+        output_array = zeros (length(filt_cal_array), 4);
+        output_array(:, 1) = filt_cal_array(:, 1);
+        output_array(:, 2) = filt_cal_array(:, 2);
+        output_array(:, 3) = filt_cal_array(:, 3);
+        output_array(:, 4) = time';
+        trial_num= 0;
+        frequency= 0;
         varargout = num2cell( output_array, [1 2]);
     end
     
