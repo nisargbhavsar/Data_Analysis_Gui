@@ -1912,12 +1912,16 @@ if(handles.system ==1) %Leap
                 plot(handles.Filtered_XYZ(handles.kin_array(1,7),7), handles.Filtered_XYZ(handles.kin_array(1,7),1), 'squarer'); %Movement end X outgoing
                 plot(handles.Filtered_XYZ(handles.kin_array(1,8),7), handles.Filtered_XYZ(handles.kin_array(1,8),2), 'squareg'); %Movement end Y outgoing
                 plot(handles.Filtered_XYZ(handles.kin_array(1,9),7), handles.Filtered_XYZ(handles.kin_array(1,9),3), 'squareb'); %Movement end Z outgoing
-                disp(handles.kin_array(1, 56));
+
                 plot(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 3), 'squareb'); 
                 text(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 3), '\leftarrow Return Phase Begin');
-                plot(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 3), 'squareb');
-                text(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 3), '\leftarrow Return Phase End');
-
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 3), 'squareb');
+                text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 3), '\leftarrow Return Phase End');
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 114), 7), handles.Filtered_XYZ(handles.kin_array(1, 114), 3), 'xb'); %Obj placement end
+                text(handles.Filtered_XYZ(handles.kin_array(1, 114), 7), handles.Filtered_XYZ(handles.kin_array(1, 114), 3), '\leftarrow OPE');
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 3), 'xb'); %Obj placement start
+                text(handles.Filtered_XYZ(handles.kin_array(1, 115), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 115), 3), '\leftarrow OPB');
+                
                 axes(handles.Middle_Graph);
                 cla;
                 plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,1), '-r'); 
@@ -2029,16 +2033,16 @@ if(handles.system ==1) %Leap
             axes(handles.Top_Graph);
             plot(handles.Filtered_XYZ(:, 7), handles.Filtered_XYZ(:, 11), '-r');
             hold on;
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), 'squarer'); %Grip begin
-            text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), '\leftarrow GB');
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 62), 7), handles.Filtered_XYZ(handles.kin_array(1, 62), 11), 'squarer'); %Obj placement end
-            text(handles.Filtered_XYZ(handles.kin_array(1, 62), 7), handles.Filtered_XYZ(handles.kin_array(1, 62), 11), '\leftarrow OPE');
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 61), 7), handles.Filtered_XYZ(handles.kin_array(1, 61), 11), 'squarer'); %Obj placement start
-            text(handles.Filtered_XYZ(handles.kin_array(1, 61), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 61), 11), '\leftarrow OPB');
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 11), 'squarer');
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 11), 'xb'); %Grip begin
+            text(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 11), '\leftarrow GB');
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 11), 'xb'); %Obj placement end
+            text(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 11), '\leftarrow OPE');
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 116), 7), handles.Filtered_XYZ(handles.kin_array(1, 116), 11), 'xb'); %Obj placement start
+            text(handles.Filtered_XYZ(handles.kin_array(1, 116), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 116), 11), '\leftarrow OPB');
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 11), 'xb');
             text(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 11), '\leftarrow Returnphase start');
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 11), 'squarer');
-            text(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 11), '\leftarrow Returnphase end');            
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), 'xb');
+            text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), '\leftarrow Returnphase end');            
         end
     end
 end

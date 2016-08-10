@@ -10,7 +10,7 @@ function [ varargout ] = filter_resampled_data( sys, sample_rate, cuttoff_freq, 
 
 if (sys ==1) %Leap data
 a = cuttoff_freq/(sample_rate/2);
-[b,a] = butter(3,a);
+[b,a] = butter(2,a);
 varargin = cell2mat(varargin);
 
 filtered_x_index = filtfilt(b,a,varargin(:,1));
@@ -47,7 +47,7 @@ varargout = num2cell(filtered_data, [1 2]);
 end
 if(sys ==2) %Optotrak
     a = cuttoff_freq/(sample_rate/2);
-    [b,a] = butter(3,a);
+    [b,a] = butter(2,a);
     varargin = cell2mat(varargin);
     
 %     for(i =1:length(varargin(:,1)))

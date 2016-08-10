@@ -413,7 +413,7 @@ if (type ==1 && system ==1) %Grasping motion Leap
     
     %index finger max velocity (Z)
     [~, indices] = findpeaks(velocity(:, 3), 'MinPeakHeight', if_vector_vel_tol);
-    if_max_vel_index_z= indices (1, 1);
+    if_max_vel_index_z = indices (1, 1);
 
     %thumb max velocity (Z)
     [~, indices] = findpeaks(velocity(:,6), 'MinPeakHeight', th_vector_vel_tol);
@@ -504,31 +504,12 @@ if (type ==1 && system ==1) %Grasping motion Leap
     th_z_100p = pos(th_100p_index, 6);
     
     %movement start time -time when velocity is less than the given tolerance
-%     ifs_move_x = if_max_vel_index_z;
-%     while (abs(velocity(ifs_move_x, 1)) > vel_tolerance && ifs_move_x > 0)      %Movement Start for outgoing arc (x) index
-%         ifs_move_x = ifs_move_x - 1;
-%     end
-%     
-%     ifs_move_y = if_max_vel_index_z;
-%     while (velocity(ifs_move_y, 2) > vel_tolerance && ifs_move_y > 0)       %Movement Start for outgoing arc (y) index
-%         ifs_move_y = ifs_move_y - 1;
-%     end
     
     ifs_move_z = if_max_vel_index_z;
     while (velocity(ifs_move_z, 3) > vel_tolerance && ifs_move_z > 0)       %Movement Start for outgoing arc (z) index
         ifs_move_z = ifs_move_z - 1;
     end
-    
-%     ths_move_x = th_max_vel_index_z;
-%     while (abs(velocity(ths_move_x,4)) > vel_tolerance && ths_move_x>0)      %Movement Start for outgoing arc (x) thumb
-%         ths_move_x = ths_move_x - 1;
-%     end
-%     
-%    	ths_move_y = th_max_vel_index_z;
-%     while (velocity(ths_move_y,5) > vel_tolerance && ths_move_y >0)     %Movement Start for outgoing arc (y) thumb
-%         ths_move_y = ths_move_y - 1;
-%     end
-%     
+
     ths_move_z = th_max_vel_index_z;
     while (velocity(ths_move_z,6)>vel_tolerance && ths_move_z >0)      %Movement Start for outgoing arc (z) thumb
         ths_move_z = ths_move_z-1;
@@ -543,31 +524,11 @@ if (type ==1 && system ==1) %Grasping motion Leap
     size_ = size(velocity());
     max_index = size_(1,1);
     
-%     ife_move_x = if_max_vel_index_z;
-%     while (velocity(ife_move_x,1)>VelEnd_tolerance && ife_move_x<max_index)      %Movement End for outgoing arc (x) index
-%         ife_move_x = ife_move_x+1;
-%     end
-%     
-%     ife_move_y = if_max_vel_index_z;
-%     while (velocity(ife_move_y,2)>VelEnd_tolerance && ife_move_y <max_index)     %Movement End for outgoing arc (y) index
-%         ife_move_y = ife_move_y+1;
-%     end
-    
     ife_move_z = if_max_vel_index_z;
     while (velocity(ife_move_z,3)>VelEnd_tolerance && ife_move_z <max_index)      %Movement End for outgoing arc (z) index
         ife_move_z = ife_move_z+1;
     end
-     
-%     the_move_x = th_max_vel_index_z;
-%     while (velocity(the_move_x,4)>VelEnd_tolerance && the_move_x<max_index)      %Movement End for outgoing arc (x) thumb
-%         the_move_x = the_move_x+1;
-%     end
-%     
-%    	the_move_y = th_max_vel_index_z;
-%     while (velocity(the_move_y,5)>VelEnd_tolerance && the_move_y <max_index)     %Movement End for outgoing arc (y) thumb
-%         the_move_y = the_move_y+1;
-%     end
-     
+
     the_move_z = th_max_vel_index_z;
     while (velocity(the_move_z,6)>VelEnd_tolerance && the_move_z<max_index)      %Movement End for outgoing arc (z) thumb
         the_move_z = the_move_z+1;
@@ -587,12 +548,10 @@ if (type ==1 && system ==1) %Grasping motion Leap
     %end
     if_max_vel_index_x = find((velocity(:,1)) == if_max_vel);
     
-    
     %index finger max velocity (Y)
     if_max_vel = max(velocity(ifs_move_x:ife_move_x,2));
     if_max_vel_index_y = find(velocity(:,2)==if_max_vel);
     
-        
     %thumb max velocity (X)
 %     if(side>0) %Subject pointing to the right (1)
          th_max_vel = max((velocity(ths_move_x:the_move_x,4)));
@@ -712,7 +671,6 @@ if (type ==1 && system ==1) %Grasping motion Leap
     end
     
     %Peak decceleration thumb
-    
     temp_array = accel(th_max_vel_index_x:the_move_x, 4); %copy thumb acceleration in x direction from peak velocity to movement end
     if(isempty(temp_array))
         temp_array = accel(the_move_x:th_max_vel_index_x, 4);
@@ -748,23 +706,24 @@ if (type ==1 && system ==1) %Grasping motion Leap
     end
     
     approach_output = [ifs_move_x   ifs_move_y   ifs_move_z   ths_move_x   ths_move_y   ths_move_z   ife_move_x   ife_move_y   ife_move_z   the_move_x   the_move_y   the_move_z   if_max_vel_index_x   if_max_vel_index_y   if_max_vel_index_z   th_max_vel_index_x   th_max_vel_index_y   th_max_vel_index_z   if_peakAccel_index_x   if_peakAccel_index_y   if_peakAccel_index_z   th_peakAccel_index_x   th_peakAccel_index_y   th_peakAccel_index_z   if_peakDeccel_index_x   if_peakDeccel_index_y   if_peakDeccel_index_z   th_peakDeccel_index_x   th_peakDeccel_index_y   th_peakDeccel_index_z   if_max_v_vel_index   th_max_v_vel_index   if_x_50n   if_y_50n   if_z_50n   if_x_50p   if_y_50p   if_z_50p   if_x_100n   if_y_100n   if_z_100n   if_x_100p   if_y_100p   if_z_100p   th_x_50n   th_y_50n   th_z_50n   th_x_50p   th_y_50p   th_z_50p   th_x_100n   th_y_100n   th_z_100n   th_x_100p   th_y_100p   th_z_100p];
-    
+    approach_phase_end = ife_move_z;
+    approach_phase_begin = ifs_move_z;
     %%Return Phase
     
     % Index finger max vector velocity
-    if_max_v_vel = max(vector_vel(:, 1)); %Peak Index Vector Vel look for the max
-    if_max_v_vel_index = find(vector_vel(:, 1) == if_max_v_vel_index);
+    [if_max_v_vel, if_max_v_vel_index] = max(vector_vel(ife_move_z:end, 1)); %Peak Index Vector Vel look for the max
+    if_max_v_vel_index = if_max_v_vel_index + ife_move_z -1;
     
     %Thumb max vector velocity
-    th_max_v_vel = max(vector_vel(:, 2)); %Peak Thumb Vector Vel look for the max
-    th_max_v_vel_index = find(vector_vel(:, 2) == th_max_v_vel);
+    [th_max_v_vel, th_max_v_vel_index] = max(vector_vel(ife_move_z:end, 2)); %Peak Thumb Vector Vel look for the max
+    th_max_v_vel_index = th_max_v_vel_index + ife_move_z -1;
         
-    % Index finger velocity peak (z)
-    if_min_vel = min(velocity(ife_move_z:end,3)); 
-    if_min_vel_index_z = find(velocity(:,3) == if_min_vel);
+    %Index finger velocity peak (z)
+    [if_min_vel, if_min_vel_index_z] = min(velocity(ife_move_z:end,3)); 
+    if_min_vel_index_z = if_min_vel_index_z + ife_move_z -1;
     %Thumb velocity peak (z)
-    th_min_vel = min(velocity(the_move_z:end,6)); 
-    th_min_vel_index_z = find(velocity(:,6) == th_min_vel);
+    [th_min_vel, th_min_vel_index_z] = min(velocity(the_move_z:end,6)); 
+    th_min_vel_index_z = th_min_vel_index_z + the_move_z -1;
 
     %Return phase start
     ifs_move_rp = if_min_vel_index_z;
@@ -784,7 +743,7 @@ if (type ==1 && system ==1) %Grasping motion Leap
     end
 
     the_move_rp = th_min_vel_index_z;
-    while(abs(velocity(the_move_rp, 6)) > VelEnd_tolerance && the_move_rp <max_index)
+    while(abs(velocity(the_move_rp, 6)) > VelEnd_tolerance && the_move_rp < max_index)
         the_move_rp = the_move_rp +1;
     end
     
@@ -792,14 +751,14 @@ if (type ==1 && system ==1) %Grasping motion Leap
     %Begining of object placement
     %objp_begin = ifs_move_rp;
     objp_begin = if_max_vel_index_z;
-    while(velocity(objp_begin,3) > -0.1 && objp_begin > 1)
+    while(velocity(objp_begin,3) > 0.1 && objp_begin > 1)
         objp_begin = objp_begin -1;
     end
     
     %End of object placement
 %     objp_end = ifs_move_rp;
-    objp_end = if_max_vel_index_z;
-    while(velocity(objp_end,3)< -0.02 && objp_end < rows)
+    objp_end = if_max_vel_index_z
+    while(velocity(objp_end,3)< 0.02 && objp_end < rows)
         objp_end = objp_end +1;
     end
     
@@ -822,16 +781,19 @@ if (type ==1 && system ==1) %Grasping motion Leap
     % Peak XYZ velocities
     %index finger max velocity (X)
     %if(side>0) %Subject pointing to the right (1)
-        if_max_vel = max(abs(velocity(ifs_move_x:ife_move_x,1)));
+        [if_max_vel, if_max_vel_index_x] = max(abs(velocity(ifs_move_x:ife_move_x,1)));
+        if_max_vel_index_x = if_max_vel_index_x + ifs_move_x -1;
+        
     %end
     %if(side <0)  %Subject pointing to the left (-1)
         %if_max_vel = min((velocity(ifs_move_x:ife_move_x,2)));
     %end
-    if_max_vel_index_x = find((velocity(:,1)) == if_max_vel);
+    %if_max_vel_index_x = find(abs(velocity(:,1)) == if_max_vel);
     
     %index finger max velocity (Y)
-    if_max_vel = max(abs(velocity(ifs_move_x:ife_move_x,2)));
-    if_max_vel_index_y = find(velocity(:,2)==if_max_vel);
+    [if_max_vel, if_max_vel_index_y] = max(abs(velocity(ifs_move_x:ife_move_x,2)));
+    if_max_vel_index_y = if_max_vel_index_y + ifs_move_x -1;
+    %if_max_vel_index_y = find(velocity(:,2)==if_max_vel);
     
     %index finger max velocity (z)
     if_max_vel_index_z = if_min_vel_index_z;
@@ -841,13 +803,14 @@ if (type ==1 && system ==1) %Grasping motion Leap
 %         th_max_vel = max((velocity(ths_move_x:the_move_x,4)));
 %     end
 %     if(side <0) %Subject pointing to the left (-1)
-        th_max_vel = max(abs(velocity(ths_move_x:the_move_x,4)));
+        [th_max_vel, th_max_vel_index_x] = max(abs(velocity(ths_move_x:the_move_x,4)));
+        th_max_vel_index_x = th_max_vel_index_x + ths_move_x -1;
 %     end
-    th_max_vel_index_x = find((velocity(:,4)) == th_max_vel);
+    %th_max_vel_index_x = find((velocity(:,4)) == th_max_vel);
     
     %thumb max velocity (Y)
-    th_max_vel = max(abs(velocity(ths_move_x:the_move_x,5)));
-    th_max_vel_index_y = find(velocity(:,5) == th_max_vel);
+    [th_max_vel, th_max_vel_index_y] = max(abs(velocity(ths_move_x:the_move_x,5)));
+    th_max_vel_index_y = th_max_vel_index_y + ths_move_x -1;
     
     %thumb max velocity (Z)
     th_max_vel_index_z = th_min_vel_index_z;
@@ -1077,20 +1040,24 @@ if (type ==1 && system ==1) %Grasping motion Leap
     %Grasping start
     %Grip aperture should be between 4/3 * object diameter and the object diameter
     objective_f_ga = zeros(length(pos(:, 1)), 1);
-    obj_dia = sum(pos(ife_move_y: ifs_move_rp, 11)) / length(pos(ife_move_y: ifs_move_rp, 11)); %avg of grip aperture between end of approach phase and start of the return phase
-    %obj_dia = varargin(1,3);
+    %obj_dia = sum(pos(approach_phase_end: ifs_move_rp, 11)) / length(pos(approach_phase_end: ifs_move_rp, 11)); %avg of grip aperture between end of approach phase and start of the return phase
+    obj_dia = varargin(1,3);
     for i= 1: length(pos(:, 1))
         if(pos(i, 11) < obj_dia) 
             objective_f_ga(i, 1) = pos(i, 11)/obj_dia;
         end
         if(pos(i, 11) >= obj_dia && pos(i, 11) <= 4/3* obj_dia)
             objective_f_ga(i, 1) = (4*obj_dia - 3*pos(i, 11)) / obj_dia;
+            %objective_f_ga (i,1) = (2*obj_dia - pos(i,11)) / obj_dia;
+            %objective_f_ga (i,1) = (3/2*obj_dia - 1/2*pos(i,11)) / obj_dia;
+           % objective_f_ga(i,1) = 1.1;
+           %objective_f_ga (i,1) = (11/10* obj_dia - 1/10 * pos(i,11)) / obj_dia;
         end
         %Else the grip aperture is greater than 4/3*obj_dia
     end
     
     figure()
-    subplot(4,1,1);
+    subplot(5,1,1);
     plot(pos(:,7),objective_f_ga(:,1));
     
     
@@ -1101,7 +1068,7 @@ if (type ==1 && system ==1) %Grasping motion Leap
         end
     end
     
-    subplot(4,1,2);
+    subplot(5,1,2);
     plot(pos(:,7),objective_f_gav);
     
     objective_f_gaa = zeros(length(pos(:,1)),1); %Grip aperture should be decelerating, not accelerating, therefore postive acceleration (added a buffer of 0.01 m/s^2)
@@ -1111,7 +1078,7 @@ if (type ==1 && system ==1) %Grasping motion Leap
         end
     end
     
-    subplot(4,1,3);
+    subplot(5,1,3);
     plot(pos(:,7),objective_f_gaa);
     
     %speed of wrist low upon movement ending
@@ -1125,15 +1092,18 @@ if (type ==1 && system ==1) %Grasping motion Leap
     
     %Average height of the thumb and index finger must be bigger than 3/4 of the height of the object from the Leap Detector
     objective_f_h = zeros(length(pos(:, 1)), 1);
-    obj_height = varargin(1,5)* 3/4;
+    %obj_height = varargin(1,5)* 3/4;
+    obj_height = varargin(1,5);
     for i=1: length(pos(:,1))
-        if (pos (i, 2) > obj_height)
+        if (pos (i, 2) < obj_height)
             objective_f_h (i, 1) = 1;
         end
     end
     
-    subplot(4,1,4);
+    subplot(5,1,4);
     plot(pos(:,7), objective_f_ws); 
+    subplot(5,1,5);
+    plot(pos(:, 7), objective_f_h);
     
     %Sagittal position of the index must be more than half of the object
     %distance from the needle
@@ -1146,22 +1116,26 @@ if (type ==1 && system ==1) %Grasping motion Leap
     end
 
 %    master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ws(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1) .* objective_f_d(:,1);
-   % master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ws(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);
-    master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);
+    %master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ws(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);
+    %master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1);
+    master_obj_function (:,1) = objective_f_gaa(:,1) .* objective_f_gav(:,1) .* objective_f_ga(:,1) .* objective_f_h(:,1)
     %Replace all zeros with Nan
     master_obj_function(master_obj_function == 0) = NaN;
-    max_i = max(master_obj_function);
-    index = find(master_obj_function(:,1) == max_i);
-    
+    [max_i, index] = max(master_obj_function);
+    %index = find(master_obj_function(:,1) == max_i);
+    figure()
+    plot(pos(:,7), master_obj_function, 'xr');
     %Placement start
-    placement_start = approach_output (1,7);
-    while(vector_vel(placement_start, 1) > 0.1)
+    placement_start = index;
+    %while(vector_vel(placement_start, 1) > 0.1)
+    while(velocity(placement_start, 3) > 0.1)
         placement_start = placement_start+ 1;
     end
     %Placement end
-    placement_end = placement_start;
-    while(vector_vel(placement_end, 1) < 0.02)
-        placement_end = placement_end+ 1;
+    placement_end = ifs_move_z;
+    %while(vector_vel(placement_end, 1) < 0.02)
+    while(velocity(placement_end, 3) > 0.01)
+        placement_end = placement_end - 1;
     end
     final_output = [approach_output return_output index placement_start placement_end];
     
@@ -1533,12 +1507,12 @@ if(type == 1 && system ==2) %Optotrak grasping
     varargin=(cell2mat(varargin)); 
     %%%Target approach phase
     % Index finger max vector velocity
-    if_max_v_vel_index = max(vector_vel(:, 2)); %Peak Index Vector Vel look for the max
-    if_max_v_vel_index = find(vector_vel(:, 2) == if_max_v_vel_index);
+    [~, if_max_v_vel_index] = max(vector_vel(:, 2)); %Peak Index Vector Vel look for the max
+    %if_max_v_vel_index = find(vector_vel(:, 2) == if_max_v_vel_index);
     
     %Thumb max vector velocity
-    th_max_v_vel = max(vector_vel(:,3)); %Peak Thumb Vector Vel look for the max
-    th_max_v_vel_index = find(vector_vel(:, 3) == th_max_v_vel);
+    [th_max_v_vel, th_max_v_vel_index] = max(vector_vel(:,3)); %Peak Thumb Vector Vel look for the max
+    %th_max_v_vel_index = find(vector_vel(:, 3) == th_max_v_vel);
     
     %index finger max velocity (Z)
     [~, indices] = findpeaks(velocity(:, 4), 'MinPeakHeight', if_vector_vel_tol);
@@ -1610,7 +1584,7 @@ if(type == 1 && system ==2) %Optotrak grasping
     th_z_50n = interp1(z, 1.5);
 
     x = [pos(th_40p_index, 5), pos(th_60p_index, 5)];
-    y = [pos(th_40p_index, 5), pos(th_60p_index, 6)];
+    y = [pos(th_40p_index, 6), pos(th_60p_index, 6)];
     z = [pos(th_40p_index, 7), pos(th_60p_index, 7)];
 
     th_x_50p = interp1(x, 1.5); %Values
@@ -1666,32 +1640,32 @@ if(type == 1 && system ==2) %Optotrak grasping
     max_index = size_(1,1);
     
     ife_move_x = if_max_vel_index_z;
-    while (velocity(ife_move_x,2)>VelEnd_tolerance && ife_move_x<max_index)      %Movement End for outgoing arc (x) index
+    while (velocity(ife_move_x, 2)>VelEnd_tolerance && ife_move_x<max_index)      %Movement End for outgoing arc (x) index
         ife_move_x = ife_move_x+1;
     end
     
     ife_move_y = if_max_vel_index_z;
-    while (velocity(ife_move_y,3)>VelEnd_tolerance && ife_move_y <max_index)     %Movement End for outgoing arc (y) index
+    while (velocity(ife_move_y, 3)>VelEnd_tolerance && ife_move_y <max_index)     %Movement End for outgoing arc (y) index
         ife_move_y = ife_move_y+1;
     end
     
     ife_move_z = if_max_vel_index_z;
-    while (velocity(ife_move_z,4)>VelEnd_tolerance && ife_move_z <max_index)      %Movement End for outgoing arc (z) index
+    while (velocity(ife_move_z, 4)>VelEnd_tolerance && ife_move_z <max_index)      %Movement End for outgoing arc (z) index
         ife_move_z = ife_move_z+1;
     end
     
     the_move_x = th_max_vel_index_z;
-    while (velocity(the_move_x,5)>VelEnd_tolerance && the_move_x<max_index)      %Movement End for outgoing arc (x) thumb
+    while (velocity(the_move_x, 5)>VelEnd_tolerance && the_move_x<max_index)      %Movement End for outgoing arc (x) thumb
         the_move_x = the_move_x+1;
     end
     
    	the_move_y = th_max_vel_index_z;
-    while (velocity(the_move_y,6)>VelEnd_tolerance && the_move_y <max_index)     %Movement End for outgoing arc (y) thumb
+    while (velocity(the_move_y, 6)>VelEnd_tolerance && the_move_y <max_index)     %Movement End for outgoing arc (y) thumb
         the_move_y = the_move_y+1;
     end
     
     the_move_z = th_max_vel_index_z;
-    while (velocity(the_move_z,7)>VelEnd_tolerance && the_move_z<max_index)      %Movement End for outgoing arc (z) thumb
+    while (velocity(the_move_z, 7)>VelEnd_tolerance && the_move_z<max_index)      %Movement End for outgoing arc (z) thumb
         the_move_z = the_move_z+1;
     end
     ife_move_x = ife_move_z; %All end times are based on velocity in z
@@ -1701,31 +1675,35 @@ if(type == 1 && system ==2) %Optotrak grasping
     % Peak XYZ velocities
     %index finger max velocity (X)
     %if(side>0) %Subject pointing to the right (1)
-        if_max_vel = max((velocity(ifs_move_x:ife_move_x,2)));
+        [if_max_vel, if_max_vel_index_x] = max((velocity(ifs_move_x:ife_move_x, 2)));
     %end
     %if(side <0)  %Subject pointing to the left (-1)
         %if_max_vel = min((velocity(ifs_move_x:ife_move_x,2)));
     %end
-    if_max_vel_index_x = find((velocity(:,2)) == if_max_vel);
+    %if_max_vel_index_x = find((velocity(:, 2)) == if_max_vel);
+    if_max_vel_index_x = if_max_vel_index_x + ifs_move_x -1;
     
     
     %index finger max velocity (Y)
-    if_max_vel = max(velocity(ifs_move_x:ife_move_x,3));
-    if_max_vel_index_y = find(velocity(:,3)==if_max_vel);
+    [if_max_vel, if_max_vel_index_y] = max(velocity(ifs_move_x:ife_move_x, 3));
+    if_max_vel_index_y = if_max_vel_index_y + ifs_move_x -1;
+    %if_max_vel_index_y = find(velocity(:, 3)==if_max_vel);
     
         
     %thumb max velocity (X)
 %     if(side>0) %Subject pointing to the right (1)
-         th_max_vel = max((velocity(ths_move_x:the_move_x,5)));
+         [th_max_vel, th_max_vel_index_x] = max((velocity(ths_move_x:the_move_x, 5)));
 %     end
 %     if(side <0) %Subject pointing to the left (-1)
 %         th_max_vel = min((velocity(ths_move_x:the_move_x,4)));
 %     end
-    th_max_vel_index_x = find((velocity(:,5)) == th_max_vel);
+    %th_max_vel_index_x = find((velocity(:,5)) == th_max_vel);
+    th_max_vel_index_x = th_max_vel_index_x + ths_move_x -1;
     
     %thumb max velocity (Y)
-    th_max_vel = max(velocity(ths_move_x:the_move_x,6));
-    th_max_vel_index_y = find(velocity(:,6) == th_max_vel);
+    [th_max_vel, th_max_vel_index_y] = max(velocity(ths_move_x:the_move_x,6));
+    %th_max_vel_index_y = find(velocity(:,6) == th_max_vel);
+    th_max_vel_index_y = th_max_vel_index_y + ths_move_x -1;
 
     
     %Peak acceleration index
@@ -1747,8 +1725,9 @@ if(type == 1 && system ==2) %Optotrak grasping
     if(isempty(temp_array))
         temp_array = accel(if_max_vel_index_y:ifs_move_y, 3);
     end
-    peakAccel = max(temp_array);
-    if_peakAccel_index_y = find(accel(:, 3) == peakAccel);
+    [peakAccel, if_peakAccel_index_y] = max(temp_array);
+    %if_peakAccel_index_y = find(accel(:, 3) == peakAccel);
+    if_peakAccel_index_y = if_peakAccel_index_y + ifs_move_y -1;
     if(isempty(if_peakAccel_index_y)) 
         if_peakAccel_index_y = if_max_vel_index_z;
     end
@@ -1757,8 +1736,9 @@ if(type == 1 && system ==2) %Optotrak grasping
     if(isempty(temp_array))
         temp_array = accel(if_max_vel_index_z:ifs_move_z, 4);
     end
-    peakAccel = max(temp_array);
-    if_peakAccel_index_z = find(accel(:, 4) == peakAccel);
+    [peakAccel, if_peakAccel_index_z] = max(temp_array);
+    %if_peakAccel_index_z = find(accel(:, 4) == peakAccel);
+    if_peakAccel_index_z = if_peakAccel_index_z + ifs_move_z -1;
     if(isempty(if_peakAccel_index_z)) 
         if_peakAccel_index_z = if_max_vel_index_z;
     end
@@ -1782,8 +1762,9 @@ if(type == 1 && system ==2) %Optotrak grasping
     if(isempty(temp_array))
         temp_array = accel(th_max_vel_index_y:ths_move_y, 6);
     end
-    peakAccel = max(temp_array);
-    th_peakAccel_index_y = find(accel(:, 6) == peakAccel);
+    [peakAccel, th_pealAccel_index_y] = max(temp_array);
+    %th_peakAccel_index_y = find(accel(:, 6) == peakAccel);
+    th_peakAccel_index_y = th_peakAccel_index_y + ths_move_y -1;
     if(isempty(th_peakAccel_index_y)) 
         th_peakAccel_index_y = th_max_vel_index_z;
     end
@@ -1792,8 +1773,9 @@ if(type == 1 && system ==2) %Optotrak grasping
     if(isempty(temp_array))
         temp_array = accel(th_max_vel_index_z:ths_move_z, 7);
     end
-    peakAccel = max(temp_array);
-    th_peakAccel_index_z = find(accel(:, 7) == peakAccel);
+    [peakAccel, th_peakAccel_index_z] = max(temp_array);
+    %th_peakAccel_index_z = find(accel(:, 7) == peakAccel);
+    th_peakAccel_index_z = th_peakAccel_index_z + ths_move_z -1;
     if(isempty(th_peakAccel_index_z)) 
         th_peakAccel_index_z = th_max_vel_index_z;
     end
@@ -1805,7 +1787,7 @@ if(type == 1 && system ==2) %Optotrak grasping
     end
     if(side >0) %Subject pointing to the right (1)
         peakDeccel = min(temp_array);
-    else %if(side<0) %Subejct pointing to the left (-1)
+    else %if(side<0) %Subject pointing to the left (-1)
         peakDeccel = max(temp_array);
     end    
     if_peakDeccel_index_x = find(accel(:, 2) == peakDeccel);
@@ -1817,8 +1799,8 @@ if(type == 1 && system ==2) %Optotrak grasping
     if(isempty(temp_array))
         temp_array = accel(ife_move_y:if_max_vel_index_y,  3);
     end
-    peakDeccel = min(temp_array);
-    if_peakDeccel_index_y = find(accel(:, 3) == peakDeccel);
+    [peakDeccel, if_peakDeccel_index_y] = min(temp_array);
+    if_peakDeccel_index_y = if_max_vel_index_y + if_peakDeccel_index_y -1;
     if(isempty(if_peakDeccel_index_y))
         if_peakDeccel_index_y = if_max_vel_index_z;
     end
@@ -1827,14 +1809,13 @@ if(type == 1 && system ==2) %Optotrak grasping
     if(isempty(temp_array))
         temp_array = accel(ife_move_z:if_max_vel_index_z, 4);
     end
-    peakDeccel = min(temp_array);
-    if_peakDeccel_index_z = find(accel(:, 4) == peakDeccel);
+    [peakDeccel, if_peakDeccel_index_z] = min(temp_array);
+    if_peakDeccel_index_z = if_max_vel_index_z + if_peakDeccel_index_z -1;
     if(isempty(if_peakDeccel_index_z)) 
         if_peakDeccel_index_z = if_max_vel_index_z;
     end
     
     %Peak decceleration thumb
-    
     temp_array = accel(th_max_vel_index_x:the_move_x, 5); %copy thumb acceleration in x direction from peak velocity to movement end
     if(isempty(temp_array))
         temp_array = accel(the_move_x:th_max_vel_index_x, 5);
@@ -1853,8 +1834,8 @@ if(type == 1 && system ==2) %Optotrak grasping
     if(isempty(temp_array))
         temp_array = accel(the_move_y:th_max_vel_index_y, 6);
     end
-    peakAccel = min(temp_array);
-    th_peakDeccel_index_y = find(accel(:, 6) == peakAccel);
+    [peakAccel, th_peakDeccel_index_y] = min(temp_array);
+    th_peakDeccel_index_y = th_max_vel_index_y + th_peakDeccel_index_y -1;
     if(isempty(th_peakDeccel_index_y))
         th_peakDeccel_index_y = th_peak_vel_index_z;
     end
@@ -1863,35 +1844,373 @@ if(type == 1 && system ==2) %Optotrak grasping
     if(isempty(temp_array))
         temp_array = accel(the_move_z:th_max_vel_index_z, 7);
     end
-    peakAccel = min(temp_array);
-    th_peakDeccel_index_z = find(accel(:, 7) == peakAccel);
+    [peakAccel, th_peakDeccel_index_z] = min(temp_array);
+    th_peakDeccel_index_z = th_max_vel_index_z + th_peakDeccel_index_z -1;
     if(isempty(th_peakDeccel_index_z))
         th_peakDeccel_index_z = th_peak_vel_index_z;
     end
     
     approach_output = [ifs_move_x   ifs_move_y   ifs_move_z   ths_move_x   ths_move_y   ths_move_z   ife_move_x   ife_move_y   ife_move_z   the_move_x   the_move_y   the_move_z   if_max_vel_index_x   if_max_vel_index_y   if_max_vel_index_z   th_max_vel_index_x   th_max_vel_index_y   th_max_vel_index_z   if_peakAccel_index_x   if_peakAccel_index_y   if_peakAccel_index_z   th_peakAccel_index_x   th_peakAccel_index_y   th_peakAccel_index_z   if_peakDeccel_index_x   if_peakDeccel_index_y   if_peakDeccel_index_z   th_peakDeccel_index_x   th_peakDeccel_index_y   th_peakDeccel_index_z   if_max_v_vel_index   th_max_v_vel_index   if_x_50n   if_y_50n   if_z_50n   if_x_50p   if_y_50p   if_z_50p   if_x_100n   if_y_100n   if_z_100n   if_x_100p   if_y_100p   if_z_100p   th_x_50n   th_y_50n   th_z_50n   th_x_50p   th_y_50p   th_z_50p   th_x_100n   th_y_100n   th_z_100n   th_x_100p   th_y_100p   th_z_100p];
-    
+        
     %%Return Phase
+    
+    % Index finger max vector velocity
+    [if_max_v_vel, if_max_v_vel_index] = max(vector_vel(ife_move_z:end, 2)); %Peak Index Vector Vel look for the max
+    if_max_v_vel_index = if_max_v_vel_index + ife_move_z -1;
+    
+    %Thumb max vector velocity
+    [th_max_v_vel, th_max_v_vel_index] = max(vector_vel(ife_move_z:end, 3)); %Peak Thumb Vector Vel look for the max
+    th_max_v_vel_index = th_max_v_vel_index + ife_move_z -1;
+        
+    %Index finger velocity peak (z)
+    [if_min_vel, if_min_vel_index_z] = min(velocity(ife_move_z:end,4)); 
+    if_min_vel_index_z = if_min_vel_index_z + ife_move_z -1;
+    %Thumb velocity peak (z)
+    [th_min_vel, th_min_vel_index_z] = min(velocity(the_move_z:end,7)); 
+    th_min_vel_index_z = th_min_vel_index_z + the_move_z -1;
+
+    %Return phase start
+    ifs_move_rp = if_min_vel_index_z;
+    while(abs(velocity(ifs_move_rp, 3)) > vel_tolerance && ifs_move_rp >ife_move_z)
+        ifs_move_rp = ifs_move_rp -1;
+    end
+    
+    ths_move_rp = th_min_vel_index_z;
+    while(abs(velocity(ths_move_rp, 6)) > vel_tolerance && ths_move_rp >the_move_z)
+        ths_move_rp = ths_move_rp -1;
+    end
+    
+    %Return phase end
+    ife_move_rp = if_min_vel_index_z;
+    while(abs(velocity(ife_move_rp, 3)) > VelEnd_tolerance && ife_move_rp < max_index)
+        ife_move_rp = ife_move_rp +1;
+    end
+
+    the_move_rp = th_min_vel_index_z;
+    while(abs(velocity(the_move_rp, 6)) > VelEnd_tolerance && the_move_rp < max_index)
+        the_move_rp = the_move_rp +1;
+    end
+    
+    [rows, ~] = size (velocity(:,3));
+    %Begining of object placement
+    %objp_begin = ifs_move_rp;
+    objp_begin = if_max_vel_index_z;
+    while(velocity(objp_begin,3) > 0.1 && objp_begin > 1)
+        objp_begin = objp_begin -1;
+    end
+    
+    %End of object placement
+%     objp_end = ifs_move_rp;
+    objp_end = if_max_vel_index_z
+    while(velocity(objp_end,3)< 0.02 && objp_end < rows)
+        objp_end = objp_end +1;
+    end
+    
+    %movement start time -time when velocity is less than the given tolerance
+    ifs_move_x = ifs_move_rp; %All start and end times based on velocity in z
+    ifs_move_y = ifs_move_rp;
+    ifs_move_z = ifs_move_rp;
+    ths_move_x = ths_move_rp;
+    ths_move_y = ths_move_rp;
+    ths_move_z = ths_move_rp;
+    
+    %movement end time - time when velocity lower than given velocity tolerance
+    ife_move_x = ife_move_rp;
+    ife_move_y = ife_move_rp;
+    ife_move_z = ife_move_rp;
+    the_move_x = the_move_rp;
+    the_move_y = the_move_rp;
+    the_move_z = the_move_rp;
+    
+    % Peak XYZ velocities
+    %index finger max velocity (X)
+    %if(side>0) %Subject pointing to the right (1)
+        [if_max_vel, if_max_vel_index_x] = max(abs(velocity(ifs_move_x:ife_move_x,1)));
+        if_max_vel_index_x = if_max_vel_index_x + ifs_move_x -1;
+        
+    %end
+    %if(side <0)  %Subject pointing to the left (-1)
+        %if_max_vel = min((velocity(ifs_move_x:ife_move_x,2)));
+    %end
+    %if_max_vel_index_x = find(abs(velocity(:,1)) == if_max_vel);
+    
+    %index finger max velocity (Y)
+    [if_max_vel, if_max_vel_index_y] = max(abs(velocity(ifs_move_x:ife_move_x,2)));
+    if_max_vel_index_y = if_max_vel_index_y + ifs_move_x -1;
+    %if_max_vel_index_y = find(velocity(:,2)==if_max_vel);
+    
+    %index finger max velocity (z)
+    if_max_vel_index_z = if_min_vel_index_z;
+    
+    %thumb max velocity (X)
+%     if(side>0) %Subject pointing to the right (1)
+%         th_max_vel = max((velocity(ths_move_x:the_move_x,4)));
+%     end
+%     if(side <0) %Subject pointing to the left (-1)
+        [th_max_vel, th_max_vel_index_x] = max(abs(velocity(ths_move_x:the_move_x,4)));
+        th_max_vel_index_x = th_max_vel_index_x + ths_move_x -1;
+%     end
+    %th_max_vel_index_x = find((velocity(:,4)) == th_max_vel);
+    
+    %thumb max velocity (Y)
+    [th_max_vel, th_max_vel_index_y] = max(abs(velocity(ths_move_x:the_move_x,5)));
+    th_max_vel_index_y = th_max_vel_index_y + ths_move_x -1;
+    
+    %thumb max velocity (Z)
+    th_max_vel_index_z = th_min_vel_index_z;
+    
+    % Index Finger 100, 50 msec before and after peak velocity
+    % Assuming sample rate is 50 frames per second
+        %100 msec before/after
+    if_100n_index = if_max_vel_index_z - 5;
+    if_100p_index = if_max_vel_index_z + 5;
+        
+        %40 msec before/after
+    if_40n_index = if_max_vel_index_z - 2;
+    if_40p_index = if_max_vel_index_z + 2;
+
+        %60 msec before/after
+    if_60n_index = if_max_vel_index_z -3;
+    if_60p_index = if_max_vel_index_z +3;
+
+        %50 msec before/after (x)
+    x = [pos(if_60n_index, 1), pos(if_40n_index, 1)];
+    y = [pos(if_60n_index, 2), pos(if_40n_index, 2)];
+    z = [pos(if_60n_index, 3), pos(if_40n_index, 3)];
+
+    if_x_50n = interp1(x, 1.5); %Values
+    if_y_50n = interp1(y, 1.5);
+    if_z_50n = interp1(z, 1.5);
+
+    x = [pos(if_40p_index, 1), pos(if_60p_index, 1)];
+    y = [pos(if_40p_index, 2), pos(if_60p_index, 2)];
+    z = [pos(if_40p_index, 3), pos(if_60p_index, 3)];
+
+    if_x_50p = interp1(x, 1.5); %Values
+    if_y_50p = interp1(y, 1.5);
+    if_z_50p = interp1(z, 1.5);
+        
+    if_x_100n = pos(if_100n_index, 1); %Values
+    if_y_100n = pos(if_100n_index, 2);
+    if_z_100n = pos(if_100n_index, 3);
+        
+    if_x_100p = pos(if_100p_index, 1); %Values
+    if_y_100p = pos(if_100p_index, 2);
+    if_z_100p = pos(if_100p_index, 3);
+        
+    % Thumb 100, 50 msec before and after
+        %100 msec before/after
+    th_100n_index = th_max_vel_index_z - 5;
+    th_100p_index = th_max_vel_index_z + 5;
+        
+        %40 msec before/after
+    th_40n_index = th_max_vel_index_z - 2;
+    th_40p_index = th_max_vel_index_z + 2;
+
+        %60 msec before/after
+    th_60n_index = th_max_vel_index_z - 3;
+    th_60p_index = th_max_vel_index_z + 3;
+
+        %50 msec before/after (x)
+    x = [pos(th_60n_index, 4), pos(th_40n_index, 4)];
+    y = [pos(th_60n_index, 5), pos(th_40n_index, 5)];
+    z = [pos(th_60n_index, 6), pos(th_40n_index, 6)];
+
+    th_x_50n = interp1(x, 1.5); %Values
+    th_y_50n = interp1(y, 1.5);
+    th_z_50n = interp1(z, 1.5);
+
+    x = [pos(th_40p_index, 4), pos(th_60p_index, 4)];
+    y = [pos(th_40p_index, 5), pos(th_60p_index, 5)];
+    z = [pos(th_40p_index, 6), pos(th_60p_index, 6)];
+
+    th_x_50p = interp1(x, 1.5); %Values
+    th_y_50p = interp1(y, 1.5);
+    th_z_50p = interp1(z, 1.5);
+        
+    th_x_100n = pos(th_100n_index, 4); %Values
+    th_y_100n = pos(th_100n_index, 5);
+    th_z_100n = pos(th_100n_index, 6);
+        
+    th_x_100p = pos(th_100p_index, 4); %Values
+    th_y_100p = pos(th_100p_index, 5);
+    th_z_100p = pos(th_100p_index, 6);
+    
+    %Peak acceleration index
+    temp_array = accel(ifs_move_x:if_max_vel_index_x, 1); %copy index acceleration in x direction from movement start to peak velocity
+    if(isempty(temp_array))
+        temp_array = accel(if_max_vel_index_x:ifs_move_x, 1); %necessary for catching an error 
+    end
+    if(side>0) %Subject pointing to the right (1)
+        peakAccel = max(temp_array);
+    else % if(side<0)%Subject pointing to the left (-1)
+        peakAccel = min(temp_array);
+    end    
+    if_peakAccel_index_x = find(accel(:,1) == peakAccel);
+    if(isempty(if_peakAccel_index_x)) 
+        if_peakAccel_index_x = if_max_vel_index_z;
+    end
+    
+    temp_array = accel(ifs_move_y:if_max_vel_index_y, 2); %copy index acceleration in y direction from movement start to peak velocity
+    if(isempty(temp_array))
+        temp_array = accel(if_max_vel_index_y:ifs_move_y,2);
+    end
+    peakAccel = max(temp_array);
+    if_peakAccel_index_y = find(accel(:,2) == peakAccel);
+    if(isempty(if_peakAccel_index_y)) 
+        if_peakAccel_index_y = if_max_vel_index_z;
+    end
+    
+    temp_array = accel(ifs_move_z:if_max_vel_index_z, 3); %copy index acceleration in z direction from movement start to peak velocity
+    if(isempty(temp_array))
+        temp_array = accel(if_max_vel_index_z:ifs_move_z, 3);
+    end
+    peakAccel = max(temp_array);
+    if_peakAccel_index_z = find(accel(:,3) == peakAccel);
+    if(isempty(if_peakAccel_index_z)) 
+        if_peakAccel_index_z = if_max_vel_index_z;
+    end
+    
+    %Peak acceleration thumb  
+    temp_array = accel(ths_move_x:th_max_vel_index_x, 4); %copy thumb acceleration in x direction from movement start to peak velocity
+    if(isempty(temp_array))
+        temp_array = accel(th_max_vel_index_x:ths_move_x, 4);
+    end
+    if(side >0) %Subject pointing to the right (1)
+        peakAccel = max(temp_array);
+    else % if(side<0) %Subject pointing to the left (-1)
+        peakAccel = min(temp_array);
+    end
+    th_peakAccel_index_x = find(accel(:,4) == peakAccel);
+    if(isempty(th_peakAccel_index_x)) 
+        th_peakAccel_index_x = th_max_vel_index_z;
+    end
+   
+    temp_array = accel(ths_move_y:th_max_vel_index_y, 5); %copy thumb acceleration in y direction from movement start to peak velocity
+    if(isempty(temp_array))
+        temp_array = accel(th_max_vel_index_y:ths_move_y, 5);
+    end
+    peakAccel = max(temp_array);
+    th_peakAccel_index_y = find(accel(:,5) == peakAccel);
+    if(isempty(th_peakAccel_index_y)) 
+        th_peakAccel_index_y = th_max_vel_index_z;
+    end
+    
+    temp_array = accel(ths_move_z:th_max_vel_index_z, 6); %copy thumb acceleration in z direction from movement start to peak velocity
+    if(isempty(temp_array))
+        temp_array = accel(th_max_vel_index_z:ths_move_z, 6);
+    end
+    peakAccel = max(temp_array);
+    th_peakAccel_index_z = find(accel(:,6) == peakAccel);
+    if(isempty(th_peakAccel_index_z)) 
+        th_peakAccel_index_z = th_max_vel_index_z;
+    end
+        
+    %Peak decceleration index
+    temp_array = accel(if_max_vel_index_x:ife_move_x,1);
+    if(isempty(temp_array))
+        temp_array = accel(ife_move_x:if_max_vel_index_x, 1);
+    end
+    if(side >0) %Subject pointing to the right (1)
+        peakDeccel = min(temp_array);
+    else %if(side<0) %Subejct pointing to the left (-1)
+        peakDeccel = max(temp_array);
+    end    
+    if_peakDeccel_index_x = find(accel(:,1) == peakDeccel);
+    if(isempty(if_peakDeccel_index_x)) 
+        if_peakDeccel_index_x = if_max_vel_index_z;
+    end
+
+    temp_array = accel(if_max_vel_index_y:ife_move_y, 2); %copy index acceleration in y direction from peak velocity to movement end
+    if(isempty(temp_array))
+        temp_array = accel(ife_move_y:if_max_vel_index_y, 2);
+    end
+    peakDeccel = min(temp_array);
+    if_peakDeccel_index_y = find(accel(:,2) == peakDeccel);
+    if(isempty(if_peakDeccel_index_y))
+        if_peakDeccel_index_y = if_max_vel_index_z;
+    end
+    
+    temp_array = accel(if_max_vel_index_z:ife_move_z, 3); %copy index acceleration in z direction from peak velocity to movement end
+    if(isempty(temp_array))
+        temp_array = accel(ife_move_z:if_max_vel_index_z, 3);
+    end
+    peakDeccel = min(temp_array);
+    if_peakDeccel_index_z = find(accel(:,3) == peakDeccel);
+    if(isempty(if_peakDeccel_index_z)) 
+        if_peakDeccel_index_z = if_max_vel_index_z;
+    end
+    
+    %Peak decceleration thumb
+    
+    temp_array = accel(th_max_vel_index_x:the_move_x, 4); %copy thumb acceleration in x direction from peak velocity to movement end
+    if(isempty(temp_array))
+        temp_array = accel(the_move_x:th_max_vel_index_x, 4);
+    end
+    if(side >0) %Subject pointing to the right (1)
+        peakDeccel = min(temp_array);
+    else %if(side<0) %Subject pointing to the left (-1)
+        peakDeccel = max(temp_array);
+    end   
+    th_peakDeccel_index_x = find(accel(:,4) == peakDeccel);
+    if(isempty(th_peakDeccel_index_x))
+        th_peakDeccel_index_x = th_peak_vel_index_z;
+    end
+    
+    temp_array = accel(th_max_vel_index_y:the_move_y, 5); %copy thumb acceleration in x direction from peak velocity to movement end
+    if(isempty(temp_array))
+        temp_array = accel(the_move_y:th_max_vel_index_y, 5);
+    end
+    peakAccel = min(temp_array);
+    th_peakDeccel_index_y = find(accel(:,5) == peakAccel);
+    if(isempty(th_peakDeccel_index_y))
+        th_peakDeccel_index_y = th_peak_vel_index_z;
+    end
+    
+    temp_array = accel(th_max_vel_index_z:the_move_z, 6); %copy thumb acceleration in x direction from peak velocity to movement end
+    if(isempty(temp_array))
+        temp_array = accel(the_move_z:th_max_vel_index_z, 6);
+    end
+    peakAccel = min(temp_array);
+    th_peakDeccel_index_z = find(accel(:,6) == peakAccel);
+    if(isempty(th_peakDeccel_index_z))
+        th_peakDeccel_index_z = th_peak_vel_index_z;
+    end
+    
+    return_output = [ifs_move_x   ifs_move_y   ifs_move_z   ths_move_x   ths_move_y   ths_move_z   ife_move_x   ife_move_y   ife_move_z   the_move_x   the_move_y   the_move_z   if_max_vel_index_x   if_max_vel_index_y   if_max_vel_index_z   th_max_vel_index_x   th_max_vel_index_y   th_max_vel_index_z   if_peakAccel_index_x   if_peakAccel_index_y   if_peakAccel_index_z   th_peakAccel_index_x   th_peakAccel_index_y   th_peakAccel_index_z   if_peakDeccel_index_x   if_peakDeccel_index_y   if_peakDeccel_index_z   th_peakDeccel_index_x   th_peakDeccel_index_y   th_peakDeccel_index_z   if_max_v_vel_index   th_max_v_vel_index   if_x_50n   if_y_50n   if_z_50n   if_x_50p   if_y_50p   if_z_50p   if_x_100n   if_y_100n   if_z_100n   if_x_100p   if_y_100p   if_z_100p   th_x_50n   th_y_50n   th_z_50n   th_x_50p   th_y_50p   th_z_50p   th_x_100n   th_y_100n   th_z_100n   th_x_100p   th_y_100p   th_z_100p objp_begin objp_end];
+
+    % Index finger max vector velocity
+    [if_max_v_vel, if_max_v_vel_index] = max(vector_vel(ife_move_z:end, 2)); %Peak Index Vector Vel look for the max
+    if_max_v_vel_index = if_max_v_vel_index + ife_move_z -1;
+    
+    %Thumb max vector velocity
+    [th_max_v_vel, th_max_v_vel_index] = max(vector_vel(ife_move_z:end, 3)); %Peak Thumb Vector Vel look for the max
+    th_max_v_vel_index = th_max_v_vel_index + ife_move_z -1;
+    
     % Index finger velocity peak (z)
-    [~, indices] = findpeaks(-velocity(ife_move_z:end, 4), 'MinPeakHeight', if_vector_vel_tol); %Negative peak of index velocity (z)
-    if_max_vel_index_z= indices (1, 1);
+    %[~, indices] = findpeaks(-velocity(ife_move_z:end, 4), 'MinPeakHeight', if_vector_vel_tol); %Negative peak of index velocity (z)
+    [~, if_max_vel_index_z] = min (velocity(ife_move_z:end, 4));
+    if_max_vel_index_z = ife_move_z + if_max_vel_index_z -1;
+    %if_max_vel_index_z= indices (1, 1);
 %     if_max_v_vel_index = min(vector_vel(varargin(1,8):varargin(1,9),2)); 
 %     if_max_v_vel_index = find(vector_vel(:,1) == if_max_v_vel_index);
     
     %Thumb velocity peak (z)
-    [~, indices] = findpeaks(-velocity(the_move_z:end, 7),'MinPeakHeight', th_vector_vel_tol); %Negative peak of thumb velocity (z)
-    th_max_vel_index_z = indices (1, 1);
+%     [~, indices] = findpeaks(-velocity(the_move_z:end, 7),'MinPeakHeight', th_vector_vel_tol); %Negative peak of thumb velocity (z)
+%     th_max_vel_index_z = indices (1, 1);
+    [~, th_max_vel_index_z] = min(velocity(the_move_z:end, 7));
+    th_max_vel_index_z = th_max_vel_index_z + the_move_z -1;
 %     th_max_v_vel = min(vector_vel(varargin(1,8):varargin(1,9),3)); 
 %     th_max_v_vel_index = find(vector_vel(:,2) == th_max_v_vel);
 
     %Return phase start
     ifs_move_rp = if_max_vel_index_z;
-    while(abs(velocity(ifs_move_rp, 4)) > vel_tolerance && ifs_move_rp >0)
+    while(abs(velocity(ifs_move_rp, 4)) > vel_tolerance && ifs_move_rp >ife_move_z)
         ifs_move_rp = ifs_move_rp -1;
     end
     
     ths_move_rp = th_max_vel_index_z;
-    while(abs(velocity(ths_move_rp, 7)) > vel_tolerance && ths_move_rp >0)
+    while(abs(velocity(ths_move_rp, 7)) > vel_tolerance && ths_move_rp > the_move_z)
         ths_move_rp = ths_move_rp -1;
     end
     
