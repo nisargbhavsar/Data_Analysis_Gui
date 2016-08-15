@@ -1059,7 +1059,7 @@ if(handles.system ==1) %Leap
             
             handles.Raw_Velocity_XYZ(i,1) = (handles.Raw_XYZ(i+1,1)-handles.Raw_XYZ(i,1))/delta_time; %index velocity X
             handles.Raw_Velocity_XYZ(i,2) = (handles.Raw_XYZ(i+1,2)-handles.Raw_XYZ(i,2))/delta_time; %index velocity Y
-            handles.Raw_Velocity_XYZ(i,3) = (handles.Raw_XYZ(i+1,3)-handles.Raw_XYZ(i,3))/delta_time; %index velocity X
+            handles.Raw_Velocity_XYZ(i,3) = (handles.Raw_XYZ(i+1,3)-handles.Raw_XYZ(i,3))/delta_time; %index velocity z
             handles.Raw_Velocity_XYZ(i,4) = (handles.Raw_XYZ(i+1,4)-handles.Raw_XYZ(i,4))/delta_time; %Thumb velocity X
             handles.Raw_Velocity_XYZ(i,5) = (handles.Raw_XYZ(i+1,5)-handles.Raw_XYZ(i,5))/delta_time; %Thumb velocity Y
             handles.Raw_Velocity_XYZ(i,6) = (handles.Raw_XYZ(i+1,6)-handles.Raw_XYZ(i,6))/delta_time; %Thumb velocity Z
@@ -3533,14 +3533,16 @@ if(handles.system ==1 || handles.system ==2)
     end
     event_data = load('-mat',filename);
     try
-        event_d = getfield(event_data, C{1});
+        names = fieldnames(event_data);
+        event_d = getfield(event_data, names{1});
         handles.event_data = event_d;
     catch
-        try
-            event_d = getfield(event_data,'unnamed');
-        catch
-            event_d = unnamed;
-        end
+%         try
+%             event_d = getfield(event_data,'unnamed');
+%         catch
+%             event_d = getfield(event_data,'ans');
+%             event_d = unnamed;
+%         end
         handles.event_data = event_d;
     end
     temp_event_d = num2cell(handles.event_data);

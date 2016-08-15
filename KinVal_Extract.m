@@ -1128,13 +1128,13 @@ if (type ==1 && system ==1) %Grasping motion Leap
     %Placement start
     placement_start = index;
     %while(vector_vel(placement_start, 1) > 0.1)
-    while(velocity(placement_start, 3) > 0.1)
+    while(velocity(placement_start, 2) > 0.1)
         placement_start = placement_start+ 1;
     end
     %Placement end
     placement_end = ifs_move_z;
     %while(vector_vel(placement_end, 1) < 0.02)
-    while(velocity(placement_end, 3) > 0.01)
+    while(velocity(placement_end, 2) > 0.01)
         placement_end = placement_end - 1;
     end
     final_output = [approach_output return_output index placement_start placement_end];
@@ -1250,6 +1250,15 @@ if(type ==0 && system == 2) %Optotrak pointing th_vector_vel_tol is the vel tole
         %index finger max velocity (Y)
         if_max_vel = max(velocity(ifs_move_y:ife_move_y,3));
         if_max_vel_index_y = find(velocity(:,3)==if_max_vel);
+        
+        %Soem Optotrak trials are nto collected properly, so the movement
+        %end occurs as the last data point of velocity (which is out of
+        %bounds for the acceleration matrix)
+        if(length(accel) < ife_move_x)
+            ife_move_x = length(accel);
+            ife_move_y = length(accel);
+            ife_move_z = length(accel);
+        end
         
         %Peak acceleration index
         temp_array = accel(ifs_move_x:if_max_vel_index_x, 2); %copy index acceleration in x direction from movement start to peak velocity
