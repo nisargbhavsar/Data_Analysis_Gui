@@ -1747,27 +1747,7 @@ if(handles.system ==1) %Leap
 
         	axes(handles.Bottom_Graph);
         	plot(handles.Filtered_Accel(:,5), handles.Filtered_Accel(:,6), '-b');
-        end
-%         set(handles.warning_text, 'String','Please choose the start of the target approach phase.');
-%         [x,y]=ginputax(handles.Top_Graph,1);
-%         plot(x,y,'ro');
-%         [~,tap_start_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
-%         
-%         set(handles.warning_text, 'String','Please choose the end of the target approach phase.');
-%         [x,y] = ginputax(handles.Top_Graph,1);
-%         plot(x,y,'ro');
-%         [~, tap_end_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
-%         
-%         set(handles.warning_text, 'String','Please choose the start of the return phase.');
-%         [x,y] = ginputax(handles.Top_Graph,1);
-%         plot(x,y,'ro');
-%         [~, trp_start_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
-%         
-%         set(handles.warning_text, 'String','Please choose the end of the return phase');
-%         [x,y] = ginputax(handles.Top_Graph,1);
-%         plot(x,y,'ro');
-%         [~,trp_end_index] = min(abs(handles.Filtered_XYZ(:,1)-x));
-        
+        end       
         handles.kin_array = zeros (1,32);
         side = handles.event_data(handles.Trial_Num, 4);
         %input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height, tap_start_index, tap_end_index, trp_start_index, trp_end_index];
@@ -1917,10 +1897,10 @@ if(handles.system ==1) %Leap
                 text(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 3), '\leftarrow Return Phase Begin');
                 plot(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 3), 'squareb');
                 text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 3), '\leftarrow Return Phase End');
-                plot(handles.Filtered_XYZ(handles.kin_array(1, 114), 7), handles.Filtered_XYZ(handles.kin_array(1, 114), 3), 'xb'); %Obj placement end
-                text(handles.Filtered_XYZ(handles.kin_array(1, 114), 7), handles.Filtered_XYZ(handles.kin_array(1, 114), 3), '\leftarrow OPE');
-                plot(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 3), 'xb'); %Obj placement start
-                text(handles.Filtered_XYZ(handles.kin_array(1, 115), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 115), 3), '\leftarrow OPB');
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 3), 'xb'); %Obj placement end
+                text(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 3), '\leftarrow OPE');
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 116), 7), handles.Filtered_XYZ(handles.kin_array(1, 116), 3), 'xb'); %Obj placement start
+                text(handles.Filtered_XYZ(handles.kin_array(1, 116), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 116), 3), '\leftarrow OPB');
                 
                 axes(handles.Middle_Graph);
                 cla;
@@ -2035,9 +2015,9 @@ if(handles.system ==1) %Leap
             hold on;
             plot(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 11), 'xb'); %Grip begin
             text(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 11), '\leftarrow GB');
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 11), 'xb'); %Obj placement end
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 11), 'squareb'); %Obj placement end
             text(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 11), '\leftarrow OPE');
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 116), 7), handles.Filtered_XYZ(handles.kin_array(1, 116), 11), 'xb'); %Obj placement start
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 116), 7), handles.Filtered_XYZ(handles.kin_array(1, 116), 11), 'ob'); %Obj placement start
             text(handles.Filtered_XYZ(handles.kin_array(1, 116), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 116), 11), '\leftarrow OPB');
             plot(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 11), 'xb');
             text(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 11), '\leftarrow Returnphase start');
@@ -3546,19 +3526,35 @@ if(handles.system ==1 || handles.system ==2)
         handles.event_data = event_d;
     end
     temp_event_d = num2cell(handles.event_data);
-    set(handles.table1,'Data',temp_event_d);
-    set(handles.table1,'ColumnName',{'Trial #';'Stimulus';'Delay'; 'Location';'Side';'Calibration Value'});
-   
-    handles.curr_col = length(handles.event_data(:,1));
-    xlswrite(handles.events_filename,{'Trial Number'}, 1,'A1'); %loaded events file information
-    xlswrite(handles.events_filename,{'Condition'}, 1,'B1'); 
-    xlswrite(handles.events_filename,{'Stimulus'}, 1,'C1'); %loaded events file information
-    xlswrite(handles.events_filename,{'Delay'}, 1,'D1'); %loaded events file information
-    xlswrite(handles.events_filename,{'Location'}, 1,'E1'); %loaded events file information
-    xlswrite(handles.events_filename,{'Calibration Value'}, 1,'F1'); %loaded events file information
-    xlswrite(handles.events_filename, handles.event_data, 1,'A2'); %loaded events file information
+    if(handles.system == 1) %Leap
+        set(handles.table1,'Data',temp_event_d);
+        set(handles.table1,'ColumnName',{'Trial #';'Stimulus';'Delay'; 'Location';'Side';'Calibration Value'});
 
-    xlswrite(handles.events_filename,output_headers, 1,'H1:CO1');
+        handles.curr_col = length(handles.event_data(:,1));
+        xlswrite(handles.events_filename,{'Trial Number'}, 1,'A1'); %loaded events file information
+        xlswrite(handles.events_filename,{'Condition'}, 1,'B1'); 
+        xlswrite(handles.events_filename,{'Stimulus'}, 1,'C1'); %loaded events file information
+        xlswrite(handles.events_filename,{'Delay'}, 1,'D1'); %loaded events file information
+        xlswrite(handles.events_filename,{'Location'}, 1,'E1'); %loaded events file information
+        xlswrite(handles.events_filename,{'Calibration Value'}, 1,'F1'); %loaded events file information
+        xlswrite(handles.events_filename, handles.event_data, 1,'A2'); %loaded events file information
+
+        xlswrite(handles.events_filename,output_headers, 1,'H1:CO1');
+    end
+    if(handles.system == 2) %Optotrak
+        set(handles.table1,'Data',temp_event_d);
+        set(handles.table1, 'ColoumnName',{'Trial #','Obj. Size','Obj. Height','Depth Loc.','Azimuthal loc.'});
+        
+        handles.curr_col = length(handles.event_data(:,1));
+        xlswrite(handles.events_filename,{'Trial Number'}, 1,'A1'); %loaded events file information
+        xlswrite(handles.events_filename,{'Obj. Size'}, 1,'B1'); 
+        xlswrite(handles.events_filename,{'Obj. Height'}, 1,'C1'); %loaded events file information
+        xlswrite(handles.events_filename,{'Depth Loc.'}, 1,'D1'); %loaded events file information
+        xlswrite(handles.events_filename,{'Azimuthal Loc.'}, 1,'E1'); %loaded events file information
+        xlswrite(handles.events_filename, handles.event_data, 1,'A2'); %loaded events file information
+
+        xlswrite(handles.events_filename,output_headers, 1,'H1:CO1');
+    end
     guidata(hObject, handles);
 end
 drawnow; pause(0.05);  % this innocent line prevents the Matlab hang
@@ -3783,6 +3779,7 @@ function object_dia_edit_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of object_dia_edit as text
 %        str2double(get(hObject,'String')) returns contents of object_dia_edit as a double
 handles.obj_dia = str2double(get(hObject,'String'));
+handles.extract=0;
 guidata(hObject,handles);
 end
 
@@ -3809,6 +3806,7 @@ function object_dist_edit_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of object_dist_edit as text
 %        str2double(get(hObject,'String')) returns contents of object_dist_edit as a double
 handles.obj_dia = str2double(get(hObject,'String'));
+handles.extract=0;
 guidata(hObject,handles);
 end
 
@@ -3835,6 +3833,7 @@ function obj_height_edit_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of obj_height_edit as text
 %        str2double(get(hObject,'String')) returns contents of obj_height_edit as a double
 handles.obj_height = str2double(get(hObject,'String'));
+handles.extract=0;
 guidata(hObject, handles);
 end
 
