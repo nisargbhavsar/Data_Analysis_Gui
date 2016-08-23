@@ -22,7 +22,7 @@ function varargout = LeapEye_Analysis(varargin)
 
 % Edit the above text to modify the response to help LeapEye_Analysis
 
-% Last Modified by GUIDE v2.5 31-Jul-2016 15:51:29
+% Last Modified by GUIDE v2.5 19-Aug-2016 13:50:31
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -1708,55 +1708,19 @@ if(handles.system ==1) %Leap
         handles.kin_array = zeros (1,56);
         side = handles.event_data(handles.Trial_Num, 4);
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ,handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel,handles.th_vec_vel, 0);
-        %disp(handles.kin_array);
         handles.extract =1;
     end
 
-    if(handles.extract == 0 && handles.point == 1) %Grasping
-        if (handles.Raw_disp (1,1) ==1) %plot Raw Values 
-        	axes(handles.Top_Graph);
-        	plot(handles.Raw_SagPos(:,5), handles.Raw_SagPos(:,6), '-r');
-        	ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
-
-        	axes(handles.Middle_Graph);
-            plot(handles.Raw_Velocity(:,5), handles.Raw_Velocity(:,6), '-r');
-
-            axes(handles.Bottom_Graph);
-        	plot(handles.Raw_Accel(:,5), handles.Raw_Accel(:,6), '-r');
-        end
-
-        if (handles.Raw_disp (1,2) ==1) %plot Resampled Values 
-        	axes(handles.Top_Graph);
-        	plot(handles.Resampled_SagPos(:,5), handles.Resampled_SagPos(:,6),'-g');
-        	ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
-
-         	axes(handles.Middle_Graph);
-        	plot(handles.Resampled_Velocity(:,5), handles.Resampled_Velocity(:,6),'-g');
-
-         	axes(handles.Bottom_Graph);
-        	plot(handles.Resampled_Accel(:,5), handles.Resampled_Accel(:,6),'-g');
-        end
-
-        if (handles.Raw_disp(1,3) ==1) %plot Filtered Values 
-        	axes(handles.Top_Graph);
-        	plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,6),'-b');
-        	ylabel(handles.Top_Graph,'Grasp Aperture (mm)');
-
-        	axes(handles.Middle_Graph);
-        	plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,6), '-b');
-
-        	axes(handles.Bottom_Graph);
-        	plot(handles.Filtered_Accel(:,5), handles.Filtered_Accel(:,6), '-b');
-        end       
-        handles.kin_array = zeros (1,32);
+    if(handles.extract == 0 && handles.point == 1) %Grasping  
         side = handles.event_data(handles.Trial_Num, 4);
-        %input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height, tap_start_index, tap_end_index, trp_start_index, trp_end_index];
+        handles.obj_dia = handles.event_data(handles.Trial_Num, 2);
+        handles.obj_dist = handles.event_data(handles.Trial_Num, 4);
+        handles.obj_height = handles.event_data(handles.Trial_Num, 3);
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel, handles.th_vec_vel, input_array);
         %handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol,0, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0, handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
     end
-
 
     if(handles.point ==0) %Pointing
        if (get(handles.Index_XYZ_Check,'Value') == get(handles.Index_XYZ_Check,'Max'))%changing Index kin vars
@@ -1897,10 +1861,10 @@ if(handles.system ==1) %Leap
                 text(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 3), '\leftarrow Return Phase Begin');
                 plot(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 3), 'squareb');
                 text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 3), '\leftarrow Return Phase End');
-                plot(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 3), 'xb'); %Obj placement end
-                text(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 3), '\leftarrow OPE');
-                plot(handles.Filtered_XYZ(handles.kin_array(1, 116), 7), handles.Filtered_XYZ(handles.kin_array(1, 116), 3), 'xb'); %Obj placement start
-                text(handles.Filtered_XYZ(handles.kin_array(1, 116), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 116), 3), '\leftarrow OPB');
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 3), 'xb'); %Obj placement end
+                text(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 3), '\leftarrow OPE');
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 114), 7), handles.Filtered_XYZ(handles.kin_array(1, 114), 3), 'xb'); %Obj placement start
+                text(handles.Filtered_XYZ(handles.kin_array(1, 114), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 114), 3), '\leftarrow OPB');
                 
                 axes(handles.Middle_Graph);
                 cla;
@@ -1920,11 +1884,11 @@ if(handles.system ==1) %Leap
                 plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,2),'-g');
                 plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,3),'-b');
 
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,19),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,19),1),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,19),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,19),1),'squarer'); %Peak Acceleration (XYZ)
                 plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,20),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,20),2),'squareg');
                 plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,21),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,21),3),'squareb');
 
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,25),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,25),1),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,25),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,25),1),'squarer'); %Peak Decceleration (XYZ)
                 plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,26),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,26),2),'squareg');
                 plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,27),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,27),3),'squareb');
            end
@@ -1946,10 +1910,10 @@ if(handles.system ==1) %Leap
                 plot(handles.Filtered_XYZ(handles.kin_array(1,11),7), handles.Filtered_XYZ(handles.kin_array(1,11),5), 'squareg'); %Movement end Y outgoing
                 plot(handles.Filtered_XYZ(handles.kin_array(1,12),7), handles.Filtered_XYZ(handles.kin_array(1,12),6), 'squareb'); %Movement end Z outgoing
                 
-                plot(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 6), 'squareb');
-                text(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 6),'\leftarrow Return Phase Start');
-                plot(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 6), 'squareb');
-                text(handles.Filtered_XYZ(handles.kin_array(1, 59), 7), handles.Filtered_XYZ(handles.kin_array(1, 59), 6), '\leftarrow Return Phase End');
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 60), 7), handles.Filtered_XYZ(handles.kin_array(1, 60), 6), 'squareb');
+                text(handles.Filtered_XYZ(handles.kin_array(1, 60), 7), handles.Filtered_XYZ(handles.kin_array(1, 60), 6),'\leftarrow Return Phase Start');
+                plot(handles.Filtered_XYZ(handles.kin_array(1, 66), 7), handles.Filtered_XYZ(handles.kin_array(1, 66), 6), 'squareb');
+                text(handles.Filtered_XYZ(handles.kin_array(1, 66), 7), handles.Filtered_XYZ(handles.kin_array(1, 66), 6), '\leftarrow Return Phase End');
                 
 
                 axes(handles.Middle_Graph);
@@ -1958,9 +1922,9 @@ if(handles.system ==1) %Leap
                 plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,5), '-g'); 
                 plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,6), '-b'); 
 
-                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),4), 'squarer'); % Peak velocity index X
-                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),5), 'squareg'); % Peak velocity index y
-                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),6), 'squareb'); % Peak velocity index z
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),4), 'squarer'); % Peak velocity thumb X
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),5), 'squareg'); % Peak velocity thumb y
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),6), 'squareb'); % Peak velocity thumb z
 
                 axes(handles.Bottom_Graph);
                 plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,4),'-r');
@@ -1968,11 +1932,11 @@ if(handles.system ==1) %Leap
                 plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,5),'-g');
                 plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,6),'-b');
 
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,22),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,22),4),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,22),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,22),4),'squarer'); %Peak Acceleration thumb (XYZ)
                 plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,23),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,23),5),'squareg');
                 plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,24),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,24),6),'squareb');
 
-                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,28),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,28),4),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,28),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,28),4),'squarer'); %Peak Decceleration thumb (XYZ)
                 plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,29),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,29),5),'squareg');
                 plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,30),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,30),6),'squareb');
             end
@@ -1984,13 +1948,13 @@ if(handles.system ==1) %Leap
                 plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,1), '-r');
                 hold on;
 
-                plot(handles.Filtered_SagPos(handles.kin_array(1,1),5), handles.Filtered_SagPos(handles.kin_array(1,1),1), 'or'); %Movement start 
-                plot(handles.Filtered_SagPos(handles.kin_array(1,7),5), handles.Filtered_SagPos(handles.kin_array(1,7),1), 'or'); %Movement end
+                plot(handles.Filtered_SagPos(handles.kin_array(1,1),5), handles.Filtered_SagPos(handles.kin_array(1,1),1), 'or'); %Approach phase start 
+                plot(handles.Filtered_SagPos(handles.kin_array(1,7),5), handles.Filtered_SagPos(handles.kin_array(1,7),1), 'or'); %Approach phase end
 
                 axes(handles.Middle_Graph);
                 plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,1),'-r');
                 hold on;
-                plot(handles.Filtered_SagPos(handles.kin_array(1,31),5),handles.Filtered_Velocity(handles.kin_array(1,31),1),'or'); %index max vel
+                plot(handles.Filtered_SagPos(handles.kin_array(1,31),5),handles.Filtered_Velocity(handles.kin_array(1,31),1),'or'); %Max vector velocity
            end
        end
        
@@ -1999,8 +1963,8 @@ if(handles.system ==1) %Leap
                 axes(handles.Top_Graph);
                 plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,2), '-r');
                 hold on;
-                plot(handles.Filtered_SagPos(handles.kin_array(1,4),5), handles.Filtered_SagPos(handles.kin_array(1,4),2), 'or'); %Movement start 
-                plot(handles.Filtered_SagPos(handles.kin_array(1,10),5), handles.Filtered_SagPos(handles.kin_array(1,10),2), 'or'); %Movement end
+                plot(handles.Filtered_SagPos(handles.kin_array(1,4),5), handles.Filtered_SagPos(handles.kin_array(1,4),2), 'or'); %Approach phase start 
+                plot(handles.Filtered_SagPos(handles.kin_array(1,10),5), handles.Filtered_SagPos(handles.kin_array(1,10),2), 'or'); %Approach phase end
 
                 axes(handles.Middle_Graph);
                 plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,2),'-r');
@@ -2013,12 +1977,12 @@ if(handles.system ==1) %Leap
             axes(handles.Top_Graph);
             plot(handles.Filtered_XYZ(:, 7), handles.Filtered_XYZ(:, 11), '-r');
             hold on;
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 11), 'xb'); %Grip begin
-            text(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 11), '\leftarrow GB');
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 11), 'squareb'); %Obj placement end
-            text(handles.Filtered_XYZ(handles.kin_array(1, 117), 7), handles.Filtered_XYZ(handles.kin_array(1, 117), 11), '\leftarrow OPE');
-            plot(handles.Filtered_XYZ(handles.kin_array(1, 116), 7), handles.Filtered_XYZ(handles.kin_array(1, 116), 11), 'ob'); %Obj placement start
-            text(handles.Filtered_XYZ(handles.kin_array(1, 116), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 116), 11), '\leftarrow OPB');
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 113), 7), handles.Filtered_XYZ(handles.kin_array(1, 113), 11), 'xb'); %Grip begin
+            text(handles.Filtered_XYZ(handles.kin_array(1, 113), 7), handles.Filtered_XYZ(handles.kin_array(1, 113), 11), '\leftarrow Grip Begin');
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 11), 'squareb'); %Obj placement end
+            text(handles.Filtered_XYZ(handles.kin_array(1, 115), 7), handles.Filtered_XYZ(handles.kin_array(1, 115), 11), '\leftarrow OPE');
+            plot(handles.Filtered_XYZ(handles.kin_array(1, 114), 7), handles.Filtered_XYZ(handles.kin_array(1, 114), 11), 'ob'); %Obj placement start
+            text(handles.Filtered_XYZ(handles.kin_array(1, 114), 7) ,handles.Filtered_XYZ(handles.kin_array(1, 114), 11), '\leftarrow OPB');
             plot(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 11), 'xb');
             text(handles.Filtered_XYZ(handles.kin_array(1, 57), 7), handles.Filtered_XYZ(handles.kin_array(1, 57), 11), '\leftarrow Returnphase start');
             plot(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), 'xb');
@@ -2038,8 +2002,11 @@ if(handles.system ==2) %Optotrak
     if(handles.extract == 0 && handles.point == 1) %Grasping
         handles.kin_array = zeros (1,32);
         side = handles.event_data(handles.Trial_Num, 4);
+        handles.obj_dia = handles.event_data(handles.Trial_Num, 2);
+        handles.obj_dist = handles.event_data(handles.Trial_Num, 4);
+        handles.obj_height = handles.event_data(handles.Trial_Num, 3);
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
-        %handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
+        handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
     end
 
@@ -2609,18 +2576,257 @@ function Accept_Trial_Button_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 h = findobj(0, 'tag', 'figure1');
 handles.Calibration_array = h.UserData;
+if(handles.point == 0) %Pointing
+    if(handles.system == 1) %Leap
+        handles.edited =0;
+        index = 1;
+        thumb = 1;
+        if (handles.marker_select == 2) %Index only selected
+            thumb =0;
+            %handles.event_data
+            %processing the accepted markers
+            trial_validity = 1;
+            hand_latency = handles.Master_array(handles.kin_array(1,1),13)/1000; 
+            movement_time_index_z = (handles.Master_array(handles.kin_array(1,9),13)-handles.Master_array(handles.kin_array(1,3),13))/1000 * index; %used this as movement time (sec)
 
-if(handles.system == 1) %Leap
-    handles.edited =0;
-    index = 1;
-    thumb = 1;
-    if (handles.marker_select == 2) %Index only selected
-        thumb =0;
+            targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
+
+            targetx = handles.Calibration_array (targetloc+1, 1);
+            targety = handles.Calibration_array (targetloc+1, 2);
+            targetz = handles.Calibration_array (targetloc+1, 3);
+
+            index_end_pos_x = (handles.Master_array(handles.kin_array(1, 7), 1)); %index x values when kept still
+            index_end_pos_y = (handles.Master_array(handles.kin_array(1, 8), 2));
+            index_end_pos_z = (handles.Master_array(handles.kin_array(1, 9), 3));
+
+            index_begin_pos_x = handles.Master_array(handles.kin_array(1, 3)-1, 1) *index; %index xyz values when movement starts one frame before (used movement start z index)
+            index_begin_pos_y = handles.Master_array(handles.kin_array(1, 3)-1, 2) *index;
+            index_begin_pos_z = handles.Master_array(handles.kin_array(1, 3)-1, 3) *index;
+
+            accuracyx = (index_end_pos_x- targetx); %accuracy of 
+            accuracyy = (index_end_pos_y- targety);
+            accuracyz = (index_end_pos_z- targetz); 
+
+            index_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 19), 1) * index;
+            index_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 20), 2) * index;
+            index_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 3) * index;
+
+            time_index_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
+
+            index_x_pos_PA = handles.Master_array(handles.kin_array(1, 21), 1) * index;
+            index_y_pos_PA = handles.Master_array(handles.kin_array(1, 21), 2) * index;
+            index_z_pos_PA = handles.Master_array(handles.kin_array(1, 21), 3) * index;
+
+            index_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 13), 1) * index;
+            index_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 14), 2) * index;
+            index_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 3) * index;
+
+            time_index_PV_z = (handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 7) - handles.Filtered_Velocity_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
+
+            index_x_pos_PV = handles.Master_array(handles.kin_array(1, 15), 1) * index;
+            index_y_pos_PV = handles.Master_array(handles.kin_array(1, 15), 2) * index;
+            index_z_pos_PV = handles.Master_array(handles.kin_array(1, 15), 3) * index;
+
+            index_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 25), 1) * index;
+            index_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 26), 2) * index;
+            index_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 3) * index;
+
+            time_index_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
+
+            index_x_pos_PD = handles.Master_array(handles.kin_array(1, 27), 1) * index;
+            index_y_pos_PD = handles.Master_array(handles.kin_array(1, 27), 2) * index;
+            index_z_pos_PD = handles.Master_array(handles.kin_array(1, 27), 3) * index;
+
+            index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1,31),1) *index; 
+
+            output_array = [trial_validity hand_latency movement_time_index_z accuracyx accuracyy accuracyz index_x_PA index_y_PA index_z_PA time_index_PA_z index_x_pos_PA index_y_pos_PA index_z_pos_PA index_x_PV index_y_PV index_z_PV time_index_PV_z index_x_pos_PV index_y_pos_PV index_z_pos_PV index_x_PD index_y_PD index_z_PD time_index_PD_z index_x_pos_PD index_y_pos_PD index_z_pos_PD index_end_pos_x index_end_pos_y index_end_pos_z 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 index_peak_vel_vec 0 handles.kin_array(1,33)*index handles.kin_array(1,34)*index handles.kin_array(1,35)*index handles.kin_array(1,36)*index handles.kin_array(1,37)*index handles.kin_array(1,38)*index handles.kin_array(1,39)*index handles.kin_array(1,40)*index handles.kin_array(1,41)*index handles.kin_array(1,42)*index handles.kin_array(1,43)*index handles.kin_array(1,44)*index 0 0 0 0 0 0 0 0 0 0 0 0 index_begin_pos_x index_begin_pos_y index_begin_pos_z 0 0 0]; 
+        end
+
+        if(handles.marker_select ==3) %Thumb only selected
+            index =0;
+            %processing the accepted markers
+            trial_validity = 1;
+            hand_latency = handles.Master_array(handles.kin_array(1, 4), 13)/1000; 
+            movement_time_thumb_z = (handles.Master_array(handles.kin_array(1, 12), 13)-handles.Master_array(handles.kin_array(1, 6), 13))/1000 * thumb; 
+
+            thumb_end_pos_x = handles.Master_array(handles.kin_array(1, 10), 4) * thumb;%thumb x value when kept still
+            thumb_end_pos_y = handles.Master_array(handles.kin_array(1, 11), 5) * thumb;
+            thumb_end_pos_z = handles.Master_array(handles.kin_array(1, 12), 6) * thumb;
+
+            thumb_begin_pos_x = handles.Master_array(handles.kin_array(1, 3)-1, 4) * thumb; %index xyz values when movement starts (used movement start z index)
+            thumb_begin_pos_y = handles.Master_array(handles.kin_array(1, 3)-1, 5) * thumb;
+            thumb_begin_pos_z = handles.Master_array(handles.kin_array(1, 3)-1, 6) * thumb;
+
+            thumb_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 22), 4) * thumb;
+            thumb_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 23), 5) * thumb;
+            thumb_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 6) * thumb;
+
+            time_thumb_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 7)-handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
+
+            thumb_x_pos_PA = handles.Master_array(handles.kin_array(1, 24), 4) * thumb;
+            thumb_y_pos_PA = handles.Master_array(handles.kin_array(1, 24), 5) * thumb;
+            thumb_z_pos_PA = handles.Master_array(handles.kin_array(1, 24), 6) * thumb;
+
+            thumb_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 16), 4) * thumb;
+            thumb_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 17), 5) * thumb;
+            thumb_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 18), 6) * thumb;
+
+            time_thumb_PV_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 18), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1,6),7))/1000 * thumb;
+
+            thumb_x_pos_PV = handles.Master_array(handles.kin_array(1, 18), 4) * thumb;
+            thumb_y_pos_PV = handles.Master_array(handles.kin_array(1, 18), 5) * thumb;
+            thumb_z_pos_PV = handles.Master_array(handles.kin_array(1, 18), 6) * thumb;
+
+            thumb_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 28), 4) * thumb;
+            thumb_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 29), 5) * thumb;
+            thumb_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 6) * thumb;
+
+            time_thumb_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
+
+            thumb_x_pos_PD = handles.Master_array(handles.kin_array(1, 30), 4) * thumb;
+            thumb_y_pos_PD = handles.Master_array(handles.kin_array(1, 30), 5) * thumb;
+            thumb_z_pos_PD = handles.Master_array(handles.kin_array(1, 30), 6) * thumb;
+        % a = {'ifs_move_x',' ifs_move_y',' ifs_move_z',' ths_move_x',' ths_move_y',' ths_move_z',' ife_move_x','ife_move_y',' ife_move_z',' the_move_x',' the_move_y',' the_move_z',' if_max_vel_index_x',' if_max_vel_index_y',' if_max_vel_index_z',' th_max_vel_index_x',' th_max_vel_index_y',' th_max_vel_index_z',' if_peakAccel_index_x',' if_peakAccel_index_y',' if_peakAccel_index_z',' th_peakAccel_index_x',' th_peakAccel_index_y',' th_peakAccel_index_z',' if_peakDeccel_index_x',' if_peakDeccel_index_y',' if_peakDeccel_index_z',' th_peakDeccel_index_x',' th_peakDeccel_index_y',' th_peakDeccel_index_z',' if_max_v_vel_index',' th_max_v_vel_index',' if_x_50n',' if_y_50n',' if_z_50n',' if_x_50p',' if_y_50p',' if_z_50p',' if_x_100n',' if_y_100n',' if_z_100n',' if_x_100p ','if_y_100p',' if_z_100p',' th_x_50n',' th_y_50n ','th_z_50n',' th_x_50p ','th_y_50p','th_z_50p',' th_x_100n ','th_y_100n',' th_z_100n',' th_x_100p',' th_y_100p ','th_z_100p'};
+        %     disp(a);
+        %     disp(handles.kin_array);
+            thumb_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1,32),2) *thumb; 
+
+            output_array = [trial_validity hand_latency movement_time_thumb_z 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 thumb_x_PA thumb_y_PA thumb_z_PA time_thumb_PA_z thumb_x_pos_PA thumb_y_pos_PA thumb_z_pos_PA thumb_x_PV thumb_y_PV thumb_z_PV time_thumb_PV_z thumb_x_pos_PV thumb_y_pos_PV thumb_z_pos_PV thumb_x_PD thumb_y_PD thumb_z_PD time_thumb_PD_z thumb_x_pos_PD thumb_y_pos_PD thumb_z_pos_PD thumb_end_pos_x thumb_end_pos_y thumb_end_pos_z index_peak_vel_vec thumb_peak_vel_vec 0 0 0 0 0 0 0 0 0 0 0 0 handles.kin_array(1,45)*thumb handles.kin_array(1,46)*thumb handles.kin_array(1,47)*thumb handles.kin_array(1,48)*thumb handles.kin_array(1,49)*thumb handles.kin_array(1,50)*thumb handles.kin_array(1,51)*thumb handles.kin_array(1,52)*thumb handles.kin_array(1,53)*thumb handles.kin_array(1,54)*thumb handles.kin_array(1,55)*thumb handles.kin_array(1,56)*thumb 0 0 0 thumb_begin_pos_x thumb_begin_pos_y thumb_begin_pos_z];
+        end
+
+        if(handles.marker_select ==1) %Thumb and Index selected
+            %handles.event_data
+            %processing the accepted markers
+            trial_validity = 1;
+            hand_latency = handles.Master_array(handles.kin_array(1, 1), 13)/1000; 
+            movement_time_index_z = (handles.Master_array(handles.kin_array(1, 9), 13)-handles.Master_array(handles.kin_array(1, 3), 13))/1000 * index; %used this as movement time (sec)
+            movement_time_thumb_z = (handles.Master_array(handles.kin_array(1, 12), 13)-handles.Master_array(handles.kin_array(1, 6), 13))/1000 * thumb; 
+
+            if(movement_time_index_z ==0) %if index finger not selected, use thumb movement start time
+                movement_time_index_z = movement_time_thumb_z;
+            end
+
+            targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
+            targetx = handles.Calibration_array (targetloc+1, 1); %targetloc+1 because the first row of handles.Calibration_array contains the startign coordinates
+            targety = handles.Calibration_array (targetloc+1, 2);
+            targetz = handles.Calibration_array (targetloc+1, 3);
+
+            index_end_pos_x = (handles.Master_array(handles.kin_array(1, 7), 1)); %index x values when kept still
+            index_end_pos_y = (handles.Master_array(handles.kin_array(1, 8), 2));
+            index_end_pos_z = (handles.Master_array(handles.kin_array(1, 9), 3));
+
+            index_begin_pos_x = handles.Master_array(handles.kin_array(1, 3)-1, 1) * index; %index xyz values when movement starts (used movement start z index)
+            index_begin_pos_y = handles.Master_array(handles.kin_array(1, 3)-1, 2) * index;
+            index_begin_pos_z = handles.Master_array(handles.kin_array(1, 3)-1, 3) * index;
+
+            accuracyx = (index_end_pos_x-targetx); %accuracy of 
+            accuracyy = (index_end_pos_y-targety);
+            accuracyz = (index_end_pos_z-targetz);
+
+            index_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 19), 1) * index;
+            index_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 20), 2) * index;
+            index_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 3) * index;
+
+            time_index_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
+
+            index_x_pos_PA = handles.Master_array(handles.kin_array(1, 21), 1) * index;
+            index_y_pos_PA = handles.Master_array(handles.kin_array(1, 21), 2) * index;
+            index_z_pos_PA = handles.Master_array(handles.kin_array(1, 21), 3) * index;
+
+            index_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 13), 1) * index;
+            index_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 14), 2) * index;
+            index_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 3) * index;
+
+            time_index_PV_z = (handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 7) - handles.Filtered_Velocity_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
+
+            index_x_pos_PV = handles.Master_array(handles.kin_array(1, 15), 1) * index;
+            index_y_pos_PV = handles.Master_array(handles.kin_array(1, 15), 2) * index;
+            index_z_pos_PV = handles.Master_array(handles.kin_array(1, 15), 3) * index;
+
+            index_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 25), 1) * index;
+            index_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 26), 2) * index;
+            index_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 3) * index;
+
+            time_index_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
+
+            index_x_pos_PD = handles.Master_array(handles.kin_array(1, 27), 1) * index;
+            index_y_pos_PD = handles.Master_array(handles.kin_array(1, 27), 2) * index;
+            index_z_pos_PD = handles.Master_array(handles.kin_array(1, 27), 3) * index;
+
+            thumb_end_pos_x = handles.Master_array(handles.kin_array(1, 10), 4)* thumb;%thumb x value when kept still
+            thumb_end_pos_y = handles.Master_array(handles.kin_array(1, 11), 5)* thumb;
+            thumb_end_pos_z = handles.Master_array(handles.kin_array(1, 12), 6)* thumb;
+
+            thumb_begin_pos_x = handles.Master_array(handles.kin_array(1, 3)-1, 4) * thumb; %index xyz values when movement starts (used movement start z index)
+            thumb_begin_pos_y = handles.Master_array(handles.kin_array(1, 3)-1, 5) * thumb;
+            thumb_begin_pos_z = handles.Master_array(handles.kin_array(1, 3)-1, 6) * thumb;
+
+            thumb_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 22), 4) * thumb;
+            thumb_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 23), 5) * thumb;
+            thumb_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 6) * thumb;
+
+            time_thumb_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 7)-handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
+
+            thumb_x_pos_PA = handles.Master_array(handles.kin_array(1, 24), 4) * thumb;
+            thumb_y_pos_PA = handles.Master_array(handles.kin_array(1, 24), 5) * thumb;
+            thumb_z_pos_PA = handles.Master_array(handles.kin_array(1, 24), 6) * thumb;
+
+            thumb_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 16), 4) * thumb;
+            thumb_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 17), 5) * thumb;
+            thumb_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 18), 6) * thumb;
+
+            time_thumb_PV_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 18), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
+
+            thumb_x_pos_PV = handles.Master_array(handles.kin_array(1, 18), 4) * thumb;
+            thumb_y_pos_PV = handles.Master_array(handles.kin_array(1, 18), 5) * thumb;
+            thumb_z_pos_PV = handles.Master_array(handles.kin_array(1, 18), 6) * thumb;
+
+            thumb_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 28), 4) * thumb;
+            thumb_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 29), 5) * thumb;
+            thumb_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 6) * thumb;
+
+            time_thumb_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
+
+            thumb_x_pos_PD = handles.Master_array(handles.kin_array(1, 30), 4) * thumb;
+            thumb_y_pos_PD = handles.Master_array(handles.kin_array(1, 30), 5) * thumb;
+            thumb_z_pos_PD = handles.Master_array(handles.kin_array(1, 30), 6) * thumb;
+        % a = {'ifs_move_x',' ifs_move_y',' ifs_move_z',' ths_move_x',' ths_move_y',' ths_move_z',' ife_move_x','ife_move_y',' ife_move_z',' the_move_x',' the_move_y',' the_move_z',' if_max_vel_index_x',' if_max_vel_index_y',' if_max_vel_index_z',' th_max_vel_index_x',' th_max_vel_index_y',' th_max_vel_index_z',' if_peakAccel_index_x',' if_peakAccel_index_y',' if_peakAccel_index_z',' th_peakAccel_index_x',' th_peakAccel_index_y',' th_peakAccel_index_z',' if_peakDeccel_index_x',' if_peakDeccel_index_y',' if_peakDeccel_index_z',' th_peakDeccel_index_x',' th_peakDeccel_index_y',' th_peakDeccel_index_z',' if_max_v_vel_index',' th_max_v_vel_index',' if_x_50n',' if_y_50n',' if_z_50n',' if_x_50p',' if_y_50p',' if_z_50p',' if_x_100n',' if_y_100n',' if_z_100n',' if_x_100p ','if_y_100p',' if_z_100p',' th_x_50n',' th_y_50n ','th_z_50n',' th_x_50p ','th_y_50p','th_z_50p',' th_x_100n ','th_y_100n',' th_z_100n',' th_x_100p',' th_y_100p ','th_z_100p'};
+        %     disp(a);
+        %     disp(handles.kin_array);
+            index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1,31),1) *index; 
+            thumb_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1,32),2) *thumb; 
+
+            output_array = [trial_validity hand_latency movement_time_index_z accuracyx accuracyy accuracyz index_x_PA index_y_PA index_z_PA time_index_PA_z index_x_pos_PA index_y_pos_PA index_z_pos_PA index_x_PV index_y_PV index_z_PV time_index_PV_z index_x_pos_PV index_y_pos_PV index_z_pos_PV index_x_PD index_y_PD index_z_PD time_index_PD_z index_x_pos_PD index_y_pos_PD index_z_pos_PD index_end_pos_x index_end_pos_y index_end_pos_z thumb_x_PA thumb_y_PA thumb_z_PA time_thumb_PA_z thumb_x_pos_PA thumb_y_pos_PA thumb_z_pos_PA thumb_x_PV thumb_y_PV thumb_z_PV time_thumb_PV_z thumb_x_pos_PV thumb_y_pos_PV thumb_z_pos_PV thumb_x_PD thumb_y_PD thumb_z_PD time_thumb_PD_z thumb_x_pos_PD thumb_y_pos_PD thumb_z_pos_PD thumb_end_pos_x thumb_end_pos_y thumb_end_pos_z index_peak_vel_vec thumb_peak_vel_vec handles.kin_array(1,33)*index handles.kin_array(1,34)*index handles.kin_array(1,35)*index handles.kin_array(1,36)*index handles.kin_array(1,37)*index handles.kin_array(1,38)*index handles.kin_array(1,39)*index handles.kin_array(1,40)*index handles.kin_array(1,41)*index handles.kin_array(1,42)*index handles.kin_array(1,43)*index handles.kin_array(1,44)*index handles.kin_array(1,45)*thumb handles.kin_array(1,46)*thumb handles.kin_array(1,47)*thumb handles.kin_array(1,48)*thumb handles.kin_array(1,49)*thumb handles.kin_array(1,50)*thumb handles.kin_array(1,51)*thumb handles.kin_array(1,52)*thumb handles.kin_array(1,53)*thumb handles.kin_array(1,54)*thumb handles.kin_array(1,55)*thumb handles.kin_array(1,56)*thumb index_begin_pos_x index_begin_pos_y index_begin_pos_z thumb_begin_pos_x thumb_begin_pos_y thumb_begin_pos_z];
+        end
+
+        %First output format
+        num = num2str(handles.Trial_Num+1);
+        str2 = strcat('H',num);
+        xlswrite(handles.events_filename,output_array, 1,str2);
+    end
+
+    if(handles.system ==2) %Optotrak: handles.marker_select ->1 (index +palm) handles.marker_select ->2 (index only) handles.marker_select ->3 (palm only) 
+        handles.edited =0;
+        index = 1;
+        palm = 1;
+        if (handles.marker_select == 2) %Index only selected
+            palm = 0;
+        end
+
+        if(handles.marker_select ==3) %Palm only selected
+            index =0;
+        end
+
         %handles.event_data
         %processing the accepted markers
         trial_validity = 1;
-        hand_latency = handles.Master_array(handles.kin_array(1,1),13)/1000; 
-        movement_time_index_z = (handles.Master_array(handles.kin_array(1,9),13)-handles.Master_array(handles.kin_array(1,3),13))/1000 * index; %used this as movement time (sec)
+        hand_latency = handles.Filtered_XYZ(handles.kin_array(1, 1), 1)/1000; 
+        movement_time_index_z = (handles.Master_array(handles.kin_array(1, 9), 1)-handles.Master_array(handles.kin_array(1, 3), 1))/1000 * index; %used this as movement time (sec)
+        movement_time_palm_z = (handles.Master_array(handles.kin_array(1, 12), 1)-handles.Master_array(handles.kin_array(1, 6), 1))/1000 * palm; 
+
+        if(movement_time_index_z ==0) %if index finger not selected, use palm movement start time
+            movement_time_index_z = movement_time_palm_z;
+        end
 
         targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
 
@@ -2628,334 +2834,248 @@ if(handles.system == 1) %Leap
         targety = handles.Calibration_array (targetloc+1, 2);
         targetz = handles.Calibration_array (targetloc+1, 3);
 
-        index_end_pos_x = (handles.Master_array(handles.kin_array(1, 7), 1)); %index x values when kept still
-        index_end_pos_y = (handles.Master_array(handles.kin_array(1, 8), 2));
-        index_end_pos_z = (handles.Master_array(handles.kin_array(1, 9), 3));
+        index_end_pos_x = (handles.Filtered_XYZ(handles.kin_array(1, 7), 2)); %index x values when kept still
+        index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1, 8), 3)); %index y values when back at the needle
+        index_end_pos_z = (handles.Filtered_XYZ(handles.kin_array(1, 9), 4)); %index z values when back at the needle
 
-        index_begin_pos_x = handles.Master_array(handles.kin_array(1, 3)-1, 1) *index; %index xyz values when movement starts one frame before (used movement start z index)
-        index_begin_pos_y = handles.Master_array(handles.kin_array(1, 3)-1, 2) *index;
-        index_begin_pos_z = handles.Master_array(handles.kin_array(1, 3)-1, 3) *index;
+        index_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 2) *index; %index xyz values when 1 frame before movement starts (used movement start z index)
+        index_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 3) *index;
+        index_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 4) *index;
 
-        accuracyx = (index_end_pos_x- targetx); %accuracy of 
-        accuracyy = (index_end_pos_y- targety);
-        accuracyz = (index_end_pos_z- targetz); 
-
-        index_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 19), 1) * index;
-        index_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 20), 2) * index;
-        index_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 3) * index;
-
-        time_index_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
-
-        index_x_pos_PA = handles.Master_array(handles.kin_array(1, 21), 1) * index;
-        index_y_pos_PA = handles.Master_array(handles.kin_array(1, 21), 2) * index;
-        index_z_pos_PA = handles.Master_array(handles.kin_array(1, 21), 3) * index;
-
-        index_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 13), 1) * index;
-        index_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 14), 2) * index;
-        index_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 3) * index;
-
-        time_index_PV_z = (handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 7) - handles.Filtered_Velocity_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
-
-        index_x_pos_PV = handles.Master_array(handles.kin_array(1, 15), 1) * index;
-        index_y_pos_PV = handles.Master_array(handles.kin_array(1, 15), 2) * index;
-        index_z_pos_PV = handles.Master_array(handles.kin_array(1, 15), 3) * index;
-
-        index_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 25), 1) * index;
-        index_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 26), 2) * index;
-        index_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 3) * index;
-
-        time_index_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
-
-        index_x_pos_PD = handles.Master_array(handles.kin_array(1, 27), 1) * index;
-        index_y_pos_PD = handles.Master_array(handles.kin_array(1, 27), 2) * index;
-        index_z_pos_PD = handles.Master_array(handles.kin_array(1, 27), 3) * index;
-
-        index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1,31),1) *index; 
-
-        output_array = [trial_validity hand_latency movement_time_index_z accuracyx accuracyy accuracyz index_x_PA index_y_PA index_z_PA time_index_PA_z index_x_pos_PA index_y_pos_PA index_z_pos_PA index_x_PV index_y_PV index_z_PV time_index_PV_z index_x_pos_PV index_y_pos_PV index_z_pos_PV index_x_PD index_y_PD index_z_PD time_index_PD_z index_x_pos_PD index_y_pos_PD index_z_pos_PD index_end_pos_x index_end_pos_y index_end_pos_z 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 index_peak_vel_vec 0 handles.kin_array(1,33)*index handles.kin_array(1,34)*index handles.kin_array(1,35)*index handles.kin_array(1,36)*index handles.kin_array(1,37)*index handles.kin_array(1,38)*index handles.kin_array(1,39)*index handles.kin_array(1,40)*index handles.kin_array(1,41)*index handles.kin_array(1,42)*index handles.kin_array(1,43)*index handles.kin_array(1,44)*index 0 0 0 0 0 0 0 0 0 0 0 0 index_begin_pos_x index_begin_pos_y index_begin_pos_z 0 0 0]; 
-    end
-
-    if(handles.marker_select ==3) %Thumb only selected
-        index =0;
-        %processing the accepted markers
-        trial_validity = 1;
-        hand_latency = handles.Master_array(handles.kin_array(1, 4), 13)/1000; 
-        movement_time_thumb_z = (handles.Master_array(handles.kin_array(1, 12), 13)-handles.Master_array(handles.kin_array(1, 6), 13))/1000 * thumb; 
-
-        thumb_end_pos_x = handles.Master_array(handles.kin_array(1, 10), 4) * thumb;%thumb x value when kept still
-        thumb_end_pos_y = handles.Master_array(handles.kin_array(1, 11), 5) * thumb;
-        thumb_end_pos_z = handles.Master_array(handles.kin_array(1, 12), 6) * thumb;
-
-        thumb_begin_pos_x = handles.Master_array(handles.kin_array(1, 3)-1, 4) * thumb; %index xyz values when movement starts (used movement start z index)
-        thumb_begin_pos_y = handles.Master_array(handles.kin_array(1, 3)-1, 5) * thumb;
-        thumb_begin_pos_z = handles.Master_array(handles.kin_array(1, 3)-1, 6) * thumb;
-
-        thumb_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 22), 4) * thumb;
-        thumb_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 23), 5) * thumb;
-        thumb_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 6) * thumb;
-
-        time_thumb_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 7)-handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
-
-        thumb_x_pos_PA = handles.Master_array(handles.kin_array(1, 24), 4) * thumb;
-        thumb_y_pos_PA = handles.Master_array(handles.kin_array(1, 24), 5) * thumb;
-        thumb_z_pos_PA = handles.Master_array(handles.kin_array(1, 24), 6) * thumb;
-
-        thumb_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 16), 4) * thumb;
-        thumb_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 17), 5) * thumb;
-        thumb_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 18), 6) * thumb;
-
-        time_thumb_PV_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 18), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1,6),7))/1000 * thumb;
-
-        thumb_x_pos_PV = handles.Master_array(handles.kin_array(1, 18), 4) * thumb;
-        thumb_y_pos_PV = handles.Master_array(handles.kin_array(1, 18), 5) * thumb;
-        thumb_z_pos_PV = handles.Master_array(handles.kin_array(1, 18), 6) * thumb;
-
-        thumb_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 28), 4) * thumb;
-        thumb_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 29), 5) * thumb;
-        thumb_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 6) * thumb;
-
-        time_thumb_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
-
-        thumb_x_pos_PD = handles.Master_array(handles.kin_array(1, 30), 4) * thumb;
-        thumb_y_pos_PD = handles.Master_array(handles.kin_array(1, 30), 5) * thumb;
-        thumb_z_pos_PD = handles.Master_array(handles.kin_array(1, 30), 6) * thumb;
-    % a = {'ifs_move_x',' ifs_move_y',' ifs_move_z',' ths_move_x',' ths_move_y',' ths_move_z',' ife_move_x','ife_move_y',' ife_move_z',' the_move_x',' the_move_y',' the_move_z',' if_max_vel_index_x',' if_max_vel_index_y',' if_max_vel_index_z',' th_max_vel_index_x',' th_max_vel_index_y',' th_max_vel_index_z',' if_peakAccel_index_x',' if_peakAccel_index_y',' if_peakAccel_index_z',' th_peakAccel_index_x',' th_peakAccel_index_y',' th_peakAccel_index_z',' if_peakDeccel_index_x',' if_peakDeccel_index_y',' if_peakDeccel_index_z',' th_peakDeccel_index_x',' th_peakDeccel_index_y',' th_peakDeccel_index_z',' if_max_v_vel_index',' th_max_v_vel_index',' if_x_50n',' if_y_50n',' if_z_50n',' if_x_50p',' if_y_50p',' if_z_50p',' if_x_100n',' if_y_100n',' if_z_100n',' if_x_100p ','if_y_100p',' if_z_100p',' th_x_50n',' th_y_50n ','th_z_50n',' th_x_50p ','th_y_50p','th_z_50p',' th_x_100n ','th_y_100n',' th_z_100n',' th_x_100p',' th_y_100p ','th_z_100p'};
-    %     disp(a);
-    %     disp(handles.kin_array);
-        thumb_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1,32),2) *thumb; 
-
-        output_array = [trial_validity hand_latency movement_time_thumb_z 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 thumb_x_PA thumb_y_PA thumb_z_PA time_thumb_PA_z thumb_x_pos_PA thumb_y_pos_PA thumb_z_pos_PA thumb_x_PV thumb_y_PV thumb_z_PV time_thumb_PV_z thumb_x_pos_PV thumb_y_pos_PV thumb_z_pos_PV thumb_x_PD thumb_y_PD thumb_z_PD time_thumb_PD_z thumb_x_pos_PD thumb_y_pos_PD thumb_z_pos_PD thumb_end_pos_x thumb_end_pos_y thumb_end_pos_z index_peak_vel_vec thumb_peak_vel_vec 0 0 0 0 0 0 0 0 0 0 0 0 handles.kin_array(1,45)*thumb handles.kin_array(1,46)*thumb handles.kin_array(1,47)*thumb handles.kin_array(1,48)*thumb handles.kin_array(1,49)*thumb handles.kin_array(1,50)*thumb handles.kin_array(1,51)*thumb handles.kin_array(1,52)*thumb handles.kin_array(1,53)*thumb handles.kin_array(1,54)*thumb handles.kin_array(1,55)*thumb handles.kin_array(1,56)*thumb 0 0 0 thumb_begin_pos_x thumb_begin_pos_y thumb_begin_pos_z];
-    end
-    
-    if(handles.marker_select ==1) %Thumb and Index selected
-        %handles.event_data
-        %processing the accepted markers
-        trial_validity = 1;
-        hand_latency = handles.Master_array(handles.kin_array(1, 1), 13)/1000; 
-        movement_time_index_z = (handles.Master_array(handles.kin_array(1, 9), 13)-handles.Master_array(handles.kin_array(1, 3), 13))/1000 * index; %used this as movement time (sec)
-        movement_time_thumb_z = (handles.Master_array(handles.kin_array(1, 12), 13)-handles.Master_array(handles.kin_array(1, 6), 13))/1000 * thumb; 
-
-        if(movement_time_index_z ==0) %if index finger not selected, use thumb movement start time
-            movement_time_index_z = movement_time_thumb_z;
-        end
-        
-        targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
-        targetx = handles.Calibration_array (targetloc+1, 1); %targetloc+1 because the first row of handles.Calibration_array contains the startign coordinates
-        targety = handles.Calibration_array (targetloc+1, 2);
-        targetz = handles.Calibration_array (targetloc+1, 3);
-
-        index_end_pos_x = (handles.Master_array(handles.kin_array(1, 7), 1)); %index x values when kept still
-        index_end_pos_y = (handles.Master_array(handles.kin_array(1, 8), 2));
-        index_end_pos_z = (handles.Master_array(handles.kin_array(1, 9), 3));
-
-        index_begin_pos_x = handles.Master_array(handles.kin_array(1, 3)-1, 1) * index; %index xyz values when movement starts (used movement start z index)
-        index_begin_pos_y = handles.Master_array(handles.kin_array(1, 3)-1, 2) * index;
-        index_begin_pos_z = handles.Master_array(handles.kin_array(1, 3)-1, 3) * index;
-
-        accuracyx = (index_end_pos_x-targetx); %accuracy of 
+        accuracyx = (index_end_pos_x-targetx); %accuracy of index finger
         accuracyy = (index_end_pos_y-targety);
         accuracyz = (index_end_pos_z-targetz);
 
-        index_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 19), 1) * index;
-        index_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 20), 2) * index;
-        index_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 3) * index;
+        index_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 19), 2) * index;
+        index_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 20), 3) * index;
+        index_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 4) * index;
 
-        time_index_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
+        time_index_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 1) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 1))/1000 * index;
 
-        index_x_pos_PA = handles.Master_array(handles.kin_array(1, 21), 1) * index;
-        index_y_pos_PA = handles.Master_array(handles.kin_array(1, 21), 2) * index;
-        index_z_pos_PA = handles.Master_array(handles.kin_array(1, 21), 3) * index;
+        index_x_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 21), 2) * index;
+        index_y_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 21), 3) * index;
+        index_z_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 21), 4) * index;
 
-        index_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 13), 1) * index;
-        index_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 14), 2) * index;
-        index_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 3) * index;
+        index_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 13), 2) * index;
+        index_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 14), 3) * index;
+        index_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 4) * index;
 
-        time_index_PV_z = (handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 7) - handles.Filtered_Velocity_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
+        time_index_PV_z = (handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 1) - handles.Filtered_Velocity_XYZ(handles.kin_array(1, 3), 1))/1000 * index;
 
-        index_x_pos_PV = handles.Master_array(handles.kin_array(1, 15), 1) * index;
-        index_y_pos_PV = handles.Master_array(handles.kin_array(1, 15), 2) * index;
-        index_z_pos_PV = handles.Master_array(handles.kin_array(1, 15), 3) * index;
+        index_x_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 15), 2) * index;
+        index_y_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 15), 3) * index;
+        index_z_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 15), 4) * index;
 
-        index_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 25), 1) * index;
-        index_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 26), 2) * index;
-        index_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 3) * index;
+        index_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 25), 2) * index;
+        index_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 26), 3) * index;
+        index_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 4) * index;
 
-        time_index_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 7))/1000 * index;
+        time_index_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 1) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 1))/1000 * index;
 
-        index_x_pos_PD = handles.Master_array(handles.kin_array(1, 27), 1) * index;
-        index_y_pos_PD = handles.Master_array(handles.kin_array(1, 27), 2) * index;
-        index_z_pos_PD = handles.Master_array(handles.kin_array(1, 27), 3) * index;
+        index_x_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 27), 2) * index;
+        index_y_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 27), 3) * index;
+        index_z_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 27), 4) * index;
 
-        thumb_end_pos_x = handles.Master_array(handles.kin_array(1, 10), 4)* thumb;%thumb x value when kept still
-        thumb_end_pos_y = handles.Master_array(handles.kin_array(1, 11), 5)* thumb;
-        thumb_end_pos_z = handles.Master_array(handles.kin_array(1, 12), 6)* thumb;
+        palm_end_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 10), 5) * palm;%palm x value when kept still
+        palm_end_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 11), 6) * palm;
+        palm_end_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 12), 7) * palm;
 
-        thumb_begin_pos_x = handles.Master_array(handles.kin_array(1, 3)-1, 4) * thumb; %index xyz values when movement starts (used movement start z index)
-        thumb_begin_pos_y = handles.Master_array(handles.kin_array(1, 3)-1, 5) * thumb;
-        thumb_begin_pos_z = handles.Master_array(handles.kin_array(1, 3)-1, 6) * thumb;
+        palm_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 5) * palm; %index xyz values when movement starts (used movement start z index)
+        palm_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 6) * palm;
+        palm_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 7) * palm;
 
-        thumb_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 22), 4) * thumb;
-        thumb_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 23), 5) * thumb;
-        thumb_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 6) * thumb;
+        palm_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 22), 5) * palm;
+        palm_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 23), 6) * palm;
+        palm_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 7) * palm;
 
-        time_thumb_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 7)-handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
+        time_palm_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 1)-handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 1))/1000 * palm;
 
-        thumb_x_pos_PA = handles.Master_array(handles.kin_array(1, 24), 4) * thumb;
-        thumb_y_pos_PA = handles.Master_array(handles.kin_array(1, 24), 5) * thumb;
-        thumb_z_pos_PA = handles.Master_array(handles.kin_array(1, 24), 6) * thumb;
+        palm_x_pos_PA= handles.Filtered_XYZ(handles.kin_array(1, 24), 5) * palm;
+        palm_y_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 24), 6) * palm;
+        palm_z_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 24), 7) * palm;
 
-        thumb_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 16), 4) * thumb;
-        thumb_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 17), 5) * thumb;
-        thumb_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 18), 6) * thumb;
+        palm_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 16), 5) * palm;
+        palm_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 17), 6) * palm;
+        palm_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 18), 7) * palm;
 
-        time_thumb_PV_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 18), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
+        time_palm_PV_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 18), 1) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 1))/1000 * palm;
 
-        thumb_x_pos_PV = handles.Master_array(handles.kin_array(1, 18), 4) * thumb;
-        thumb_y_pos_PV = handles.Master_array(handles.kin_array(1, 18), 5) * thumb;
-        thumb_z_pos_PV = handles.Master_array(handles.kin_array(1, 18), 6) * thumb;
+        palm_x_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 18), 5) * palm;
+        palm_y_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 18), 6) * palm;
+        palm_z_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 18), 7) * palm;
 
-        thumb_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 28), 4) * thumb;
-        thumb_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 29), 5) * thumb;
-        thumb_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 6) * thumb;
+        palm_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 28), 5) * palm;
+        palm_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 29), 6) * palm;
+        palm_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 7) * palm;
 
-        time_thumb_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 7) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 7))/1000 * thumb;
+        time_palm_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 1) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 1))/1000 * palm;
 
-        thumb_x_pos_PD = handles.Master_array(handles.kin_array(1, 30), 4) * thumb;
-        thumb_y_pos_PD = handles.Master_array(handles.kin_array(1, 30), 5) * thumb;
-        thumb_z_pos_PD = handles.Master_array(handles.kin_array(1, 30), 6) * thumb;
-    % a = {'ifs_move_x',' ifs_move_y',' ifs_move_z',' ths_move_x',' ths_move_y',' ths_move_z',' ife_move_x','ife_move_y',' ife_move_z',' the_move_x',' the_move_y',' the_move_z',' if_max_vel_index_x',' if_max_vel_index_y',' if_max_vel_index_z',' th_max_vel_index_x',' th_max_vel_index_y',' th_max_vel_index_z',' if_peakAccel_index_x',' if_peakAccel_index_y',' if_peakAccel_index_z',' th_peakAccel_index_x',' th_peakAccel_index_y',' th_peakAccel_index_z',' if_peakDeccel_index_x',' if_peakDeccel_index_y',' if_peakDeccel_index_z',' th_peakDeccel_index_x',' th_peakDeccel_index_y',' th_peakDeccel_index_z',' if_max_v_vel_index',' th_max_v_vel_index',' if_x_50n',' if_y_50n',' if_z_50n',' if_x_50p',' if_y_50p',' if_z_50p',' if_x_100n',' if_y_100n',' if_z_100n',' if_x_100p ','if_y_100p',' if_z_100p',' th_x_50n',' th_y_50n ','th_z_50n',' th_x_50p ','th_y_50p','th_z_50p',' th_x_100n ','th_y_100n',' th_z_100n',' th_x_100p',' th_y_100p ','th_z_100p'};
-    %     disp(a);
-    %     disp(handles.kin_array);
-        index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1,31),1) *index; 
-        thumb_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1,32),2) *thumb; 
+        palm_x_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 30), 5) * palm;
+        palm_y_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 30), 6) * palm;
+        palm_z_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 30), 7) * palm;
 
-        output_array = [trial_validity hand_latency movement_time_index_z accuracyx accuracyy accuracyz index_x_PA index_y_PA index_z_PA time_index_PA_z index_x_pos_PA index_y_pos_PA index_z_pos_PA index_x_PV index_y_PV index_z_PV time_index_PV_z index_x_pos_PV index_y_pos_PV index_z_pos_PV index_x_PD index_y_PD index_z_PD time_index_PD_z index_x_pos_PD index_y_pos_PD index_z_pos_PD index_end_pos_x index_end_pos_y index_end_pos_z thumb_x_PA thumb_y_PA thumb_z_PA time_thumb_PA_z thumb_x_pos_PA thumb_y_pos_PA thumb_z_pos_PA thumb_x_PV thumb_y_PV thumb_z_PV time_thumb_PV_z thumb_x_pos_PV thumb_y_pos_PV thumb_z_pos_PV thumb_x_PD thumb_y_PD thumb_z_PD time_thumb_PD_z thumb_x_pos_PD thumb_y_pos_PD thumb_z_pos_PD thumb_end_pos_x thumb_end_pos_y thumb_end_pos_z index_peak_vel_vec thumb_peak_vel_vec handles.kin_array(1,33)*index handles.kin_array(1,34)*index handles.kin_array(1,35)*index handles.kin_array(1,36)*index handles.kin_array(1,37)*index handles.kin_array(1,38)*index handles.kin_array(1,39)*index handles.kin_array(1,40)*index handles.kin_array(1,41)*index handles.kin_array(1,42)*index handles.kin_array(1,43)*index handles.kin_array(1,44)*index handles.kin_array(1,45)*thumb handles.kin_array(1,46)*thumb handles.kin_array(1,47)*thumb handles.kin_array(1,48)*thumb handles.kin_array(1,49)*thumb handles.kin_array(1,50)*thumb handles.kin_array(1,51)*thumb handles.kin_array(1,52)*thumb handles.kin_array(1,53)*thumb handles.kin_array(1,54)*thumb handles.kin_array(1,55)*thumb handles.kin_array(1,56)*thumb index_begin_pos_x index_begin_pos_y index_begin_pos_z thumb_begin_pos_x thumb_begin_pos_y thumb_begin_pos_z];
+        index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1, 31), 2) * index;
+        palm_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1, 32), 3) * palm;
+
+        output_array = [trial_validity hand_latency movement_time_index_z accuracyx accuracyy accuracyz index_x_PA index_y_PA index_z_PA time_index_PA_z index_x_pos_PA index_y_pos_PA index_z_pos_PA index_x_PV index_y_PV index_z_PV time_index_PV_z index_x_pos_PV index_y_pos_PV index_z_pos_PV index_x_PD index_y_PD index_z_PD time_index_PD_z index_x_pos_PD index_y_pos_PD index_z_pos_PD index_end_pos_x index_end_pos_y index_end_pos_z palm_x_PA palm_y_PA palm_z_PA time_palm_PA_z palm_x_pos_PA palm_y_pos_PA palm_z_pos_PA palm_x_PV palm_y_PV palm_z_PV time_palm_PV_z palm_x_pos_PV palm_y_pos_PV palm_z_pos_PV palm_x_PD palm_y_PD palm_z_PD time_palm_PD_z palm_x_pos_PD palm_y_pos_PD palm_z_pos_PD palm_end_pos_x palm_end_pos_y palm_end_pos_z index_peak_vel_vec palm_peak_vel_vec handles.kin_array(1,33)*index handles.kin_array(1,34)*index handles.kin_array(1,35)*index handles.kin_array(1,36)*index handles.kin_array(1,37)*index handles.kin_array(1,38)*index handles.kin_array(1,39)*index handles.kin_array(1,40)*index handles.kin_array(1,41)*index handles.kin_array(1,42)*index handles.kin_array(1,43)*index handles.kin_array(1,44)*index handles.kin_array(1,45)*palm handles.kin_array(1,46)*palm handles.kin_array(1,47)*palm handles.kin_array(1,48)*palm handles.kin_array(1,49)*palm handles.kin_array(1,50)*palm handles.kin_array(1,51)*palm handles.kin_array(1,52)*palm handles.kin_array(1,53)*palm handles.kin_array(1,54)*palm handles.kin_array(1,55)*palm handles.kin_array(1,56)*palm index_begin_pos_x index_begin_pos_y index_begin_pos_z palm_begin_pos_x palm_begin_pos_y palm_begin_pos_z];
+
+        %First output format
+        num = num2str(handles.Trial_Num+1);
+        str2 = strcat('H',num);
+        xlswrite(handles.events_filename, output_array, 1, str2);
     end
-       
-    %First output format
-    num = num2str(handles.Trial_Num+1);
-    str2 = strcat('H',num);
-    xlswrite(handles.events_filename,output_array, 1,str2);
 end
+if(handles.point == 1) %Grasping
+    if(handles.system == 1) %Leap
+        trial_validity = 1;
+        hand_latency = handles.Filtered_XYZ(1, 7) / 1000;
+        
+        %Approach phase
+        movement_time_approach_phase = handles.Filtered_XYZ(handles.kin_array(1,1), 7) - handles.Filtered_XYZ(handles.kin_array(1, 7), 7) / 1000; %Approach phase movement time (secs)
+        
+        index_end_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 7), 1); %Index xyz components when approach phase ended
+        index_end_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 8), 2);
+        index_end_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 9), 3);
+        thumb_end_pos_x = handles.Filtered_XYZ(handles.kin_array(1,10), 4); %Thumb xyz positions when approach phase ends
+        thumb_end_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 11), 5);
+        thumb_end_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 12), 6);
+        
+        index_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1,1) -1 , 1); %Index xyz positions one frame before start
+        index_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1,2) -1, 2); 
+        index_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 3);
+        thumb_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1,4) -1, 4); %Thumb xyz positions one frame before start
+        thumb_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 5)-1, 5);
+        thumb_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 6) -1, 6);
+        
+        index_pos_x_PA = handles.Filtered_XYZ(handles.kin_array(1, 19), 1); %Index xyz positions at Peak Acceleration
+        index_pos_y_PA = handles.Filtered_XYZ(handles.kin_array(1, 20), 2);
+        index_pos_z_PA = handles.Filtered_XYZ(handles.kin_array(1, 21), 3);
+        thumb_pos_x_PA = handles.Filtered_XYZ(handles.kin_array(1, 22), 4); %Thumb xyz positions at Peak Acceleration
+        thumb_pos_y_PA = handles.Filtered_XYZ(handles.kin_array(1, 23), 5);
+        thumb_pos_z_PA = handles.Filtered_XYZ(handles.kin_array(1, 24), 6);
+        
+        index_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 19), 1); %Index + Thumb xyz accelerations at peak acceleration
+        index_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 20), 2);
+        index_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 3);
+        thumb_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 22), 4);
+        thumb_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 23), 5);
+        thumb_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 6);
+        
+        time_PA = handles.Filtered_XYZ(handles.kin_array(1, 19), 7) - handles.Filtered_XYZ(handles.kin_array(1, 1), 7) /1000;
+        
+        index_pos_x_PV = handles.Filtered_XYZ(handles.kin_array(1, 13), 1); %Index xyz positions at peak velocity
+        index_pos_y_PV = handles.Filtered_XYZ(handles.kin_array(1, 14), 2);
+        index_pos_z_PV = handles.Filtered_XYZ(handles.kin_array(1, 15), 3);
+        thumb_pos_x_PV = handles.Filtered_XYZ(handles.kin_array(1, 16), 4); %Thumb xyz positions at peak velocity
+        thumb_pos_y_PV = handles.Filtered_XYZ(handles.kin_array(1, 17), 5);
+        thumb_pos_z_PV = handles.Filtered_XYZ(handles.kin_array(1, 18), 6);
+        
+        index_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 13), 1); %index + thumb xyz velocities at peak velocity
+        index_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 14), 2);
+        index_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 3);
+        thumb_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 16), 4);
+        thumb_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 17), 5);
+        thumb_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 18), 6);
+        
+        
+        time_PV = handles.Filtered_XYZ(handles.kin_array(1,13), 7) - handles.Filtered_XYZ(handles.kin_array(1,1), 7) / 1000;
+        
+        index_pos_x_PD = handles.Filtered_XYZ(handles.kin_array(1, 25), 1); %Index xyz positions at peak decceleration
+        index_pos_y_PD = handles.Filtered_XYZ(handles.kin_array(1, 26), 2);
+        index_pos_z_PD = handles.Filtered_XYZ(handles.kin_array(1, 27), 3);
+        thumb_pos_x_PD = handles.Filtered_XYZ(handles.kin_array(1, 28), 4); %Thumb xyz positions at peak decceleration
+        thumb_pos_y_PD = handles.Filtered_XYZ(handles.kin_array(1, 29), 5);
+        thumb_pos_z_PD = handles.Filtered_XYZ(handles.kin_array(1, 30), 6);
+        
+        index_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 25), 1); %Index + thumb xyz accelerations at peak decceleration
+        index_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 26), 2);
+        index_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 3);
+        thumb_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 28), 4);
+        thumb_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 29), 5);
+        thumb_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 6);
+        
+        time_PD = handles.Filtered_XYZ(handles.kin_array(1, 25), 7) - handles.Filtered_XYZ(handles.kin_array(1,1), 7) /1000;
+        
+        index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1, 31), 2);
+        thumb_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1, 32), 3)
+        
+        approach_output = [trial_validity hand_latency movement_time_approach_phase index_x_PA index_y_PA index_z_PA thumb_x_PA thumb_y_PA thumb_z_PA time_PA index_pos_x_PA index_pos_y_PA index_pos_z_PA thumb_pos_x_PA thumb_pos_y_PA thumb_pos_z_PA index_x_PV index_y_PV index_z_PV thumb_x_PV thumb_y_PV thumb_z_PV time_PV index_pos_x_PV index_pos_y_PV index_pos_z_PV thumb_pos_x_PV thumb_pos_y_PV thumb_pos_z_PV index_x_PD index_y_PD index_z_PD thumb_x_PD thumb_y_PD thumb_z_PD time_PD index_pos_x_PD index_pos_y_PD index_pos_z_PD thumb_pos_x_PD thumb_pos_y_PD thumb_pos_z_PD index_end_pos_x index_end_pos_y index_end_pos_z thumb_end_pos_x thumb_end_pos_y thumb_end_pos_z index_peak_vel_vec thumb_peak_vel_vec handles.kin_array(1,33) handles.kin_array(1,34) handles.kin_array(1,35) handles.kin_array(1,36) handles.kin_array(1,37) handles.kin_array(1,38) handles.kin_array(1,39) handles.kin_array(1,40) handles.kin_array(1,41) handles.kin_array(1,42) handles.kin_array(1,43) handles.kin_array(1,44) handles.kin_array(1,45) handles.kin_array(1,46) handles.kin_array(1,47) handles.kin_array(1,48) handles.kin_array(1,49) handles.kin_array(1,50) handles.kin_array(1,51) handles.kin_array(1,52) handles.kin_array(1,53) handles.kin_array(1,54) handles.kin_array(1,55) handles.kin_array(1,56) index_begin_pos_x index_begin_pos_y index_begin_pos_z thumb_begin_pos_x thumb_begin_pos_y thumb_begin_pos_z];
 
-if(handles.system ==2) %Optotrak: handles.marker_select ->1 (index +palm) handles.marker_select ->2 (index only) handles.marker_select ->3 (palm only) 
-    handles.edited =0;
-    index = 1;
-    palm = 1;
-    if (handles.marker_select == 2) %Index only selected
-        palm = 0;
+        %%%Return Phase
+        movement_time_return_phase = handles.Filtered_XYZ(handles.kin_array(1,57), 7) - handles.Filtered_XYZ(handles.kin_array(1, 63), 7) / 1000; %Return phase movement time
+        
+        index_end_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 63), 1); %Index xyz components when approach phase ended
+        index_end_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 64), 2);
+        index_end_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 65), 3);
+        thumb_end_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 66), 4); %Thumb xyz positions when approach phase ends
+        thumb_end_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 67), 5);
+        thumb_end_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 68), 6);
+        
+        index_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 57) -1 , 1); %Index xyz positions one frame before start
+        index_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 58) -1, 2); 
+        index_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 59)-1, 3);
+        thumb_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 60) -1, 4); %Thumb xyz positions one frame before start
+        thumb_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 61)-1, 5);
+        thumb_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 62) -1, 6);
+        
+        index_pos_x_PA = handles.Filtered_XYZ(handles.kin_array(1, 75), 1); %Index xyz positions at Peak Acceleration
+        index_pos_y_PA = handles.Filtered_XYZ(handles.kin_array(1, 76), 2);
+        index_pos_z_PA = handles.Filtered_XYZ(handles.kin_array(1, 77), 3);
+        thumb_pos_x_PA = handles.Filtered_XYZ(handles.kin_array(1, 78), 4); %Thumb xyz positions at Peak Acceleration
+        thumb_pos_y_PA = handles.Filtered_XYZ(handles.kin_array(1, 79), 5);
+        thumb_pos_z_PA = handles.Filtered_XYZ(handles.kin_array(1, 80), 6);
+        
+        index_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 75), 1); %Index + Thumb xyz accelerations at peak acceleration
+        index_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 76), 2);
+        index_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 77), 3);
+        thumb_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 78), 4);
+        thumb_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 79), 5);
+        thumb_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 80), 6);
+        
+        time_PA = handles.Filtered_XYZ(handles.kin_array(1, 75), 7) - handles.Filtered_XYZ(handles.kin_array(1, 57), 7) /1000;
+        
+        index_pos_x_PV = handles.Filtered_XYZ(handles.kin_array(1, 69), 1); %Index xyz positions at peak velocity
+        index_pos_y_PV = handles.Filtered_XYZ(handles.kin_array(1, 70), 2);
+        index_pos_z_PV = handles.Filtered_XYZ(handles.kin_array(1, 71), 3);
+        thumb_pos_x_PV = handles.Filtered_XYZ(handles.kin_array(1, 72), 4); %Thumb xyz positions at peak velocity
+        thumb_pos_y_PV = handles.Filtered_XYZ(handles.kin_array(1, 73), 5);
+        thumb_pos_z_PV = handles.Filtered_XYZ(handles.kin_array(1, 74), 6);
+        
+        index_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 69), 1); %index + thumb xyz velocities at peak velocity
+        index_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 70), 2);
+        index_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 71), 3);
+        thumb_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 72), 4);
+        thumb_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 73), 5);
+        thumb_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 74), 6);
+        
+        
+        time_PV = handles.Filtered_XYZ(handles.kin_array(1,69), 7) - handles.Filtered_XYZ(handles.kin_array(1,57), 7) / 1000;
+        
+        index_pos_x_PD = handles.Filtered_XYZ(handles.kin_array(1, 81), 1); %Index xyz positions at peak decceleration
+        index_pos_y_PD = handles.Filtered_XYZ(handles.kin_array(1, 82), 2);
+        index_pos_z_PD = handles.Filtered_XYZ(handles.kin_array(1, 83), 3);
+        thumb_pos_x_PD = handles.Filtered_XYZ(handles.kin_array(1, 84), 4); %Thumb xyz positions at peak decceleration
+        thumb_pos_y_PD = handles.Filtered_XYZ(handles.kin_array(1, 85), 5);
+        thumb_pos_z_PD = handles.Filtered_XYZ(handles.kin_array(1, 86), 6);
+        
+        index_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 81), 1); %Index + thumb xyz accelerations at peak decceleration
+        index_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 82), 2);
+        index_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 83), 3);
+        thumb_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 84), 4);
+        thumb_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 85), 5);
+        thumb_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 86), 6);
+        
+        time_PD = handles.Filtered_XYZ(handles.kin_array(1, 81), 7) - handles.Filtered_XYZ(handles.kin_array(1,57), 7) /1000;
+        
+        index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1, 87), 2);
+        thumb_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1, 88), 3)
+
+        return_output = [movement_time_return_phase index_x_PA index_y_PA index_z_PA thumb_x_PA thumb_y_PA thumb_z_PA time_PA index_pos_x_PA index_pos_y_PA index_pos_z_PA thumb_pos_x_PA thumb_pos_y_PA thumb_pos_z_PA index_x_PV index_y_PV index_z_PV thumb_x_PV thumb_y_PV thumb_z_PV time_PV index_pos_x_PV index_pos_y_PV index_pos_z_PV thumb_pos_x_PV thumb_pos_y_PV thumb_pos_z_PV index_x_PD index_y_PD index_z_PD thumb_x_PD thumb_y_PD thumb_z_PD time_PD index_pos_x_PD index_pos_y_PD index_pos_z_PD thumb_pos_x_PD thumb_pos_y_PD thumb_pos_z_PD index_end_pos_x index_end_pos_y index_end_pos_z thumb_end_pos_x thumb_end_pos_y thumb_end_pos_z index_peak_vel_vec thumb_peak_vel_vec handles.kin_array(1,89) handles.kin_array(1,90) handles.kin_array(1,91) handles.kin_array(1,92) handles.kin_array(1,93) handles.kin_array(1,94) handles.kin_array(1,95) handles.kin_array(1,96) handles.kin_array(1,97) handles.kin_array(1,98) handles.kin_array(1,99) handles.kin_array(1,100) handles.kin_array(1,101) handles.kin_array(1,102) handles.kin_array(1,103) handles.kin_array(1,104) handles.kin_array(1,105) handles.kin_array(1,106) handles.kin_array(1,107) handles.kin_array(1,108) handles.kin_array(1,109) handles.kin_array(1,110) handles.kin_array(1,111) handles.kin_array(1,112) index_begin_pos_x index_begin_pos_y index_begin_pos_z thumb_begin_pos_x thumb_begin_pos_y thumb_begin_pos_z];
+        
+        %Grip
+        
+       
     end
-
-    if(handles.marker_select ==3) %Palm only selected
-        index =0;
-    end
-
-    %handles.event_data
-    %processing the accepted markers
-    trial_validity = 1;
-    hand_latency = handles.Filtered_XYZ(handles.kin_array(1, 1), 1)/1000; 
-    movement_time_index_z = (handles.Master_array(handles.kin_array(1, 9), 1)-handles.Master_array(handles.kin_array(1, 3), 1))/1000 * index; %used this as movement time (sec)
-    movement_time_palm_z = (handles.Master_array(handles.kin_array(1, 12), 1)-handles.Master_array(handles.kin_array(1, 6), 1))/1000 * palm; 
-
-    if(movement_time_index_z ==0) %if index finger not selected, use palm movement start time
-        movement_time_index_z = movement_time_palm_z;
-    end
-
-    targetloc = handles.event_data(handles.Trial_Num, 6); %assume target location is inputted as a numerical value following the order during calibration
-    
-    targetx = handles.Calibration_array (targetloc+1, 1);
-    targety = handles.Calibration_array (targetloc+1, 2);
-    targetz = handles.Calibration_array (targetloc+1, 3);
-
-    index_end_pos_x = (handles.Filtered_XYZ(handles.kin_array(1, 7), 2)); %index x values when kept still
-    index_end_pos_y = (handles.Filtered_XYZ(handles.kin_array(1, 8), 3)); %index y values when back at the needle
-    index_end_pos_z = (handles.Filtered_XYZ(handles.kin_array(1, 9), 4)); %index z values when back at the needle
-
-    index_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 2) *index; %index xyz values when 1 frame before movement starts (used movement start z index)
-    index_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 3) *index;
-    index_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 4) *index;
-
-    accuracyx = (index_end_pos_x-targetx); %accuracy of index finger
-    accuracyy = (index_end_pos_y-targety);
-    accuracyz = (index_end_pos_z-targetz);
-
-    index_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 19), 2) * index;
-    index_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 20), 3) * index;
-    index_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 4) * index;
-
-    time_index_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 21), 1) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 1))/1000 * index;
-
-    index_x_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 21), 2) * index;
-    index_y_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 21), 3) * index;
-    index_z_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 21), 4) * index;
-
-    index_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 13), 2) * index;
-    index_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 14), 3) * index;
-    index_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 4) * index;
-
-    time_index_PV_z = (handles.Filtered_Velocity_XYZ(handles.kin_array(1, 15), 1) - handles.Filtered_Velocity_XYZ(handles.kin_array(1, 3), 1))/1000 * index;
-
-    index_x_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 15), 2) * index;
-    index_y_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 15), 3) * index;
-    index_z_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 15), 4) * index;
-
-    index_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 25), 2) * index;
-    index_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 26), 3) * index;
-    index_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 4) * index;
-
-    time_index_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 27), 1) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 3), 1))/1000 * index;
-
-    index_x_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 27), 2) * index;
-    index_y_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 27), 3) * index;
-    index_z_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 27), 4) * index;
-
-    palm_end_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 10), 5) * palm;%palm x value when kept still
-    palm_end_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 11), 6) * palm;
-    palm_end_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 12), 7) * palm;
-    
-    palm_begin_pos_x = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 5) * palm; %index xyz values when movement starts (used movement start z index)
-    palm_begin_pos_y = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 6) * palm;
-    palm_begin_pos_z = handles.Filtered_XYZ(handles.kin_array(1, 3)-1, 7) * palm;
-
-    palm_x_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 22), 5) * palm;
-    palm_y_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 23), 6) * palm;
-    palm_z_PA = handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 7) * palm;
-
-    time_palm_PA_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 24), 1)-handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 1))/1000 * palm;
-
-    palm_x_pos_PA= handles.Filtered_XYZ(handles.kin_array(1, 24), 5) * palm;
-    palm_y_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 24), 6) * palm;
-    palm_z_pos_PA = handles.Filtered_XYZ(handles.kin_array(1, 24), 7) * palm;
-
-    palm_x_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 16), 5) * palm;
-    palm_y_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 17), 6) * palm;
-    palm_z_PV = handles.Filtered_Velocity_XYZ(handles.kin_array(1, 18), 7) * palm;
-
-    time_palm_PV_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 18), 1) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 1))/1000 * palm;
-
-    palm_x_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 18), 5) * palm;
-    palm_y_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 18), 6) * palm;
-    palm_z_pos_PV = handles.Filtered_XYZ(handles.kin_array(1, 18), 7) * palm;
-
-    palm_x_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 28), 5) * palm;
-    palm_y_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 29), 6) * palm;
-    palm_z_PD = handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 7) * palm;
-
-    time_palm_PD_z = (handles.Filtered_Accel_XYZ(handles.kin_array(1, 30), 1) - handles.Filtered_Accel_XYZ(handles.kin_array(1, 6), 1))/1000 * palm;
-
-    palm_x_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 30), 5) * palm;
-    palm_y_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 30), 6) * palm;
-    palm_z_pos_PD = handles.Filtered_XYZ(handles.kin_array(1, 30), 7) * palm;
-
-    index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1, 31), 2) * index;
-    palm_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1, 32), 3) * palm;
-    
-    output_array = [trial_validity hand_latency movement_time_index_z accuracyx accuracyy accuracyz index_x_PA index_y_PA index_z_PA time_index_PA_z index_x_pos_PA index_y_pos_PA index_z_pos_PA index_x_PV index_y_PV index_z_PV time_index_PV_z index_x_pos_PV index_y_pos_PV index_z_pos_PV index_x_PD index_y_PD index_z_PD time_index_PD_z index_x_pos_PD index_y_pos_PD index_z_pos_PD index_end_pos_x index_end_pos_y index_end_pos_z palm_x_PA palm_y_PA palm_z_PA time_palm_PA_z palm_x_pos_PA palm_y_pos_PA palm_z_pos_PA palm_x_PV palm_y_PV palm_z_PV time_palm_PV_z palm_x_pos_PV palm_y_pos_PV palm_z_pos_PV palm_x_PD palm_y_PD palm_z_PD time_palm_PD_z palm_x_pos_PD palm_y_pos_PD palm_z_pos_PD palm_end_pos_x palm_end_pos_y palm_end_pos_z index_peak_vel_vec palm_peak_vel_vec handles.kin_array(1,33)*index handles.kin_array(1,34)*index handles.kin_array(1,35)*index handles.kin_array(1,36)*index handles.kin_array(1,37)*index handles.kin_array(1,38)*index handles.kin_array(1,39)*index handles.kin_array(1,40)*index handles.kin_array(1,41)*index handles.kin_array(1,42)*index handles.kin_array(1,43)*index handles.kin_array(1,44)*index handles.kin_array(1,45)*palm handles.kin_array(1,46)*palm handles.kin_array(1,47)*palm handles.kin_array(1,48)*palm handles.kin_array(1,49)*palm handles.kin_array(1,50)*palm handles.kin_array(1,51)*palm handles.kin_array(1,52)*palm handles.kin_array(1,53)*palm handles.kin_array(1,54)*palm handles.kin_array(1,55)*palm handles.kin_array(1,56)*palm index_begin_pos_x index_begin_pos_y index_begin_pos_z palm_begin_pos_x palm_begin_pos_y palm_begin_pos_z];
-   
-    %First output format
-    num = num2str(handles.Trial_Num+1);
-    str2 = strcat('H',num);
-    xlswrite(handles.events_filename, output_array, 1, str2);
 end
 
 str = strcat('Trial #: ', num2str(handles.Trial_Num), ' was accepted.');
@@ -3503,13 +3623,25 @@ function eventFile_Button_Callback(hObject, eventdata, handles)
 if(handles.system ==1 || handles.system ==2)
     [filename, pathname] = uigetfile('*.mat','Select the Events File');
     C= strsplit(filename, '.');
-    if(handles.system ==1) %Leap
-        handles.events_filename = strcat(C{1},'_Leap.xls');
-        output_headers ={'Pointing Valid Data 1/0','Hand Latency (sec)','Movement Time (sec)','Index X Accuracy','Index Y Accuracy','Index Z Accuracy','Peak Acceleration Index X','Peak Acceleration Index Y','Peak Acceleration Index Z','Time from onset to PA_Z','Index Position X @ PA_Z','Index Position Y @ PA_Z','Index Position Z @ PA_Z','Peak Velocity Index X','Peak Velocity Index Y','Peak Velocity Index Z','Time from onset to PV_Z','Index Position X @ PV_Z','Index Position Y @ PV_Z','Index Position Z @ PV_Z','Peak Deceleration Index X','Peak Deceleration Index Y','Peak Deceleration Index Z','Time from onset to PD_Z',	'Index Position X @ PD_Z',	'Index Position Y @ PD_Z',	'Index Position Z @ PD_Z',	'Index End Position X',	'Index End Position Y',	'Index End Position Z',	'Peak Acceleration thumb X','Peak Acceleration thumb Y','Peak Acceleration thumb Z','Time from onset to PA thumb Z','Finger Position X @ PA thumb Z','Finger Position Y @ PA thumb Z','Finger Position Z @ PA thumb Z','Peak Velocity thumb X','Peak Velocity thumb Y','Peak Velocity thumb Z',	'Time from onset to PV thumb Z','Finger Position X @ PV thumb Z','Finger Position Y @ PV thumb Z','Finger Position Z @ PV thumb Z',	'Peak Deceleration thumb X','Peak Deceleration thumb Y','Peak Deceleration thumb Z','Time from onset to PD thumb Z','Thumb Position X @ PD thumb Z','Thumb Position Y @ PD_Z','Thumb Position Z @ PD thumb Z','thumb End Position X','thumb End Position Y','thumb End Position z', 'Index Peak Velocity (Vector)','Thumb Peak Velocity (Vector)', 'Index (x) 50 msec before PV', 'Index (y) 50 msec before PV', 'Index (z) 50 msec before PV', 'Index (x) 50 msec after PV', 'Index (y) 50 msec after PV', 'Index (z) 50 msec after PV', 'Index (x) 100 msec before PV','Index (y) 100msec before PV','Index (z) 100 msec before PV','Index (x) 100 msec after PV','Index (y) 100 msec after PV','Index (z) 100 msec after PV','Thumb (x) 50 msec before PV', 'Thumb (y) 50 msec before PV', 'Thumb (z) 50 msec before PV', 'Thumb (x) 50 msec after PV', 'Thumb (y) 50 msec after PV', 'Thumb (z) 50 msec after PV', 'Thumb (x) 100 msec before PV','Thumb (y) 100msec before PV','Thumb (z) 100 msec before PV','Thumb (x) 100 msec after PV','Thumb (y) 100 msec after PV','Thumb (z) 100 msec after PV','Index (x) pos ofbs','Index(y) pos ofbs','Index (z) pos ofbs','Thumb (x) pos ofbs','Thumb (y) pos ofbs','Thumb (z) pos ofbs'};
+    if(handles.point == 0) %Pointing
+        if(handles.system ==1) %Leap
+            handles.events_filename = strcat(C{1},'_Leap.xls');
+            output_headers ={'Pointing Valid Data 1/0','Hand Latency (sec)','Movement Time (sec)','Index X Accuracy','Index Y Accuracy','Index Z Accuracy','Peak Acceleration Index X','Peak Acceleration Index Y','Peak Acceleration Index Z','Time from onset to PA_Z','Index Position X @ PA_Z','Index Position Y @ PA_Z','Index Position Z @ PA_Z','Peak Velocity Index X','Peak Velocity Index Y','Peak Velocity Index Z','Time from onset to PV_Z','Index Position X @ PV_Z','Index Position Y @ PV_Z','Index Position Z @ PV_Z','Peak Deceleration Index X','Peak Deceleration Index Y','Peak Deceleration Index Z','Time from onset to PD_Z',	'Index Position X @ PD_Z',	'Index Position Y @ PD_Z',	'Index Position Z @ PD_Z',	'Index End Position X',	'Index End Position Y',	'Index End Position Z',	'Peak Acceleration thumb X','Peak Acceleration thumb Y','Peak Acceleration thumb Z','Time from onset to PA thumb Z','Finger Position X @ PA thumb Z','Finger Position Y @ PA thumb Z','Finger Position Z @ PA thumb Z','Peak Velocity thumb X','Peak Velocity thumb Y','Peak Velocity thumb Z',	'Time from onset to PV thumb Z','Finger Position X @ PV thumb Z','Finger Position Y @ PV thumb Z','Finger Position Z @ PV thumb Z',	'Peak Deceleration thumb X','Peak Deceleration thumb Y','Peak Deceleration thumb Z','Time from onset to PD thumb Z','Thumb Position X @ PD thumb Z','Thumb Position Y @ PD_Z','Thumb Position Z @ PD thumb Z','thumb End Position X','thumb End Position Y','thumb End Position z', 'Index Peak Velocity (Vector)','Thumb Peak Velocity (Vector)', 'Index (x) 50 msec before PV', 'Index (y) 50 msec before PV', 'Index (z) 50 msec before PV', 'Index (x) 50 msec after PV', 'Index (y) 50 msec after PV', 'Index (z) 50 msec after PV', 'Index (x) 100 msec before PV','Index (y) 100msec before PV','Index (z) 100 msec before PV','Index (x) 100 msec after PV','Index (y) 100 msec after PV','Index (z) 100 msec after PV','Thumb (x) 50 msec before PV', 'Thumb (y) 50 msec before PV', 'Thumb (z) 50 msec before PV', 'Thumb (x) 50 msec after PV', 'Thumb (y) 50 msec after PV', 'Thumb (z) 50 msec after PV', 'Thumb (x) 100 msec before PV','Thumb (y) 100msec before PV','Thumb (z) 100 msec before PV','Thumb (x) 100 msec after PV','Thumb (y) 100 msec after PV','Thumb (z) 100 msec after PV','Index (x) pos ofbs','Index(y) pos ofbs','Index (z) pos ofbs','Thumb (x) pos ofbs','Thumb (y) pos ofbs','Thumb (z) pos ofbs'};
+        end
+        if(handles.system ==2) %Optotrak
+            handles.events_filename = strcat(C{1},'_Optotrak.xls');
+            output_headers ={'Pointing Valid Data 1/0','Hand Latency (sec)','Movement Time (sec)','Index X Accuracy','Index Y Accuracy','Index Z Accuracy','Peak Acceleration Index X','Peak Acceleration Index Y','Peak Acceleration Index Z','Time from onset to PA_Z','Index Position X @ PA_Z','Index Position Y @ PA_Z','Index Position Z @ PA_Z','Peak Velocity Index X','Peak Velocity Index Y','Peak Velocity Index Z','Time from onset to PV_Z','Index Position X @ PV_Z','Index Position Y @ PV_Z','Index Position Z @ PV_Z','Peak Deceleration Index X','Peak Deceleration Index Y','Peak Deceleration Index Z','Time from onset to PD_Z',	'Index Position X @ PD_Z',	'Index Position Y @ PD_Z',	'Index Position Z @ PD_Z',	'Index End Position X',	'Index End Position Y',	'Index End Position Z',	'Peak Acceleration Palm X','Peak Acceleration Palm Y','Peak Acceleration Palm Z','Time from onset to PA Palm Z','Finger Position X @ PA Palm Z','Finger Position Y @ PA Palm Z','Finger Position Z @ PA Palm Z','Peak Velocity Palm X','Peak Velocity Palm Y','Peak Velocity Palm Z',	'Time from onset to PV Palm Z','Finger Position X @ PV Palm Z','Finger Position Y @ PV Palm Z','Finger Position Z @ PV Palm Z',	'Peak Deceleration Palm X','Peak Deceleration Palm Y','Peak Deceleration Palm Z','Time from onset to PD Palm Z','Palm Position X @ PD Palm Z','Palm Position Y @ PD_Z','Palm Position Z @ PD Palm Z','Palm End Position X','Palm End Position Y','Palm End Position z', 'Index Peak Velocity (Vector)','Palm Peak Velocity (Vector)', 'Index (x) 50 msec before PV', 'Index (y) 50 msec before PV', 'Index (z) 50 msec before PV', 'Index (x) 50 msec after PV', 'Index (y) 50 msec after PV', 'Index (z) 50 msec after PV', 'Index (x) 100 msec before PV','Index (y) 100msec before PV','Index (z) 100 msec before PV','Index (x) 100 msec after PV','Index (y) 100 msec after PV','Index (z) 100 msec after PV','Palm (x) 50 msec before PV', 'Palm (y) 50 msec before PV', 'Palm (z) 50 msec before PV', 'Palm (x) 50 msec after PV', 'Palm (y) 50 msec after PV', 'Palm (z) 50 msec after PV', 'Palm (x) 100 msec before PV','Palm (y) 100msec before PV','Palm (z) 100 msec before PV','Palm (x) 100 msec after PV','Palm (y) 100 msec after PV','Palm (z) 100 msec after PV','Index (x) pos ofbs','Index(y) pos ofbs','Index (z) pos ofbs','Palm (x) pos ofbs','Palm (y) pos ofbs','Palm (z) pos ofbs'};
+        end
     end
-    if(handles.system ==2) %Optotrak
-        handles.events_filename = strcat(C{1},'_Optotrak.xls');
-        output_headers ={'Pointing Valid Data 1/0','Hand Latency (sec)','Movement Time (sec)','Index X Accuracy','Index Y Accuracy','Index Z Accuracy','Peak Acceleration Index X','Peak Acceleration Index Y','Peak Acceleration Index Z','Time from onset to PA_Z','Index Position X @ PA_Z','Index Position Y @ PA_Z','Index Position Z @ PA_Z','Peak Velocity Index X','Peak Velocity Index Y','Peak Velocity Index Z','Time from onset to PV_Z','Index Position X @ PV_Z','Index Position Y @ PV_Z','Index Position Z @ PV_Z','Peak Deceleration Index X','Peak Deceleration Index Y','Peak Deceleration Index Z','Time from onset to PD_Z',	'Index Position X @ PD_Z',	'Index Position Y @ PD_Z',	'Index Position Z @ PD_Z',	'Index End Position X',	'Index End Position Y',	'Index End Position Z',	'Peak Acceleration Palm X','Peak Acceleration Palm Y','Peak Acceleration Palm Z','Time from onset to PA Palm Z','Finger Position X @ PA Palm Z','Finger Position Y @ PA Palm Z','Finger Position Z @ PA Palm Z','Peak Velocity Palm X','Peak Velocity Palm Y','Peak Velocity Palm Z',	'Time from onset to PV Palm Z','Finger Position X @ PV Palm Z','Finger Position Y @ PV Palm Z','Finger Position Z @ PV Palm Z',	'Peak Deceleration Palm X','Peak Deceleration Palm Y','Peak Deceleration Palm Z','Time from onset to PD Palm Z','Palm Position X @ PD Palm Z','Palm Position Y @ PD_Z','Palm Position Z @ PD Palm Z','Palm End Position X','Palm End Position Y','Palm End Position z', 'Index Peak Velocity (Vector)','Palm Peak Velocity (Vector)', 'Index (x) 50 msec before PV', 'Index (y) 50 msec before PV', 'Index (z) 50 msec before PV', 'Index (x) 50 msec after PV', 'Index (y) 50 msec after PV', 'Index (z) 50 msec after PV', 'Index (x) 100 msec before PV','Index (y) 100msec before PV','Index (z) 100 msec before PV','Index (x) 100 msec after PV','Index (y) 100 msec after PV','Index (z) 100 msec after PV','Palm (x) 50 msec before PV', 'Palm (y) 50 msec before PV', 'Palm (z) 50 msec before PV', 'Palm (x) 50 msec after PV', 'Palm (y) 50 msec after PV', 'Palm (z) 50 msec after PV', 'Palm (x) 100 msec before PV','Palm (y) 100msec before PV','Palm (z) 100 msec before PV','Palm (x) 100 msec after PV','Palm (y) 100 msec after PV','Palm (z) 100 msec after PV','Index (x) pos ofbs','Index(y) pos ofbs','Index (z) pos ofbs','Palm (x) pos ofbs','Palm (y) pos ofbs','Palm (z) pos ofbs'};
+    if(handles.point == 1) %Grasping
+        if(handles.system == 1) %Leap
+            handles.event_filename = strcat(C{1}, '_Leap.xls');
+            output_headers = {'Grasping valid data 1/0'};
+        end
+        if(handles.system == 2) %Optotrak
+            handles.event_filename = strcat(C{1}, '_Optotrak.xls');
+            output_headers = {'Still to complete'};
+        end
     end
     event_data = load('-mat',filename);
     try
@@ -3517,19 +3649,17 @@ if(handles.system ==1 || handles.system ==2)
         event_d = getfield(event_data, names{1});
         handles.event_data = event_d;
     catch
-%         try
-%             event_d = getfield(event_data,'unnamed');
-%         catch
-%             event_d = getfield(event_data,'ans');
-%             event_d = unnamed;
-%         end
         handles.event_data = event_d;
     end
-    temp_event_d = num2cell(handles.event_data);
-    if(handles.system == 1) %Leap
-        set(handles.table1,'Data',temp_event_d);
-        set(handles.table1,'ColumnName',{'Trial #';'Stimulus';'Delay'; 'Location';'Side';'Calibration Value'});
+    try
+        handles.event_data = num2cell(handles.event_data);
+    catch
+    end
 
+    h = findobj(0, 'tag', 'table1');
+    if((handles.system == 1 || handles.system == 2) && handles.point==0) %Leap/Optotrak pointing
+        set(h,'Data',handles.event_data);
+        
         handles.curr_col = length(handles.event_data(:,1));
         xlswrite(handles.events_filename,{'Trial Number'}, 1,'A1'); %loaded events file information
         xlswrite(handles.events_filename,{'Condition'}, 1,'B1'); 
@@ -3541,9 +3671,8 @@ if(handles.system ==1 || handles.system ==2)
 
         xlswrite(handles.events_filename,output_headers, 1,'H1:CO1');
     end
-    if(handles.system == 2) %Optotrak
-        set(handles.table1,'Data',temp_event_d);
-        set(handles.table1, 'ColoumnName',{'Trial #','Obj. Size','Obj. Height','Depth Loc.','Azimuthal loc.'});
+    if((handles.system == 1 || handles.system == 2) && handles.point == 1) %Leap/Optotrak Grasping
+        set(h,'Data',handles.event_data);
         
         handles.curr_col = length(handles.event_data(:,1));
         xlswrite(handles.events_filename,{'Trial Number'}, 1,'A1'); %loaded events file information
@@ -3611,8 +3740,11 @@ function table1_CellEditCallback(hObject, eventdata, handles)
 %	NewData: EditData or its converted form set on the Data property. Empty if Data was not changed
 %	Error: error string when failed to convert EditData to appropriate value for Data
 % handles    structure with handles and user data (see GUIDATA)
-
-handles.event_data{eventdata.Indices(1), eventdata.Indices(2)} = eventdata.EditData;
+try
+    handles.event_data(eventdata.Indices(1), eventdata.Indices(2)) = eventdata.EditData;
+catch
+    handles.event_data{eventdata.Indices(1), eventdata.Indices(2)} = eventdata.EditData;  
+end
 str = 'A';
 if eventdata.Indices(2) == 2
     str = 'B';
@@ -3638,23 +3770,23 @@ xlswrite(handles.events_filename, cellstr(eventdata.EditData), 1, str); %loaded 
 guidata(hObject, handles);
 end
 
-
-% --- Executes on button press in radiobutton4.
+% --- Executes on button press in radiobutton4. (Pointing)
 function radiobutton4_Callback(hObject, eventdata, handles)
 % hObject    handle to radiobutton4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+h = findobj(0, 'tag', 'table1');
 if (get(hObject,'Value') == get(hObject,'Max'))
     handles.point = 0; 
     set(handles.radiobutton5,'Value',0);
     set(handles.text14,'String','Max Index Velocity: ');
-    if(handles.system ==1)
+    set(h,'columnname',{'Trial #';'Stimulus';'Delay'; 'Location';'Side';'Calibration Value'});
+    handles.marker_select = 1;
+    if(handles.system ==1) %Leap
         set(handles.markers_popupmenu,'String',{'Index & Thumb';'Index Only';'Thumb Only'});
-        handles.marker_select = 1;
     end
-    if(handles.system == 2)
-        set(handles.markers_popupmenu,'String',{'Index & Palm';'Index Only';'Palm Only'});
-        handles.marker_select = 1;
+    if(handles.system == 2) %Optotrak
+        set(handles.markers_popupmenu,'String',{'Index & Palm';'Index Only';'Palm Only'});     
     end
 end
 if (get(hObject,'Value') == get(hObject,'Min'))
@@ -3664,20 +3796,21 @@ end
 guidata(hObject, handles);
 end
 
-% --- Executes on button press in radiobutton5.
+% --- Executes on button press in radiobutton5. (Grasping)
 function radiobutton5_Callback(hObject, eventdata, handles)
 % hObject    handle to radiobutton5 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of radiobutton5
-
+h = findobj(0, 'tag', 'table1');
 if (get(hObject,'Value') == get(hObject,'Max'))
     handles.point = 1;
-   set(handles.radiobutton4,'Value',0);
-   set(handles.text14,'String','Max Index Velocity: ');
-   set(handles.markers_popupmenu,'String',{'Grasping'});
-   handles.marker_select = 1;
+    set(handles.radiobutton4,'Value',0);
+	set(handles.text14,'String','Max Index Velocity: ');
+	set(handles.markers_popupmenu,'String',{'Grasping'});
+	handles.marker_select = 1;
+	set(h, 'columnname',{'Trial #','Obj. Size','Obj. Height','Depth Loc.','Azimuthal loc.','N/A','N/A'});
 end
 if (get(hObject,'Value') == get(hObject,'Min'))
     handles.point = -1;
@@ -3693,7 +3826,7 @@ function radiobutton4_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 % 
 % For the pointing stand alone app only
-handles.point =1;
+handles.point =0;
 set(hObject,'Value',1);
 guidata(hObject, handles);
 end
@@ -3805,7 +3938,7 @@ function object_dist_edit_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of object_dist_edit as text
 %        str2double(get(hObject,'String')) returns contents of object_dist_edit as a double
-handles.obj_dia = str2double(get(hObject,'String'));
+handles.obj_dist = str2double(get(hObject,'String'));
 handles.extract=0;
 guidata(hObject,handles);
 end
@@ -3982,4 +4115,268 @@ function warning_text_CreateFcn(hObject, eventdata, handles)
 
 set(hObject, 'String','Warning:');
 guidata(hObject,handles);
+end
+
+
+% --- Executes on button press in specify_button.
+function specify_button_Callback(hObject, eventdata, handles)
+% hObject    handle to specify_button (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+x = zeros(1,2);
+axes(handles.Middle_Graph);
+clc;
+for (i = 1: 2)
+    [x(1 ,i), y] = ginputax(handles.Top_Graph, 1);
+    plot(x(1, i),y,'ro');
+end
+axes(handles.Middle_Graph);
+clc;
+side = handles.event_data(handles.Trial_Num, 4);
+if(handles.point == 0)
+    if(handles.system == 1)%Leap
+        [~, index] = min(abs(handles.Filtered_XYZ(:, 7)-x(1, 1)));
+        [~, index2] = min(abs(handles.Filtered_XYZ(:,7)-x(1, 2)));
+        input_array = [index, index2];
+        handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ,handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel,handles.th_vec_vel, input_array);
+      
+       if (get(handles.Index_XYZ_Check,'Value') == get(handles.Index_XYZ_Check,'Max'))%changing Index kin vars
+           if(handles.marker_select == 1 || handles.marker_select == 2)
+                axes(handles.Top_Graph);
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,1), '-r');
+                hold on;
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,2), '-g');
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,3), '-b');
+
+                plot(handles.Filtered_XYZ(handles.kin_array(1,1),7), handles.Filtered_XYZ(handles.kin_array(1,1),1), 'or'); %Movement start X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,2),7), handles.Filtered_XYZ(handles.kin_array(1,2),2), 'og'); %Movement start Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,3),7), handles.Filtered_XYZ(handles.kin_array(1,3),3), 'ob'); %Movement start Z outgoing
+
+                plot(handles.Filtered_XYZ(handles.kin_array(1,7),7), handles.Filtered_XYZ(handles.kin_array(1,7),1), 'squarer'); %Movement end X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,8),7), handles.Filtered_XYZ(handles.kin_array(1,8),2), 'squareg'); %Movement end Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,9),7), handles.Filtered_XYZ(handles.kin_array(1,9),3), 'squareb'); %Movement end Z outgoing
+
+                axes(handles.Middle_Graph);
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,1), '-r'); 
+                hold on;
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,2), '-g'); 
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,3), '-b'); 
+
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,13),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,13),1), 'squarer'); % Peak velocity index X
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,14),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,14),2), 'squareg'); % Peak velocity index y
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),3), 'squareb'); % Peak velocity index z
+
+                axes(handles.Bottom_Graph);
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,1),'-r');
+                hold on;
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,2),'-g');
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,3),'-b');
+
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,19),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,19),1),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,20),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,20),2),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,21),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,21),3),'squareb');
+
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,25),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,25),1),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,26),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,26),2),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,27),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,27),3),'squareb');
+           end
+       end
+
+       if (get(handles.Thumb_XYZ_Check,'Value') == get(handles.Thumb_XYZ_Check,'Max')) %changing Thumb kin vars
+            if(handles.marker_select == 3 || handles.marker_select == 1) 
+                axes(handles.Top_Graph);
+                cla;
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,4), '-r');
+                hold on;
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,5), '-g');
+                plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,6), '-b');
+
+                plot(handles.Filtered_XYZ(handles.kin_array(1,4),7), handles.Filtered_XYZ(handles.kin_array(1,4),4), 'or'); %Movement start X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,5),7), handles.Filtered_XYZ(handles.kin_array(1,5),5), 'og'); %Movement start Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,6),7), handles.Filtered_XYZ(handles.kin_array(1,6),6), 'ob'); %Movement start Z outgoing
+
+                plot(handles.Filtered_XYZ(handles.kin_array(1,10),7), handles.Filtered_XYZ(handles.kin_array(1,10),4), 'squarer'); %Movement end X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,11),7), handles.Filtered_XYZ(handles.kin_array(1,11),5), 'squareg'); %Movement end Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,12),7), handles.Filtered_XYZ(handles.kin_array(1,12),6), 'squareb'); %Movement end Z outgoing
+
+                axes(handles.Middle_Graph);
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,4), '-r'); 
+                hold on;
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,5), '-g'); 
+                plot(handles.Filtered_Velocity_XYZ (:,7), handles.Filtered_Velocity_XYZ(:,6), '-b'); 
+
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),4), 'squarer'); % Peak velocity index X
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),5), 'squareg'); % Peak velocity index y
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),7),handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),6), 'squareb'); % Peak velocity index z
+
+                axes(handles.Bottom_Graph);
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,4),'-r');
+                hold on;
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,5),'-g');
+                plot(handles.Filtered_Accel_XYZ(:,7), handles.Filtered_Accel_XYZ (:,6),'-b');
+
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,22),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,22),4),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,23),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,23),5),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,24),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,24),6),'squareb');
+
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,28),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,28),4),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,29),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,29),5),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,30),7),handles.Filtered_Accel_XYZ(handles.kin_array(1,30),6),'squareb');
+            end
+       end
+      
+       if (get(handles.Index_Accel_Check,'Value') == get(handles.Index_Accel_Check,'Max')) %changing Index Vector kin vars
+           if(handles.marker_select == 1 || handles.marker_select == 2)
+                axes(handles.Top_Graph);
+                plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,1), '-r');
+                hold on;
+                plot(handles.Filtered_SagPos(handles.kin_array(1,1),5), handles.Filtered_SagPos(handles.kin_array(1,1),1), 'or'); %Movement start 
+                plot(handles.Filtered_SagPos(handles.kin_array(1,7),5), handles.Filtered_SagPos(handles.kin_array(1,7),1), 'or'); %Movement end
+
+                axes(handles.Middle_Graph);
+                plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,1),'-r');
+                hold on;
+                plot(handles.Filtered_SagPos(handles.kin_array(1,31),5),handles.Filtered_Velocity(handles.kin_array(1,31),1),'or'); %index max vel
+           end
+       end
+       
+       if (get(handles.Thumb_Accel_Check,'Value') == get(handles.Thumb_Accel_Check,'Max')) %changing Thumb Vector kin vars
+           if(handles.marker_select ==1 || handles.marker_select == 3)
+                axes(handles.Top_Graph);
+                plot(handles.Filtered_SagPos(:,5), handles.Filtered_SagPos(:,2), '-r');
+                hold on;
+                plot(handles.Filtered_SagPos(handles.kin_array(1,4),5), handles.Filtered_SagPos(handles.kin_array(1,4),2), 'or'); %Movement start 
+                plot(handles.Filtered_SagPos(handles.kin_array(1,10),5), handles.Filtered_SagPos(handles.kin_array(1,10),2), 'or'); %Movement end
+
+                axes(handles.Middle_Graph);
+                plot(handles.Filtered_Velocity(:,5), handles.Filtered_Velocity(:,2),'-r');
+                hold on;
+                plot(handles.Filtered_SagPos(handles.kin_array(1,32),5),handles.Filtered_Velocity(handles.kin_array(1,32),2),'or');
+           end
+       end
+    end
+    if(handles.system == 2) %Optotrak
+        [~, index] = min(abs(handles.Filtered_XYZ(:, 1)-x(1, 1)));
+        [~, index2] = min(abs(handles.Filtered_XYZ(:, 1)-x(1, 2)));
+        input_array = [index, index2]
+        handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ,handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel,handles.th_vec_vel, input_array);
+
+        if (get(handles.Index_XYZ_Check,'Value') == get(handles.Index_XYZ_Check,'Max')) %changing Index kin vars
+           if(handles.marker_select == 1 || handles.marker_select == 2)
+                axes(handles.Top_Graph);
+                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,2), '-r');
+                hold on;
+                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,3), '-g');
+                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,4), '-b');
+
+                plot(handles.Filtered_XYZ(handles.kin_array(1,1),1), handles.Filtered_XYZ(handles.kin_array(1,1),2), 'or'); %Movement start X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,2),1), handles.Filtered_XYZ(handles.kin_array(1,2),3), 'og'); %Movement start Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,3),1), handles.Filtered_XYZ(handles.kin_array(1,3),4), 'ob'); %Movement start Z outgoing
+
+                plot(handles.Filtered_XYZ(handles.kin_array(1,7),1), handles.Filtered_XYZ(handles.kin_array(1,7),2), 'squarer'); %Movement end X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,8),1), handles.Filtered_XYZ(handles.kin_array(1,8),3), 'squareg'); %Movement end Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,9),1), handles.Filtered_XYZ(handles.kin_array(1,9),4), 'squareb'); %Movement end Z outgoing
+
+                axes(handles.Middle_Graph);
+                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,2), '-r'); 
+                hold on;
+                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,3), '-g'); 
+                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,4), '-b'); 
+
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,13),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,13),2), 'squarer'); % Peak velocity index X
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,14),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,14),3), 'squareg'); % Peak velocity index y
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,15),4), 'squareb'); % Peak velocity index z
+
+                axes(handles.Bottom_Graph);
+                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,2),'-r');
+                hold on;
+                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,3),'-g');
+                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,4),'-b');
+
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,19),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,19),2),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,20),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,20),3),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,21),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,21),4),'squareb');
+
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,25),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,25),2),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,26),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,26),3),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,27),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,27),4),'squareb');
+           end
+       end
+
+       if (get(handles.Thumb_XYZ_Check,'Value') == get(handles.Thumb_XYZ_Check,'Max')) %changing Palm kin vars
+            if(handles.marker_select == 1 || handles.marker_select == 3)
+                axes(handles.Top_Graph);
+                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,5), '-r');
+                hold on;
+                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,6), '-g');
+                plot(handles.Filtered_XYZ(:,1), handles.Filtered_XYZ(:,7), '-b');
+
+                plot(handles.Filtered_XYZ(handles.kin_array(1,4),1), handles.Filtered_XYZ(handles.kin_array(1,4),5), 'or'); %Movement start X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,5),1), handles.Filtered_XYZ(handles.kin_array(1,5),6), 'og'); %Movement start Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,6),1), handles.Filtered_XYZ(handles.kin_array(1,6),7), 'ob'); %Movement start Z outgoing
+
+                plot(handles.Filtered_XYZ(handles.kin_array(1,10),1), handles.Filtered_XYZ(handles.kin_array(1,10),5), 'squarer'); %Movement end X outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,11),1), handles.Filtered_XYZ(handles.kin_array(1,11),6), 'squareg'); %Movement end Y outgoing
+                plot(handles.Filtered_XYZ(handles.kin_array(1,12),1), handles.Filtered_XYZ(handles.kin_array(1,12),7), 'squareb'); %Movement end Z outgoing
+                                    
+                axes(handles.Middle_Graph);
+                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,5), '-r'); 
+                hold on;
+                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,6), '-g'); 
+                plot(handles.Filtered_Velocity_XYZ (:,1), handles.Filtered_Velocity_XYZ(:,7), '-b'); 
+
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,16),5), 'squarer'); % Peak velocity index X
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,17),6), 'squareg'); % Peak velocity index y
+                plot(handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),1),handles.Filtered_Velocity_XYZ(handles.kin_array(1,18),7), 'squareb'); % Peak velocity index z
+
+                axes(handles.Bottom_Graph);
+                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,5),'-r');
+                hold on;
+                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,6),'-g');
+                plot(handles.Filtered_Accel_XYZ(:,1), handles.Filtered_Accel_XYZ (:,7),'-b');
+
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,22),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,22),5),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,23),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,23),6),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,24),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,24),7),'squareb');
+
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,28),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,28),5),'squarer');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,29),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,29),6),'squareg');
+                plot(handles.Filtered_Accel_XYZ(handles.kin_array(1,30),1),handles.Filtered_Accel_XYZ(handles.kin_array(1,30),7),'squareb');
+            end
+       end
+      
+       if (get(handles.Index_Accel_Check,'Value') == get(handles.Index_Accel_Check,'Max')) %changing Index Vector kin vars
+           if(handles.marker_select == 1 || handles.marker_select == 2)
+                axes(handles.Top_Graph);
+                plot(handles.Filtered_SagPos(:,1), handles.Filtered_SagPos(:,2), '-r');
+                hold on;
+
+                plot(handles.Filtered_SagPos(handles.kin_array(1,1),1), handles.Filtered_SagPos(handles.kin_array(1,1),2), 'or'); %Movement start 
+                plot(handles.Filtered_SagPos(handles.kin_array(1,7),1), handles.Filtered_SagPos(handles.kin_array(1,7),2), 'or'); %Movement end
+
+                axes(handles.Middle_Graph);
+                plot(handles.Filtered_Velocity(:,1), handles.Filtered_Velocity(:,2),'-r');
+                hold on;
+                plot(handles.Filtered_SagPos(handles.kin_array(1,31),1),handles.Filtered_Velocity(handles.kin_array(1,31),2),'or');
+           end
+      end
+       if (get(handles.Thumb_Accel_Check,'Value') == get(handles.Thumb_Accel_Check,'Max')) %changing Palm Vector kin vars
+           if(handles.marker_select == 1 || handles.marker_select == 3)
+                axes(handles.Top_Graph);
+                plot(handles.Filtered_SagPos(:,1), handles.Filtered_SagPos(:,3), '-r');
+                hold on;
+                plot(handles.Filtered_SagPos(handles.kin_array(1,4),1), handles.Filtered_SagPos(handles.kin_array(1,4),3), 'or'); %Movement start 
+                plot(handles.Filtered_SagPos(handles.kin_array(1,10),1), handles.Filtered_SagPos(handles.kin_array(1,10),3), 'or'); %Movement end
+
+                axes(handles.Middle_Graph);
+                plot(handles.Filtered_Velocity(:,1), handles.Filtered_Velocity(:,3),'-r');
+                hold on;
+                plot(handles.Filtered_SagPos(handles.kin_array(1,32),1),handles.Filtered_Velocity(handles.kin_array(1,32),3),'or');
+           end
+       end
+        
+    end
+    handles.extract =1;
+end
+
 end
