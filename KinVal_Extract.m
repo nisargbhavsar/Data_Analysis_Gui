@@ -1107,7 +1107,7 @@ if (type ==1 && system ==1) %Grasping Leap
     objective_f_h = zeros(length(pos(:, 1)), 1);
     obj_height = varargin(1,5) * 3/4;
     for i=1: length(pos(:,1))
-        if (pos (i, 2) > obj_height)
+        if ((pos (i, 2) + pos(i, 5))/2 > obj_height)
             objective_f_h (i, 1) = 1;
         end
     end
@@ -1118,17 +1118,10 @@ if (type ==1 && system ==1) %Grasping Leap
     plot(pos(:, 7), objective_f_h);
     %
     
-    %Sagittal position of the index must be more than half of the object
-    %distance from the needle
-%    objective_f_d = zeros(length(pos(:,6)),1);
-%    obj_dist = varargin(1,4)/2;
-%     for i=1: length(pos(:,6))
-%         if(pos(i,6) > obj_dist)
-%             objective_f_d (i,1) = 1;
-%         end
-%     end
+    %Sagittal position of the index must be more than half of the azimuthal object
+    %distance  from the needle
     objective_f_d = zeros(length(vector_sagpos(:, 1)), 1);
-    obj_dist = varargin(1, 4) * 5/6;
+    obj_dist = varargin(1, 4) * 1/2;
     for(i = 1: length(vector_sagpos(:, 1)))
         if(vector_sagpos(i, 1) > obj_dist)
                 objective_f_d (i, 1) = 1;
@@ -1157,7 +1150,7 @@ if (type ==1 && system ==1) %Grasping Leap
     [~, max_g_index] = max(pos(1:index, 11));
     
        
-    % Index Finger 100, 50 msec before and after peak velocity
+    % Index Finger 100, 50 msec before and after peak grip aperture
     % Assuming sample rate is 50 frames per second
         %100 msec before/after
     if_100n_index_g = max_g_index - 5;
@@ -1237,11 +1230,9 @@ if (type ==1 && system ==1) %Grasping Leap
     
     max_grip_positions = [if_x_50n_g if_y_50n_g if_z_50n_g if_x_50p_g if_y_50p_g if_z_50p_g if_x_100n_g if_y_100n_g if_z_100n_g if_x_100p_g if_y_100p_g if_z_100p_g th_x_50n_g th_y_50n_g th_z_50n_g th_x_50p_g th_y_50p_g th_z_50p_g th_x_100n_g th_y_100n_g th_z_100n_g th_x_100p_g th_y_100p_g th_z_100p_g max_g_index];
 
-
     %Placement start
     placement_start = index;
-    %while(vector_vel(placement_start, 1) > 0.1)
-    while(velocity(placement_start, 2) > -0.1)
+    while(velocity(placement_start, 2) > -0.1) %Using velocity in y direction
         placement_start = placement_start+ 1;
     end
     %Placement end
@@ -2344,7 +2335,7 @@ if(type == 1 && system ==2) %Optotrak grasping
     
     %Debuging
     figure()
-    subplot(6,1,1);
+    subplot(5,1,1);
     plot(vector_sagpos(:,1),objective_f_ga(:,1));
     %
     
@@ -2356,7 +2347,7 @@ if(type == 1 && system ==2) %Optotrak grasping
     end
     
     %Debuging
-    subplot(6,1,2);
+    subplot(5,1,2);
     plot(vector_vel(:, 1),objective_f_gav(:, 1));
     %
     
@@ -2368,56 +2359,71 @@ if(type == 1 && system ==2) %Optotrak grasping
     end
     
     %Debugging
-    subplot(6,1,3);
+    subplot(5,1,3);
     plot(vector_accel(:, 1), objective_f_gaa(:, 1));
     %
     
-    %speed of palm low upon movement ending
-    max_wrist_velocity = max(velocity(:,3));
-    objective_f_ws = abs(velocity(:,3));
-    %assign more importance to lower wrist speeds
-    objective_f_ws = 1-(objective_f_ws(:,1)/max_wrist_velocity);
     
     %Average height of the thumb and index finger must be bigger than 3/4 of the
-    %height of the object from the Leap Detector
-    objective_f_h = zeros(length(vel_tolerance(:,1)),1);
+    %height of the object
+    objective_f_h = zeros(length(pos(:,1)),1);
     
     obj_height = varargin(1,5)*3/4;
-    for i=1: length(vel_tolerance(:,1))
-        if (vel_tolerance (i,3) > obj_height)
+    for i=1: length(pos(:,1))
+        if ((pos (i,3) + pos(i, 6))/2 > obj_height)
             objective_f_h (i,1) = 1;
         end
     end
     
-%     %Sagittal position of the index must be more than half of the object
-%     %distance from the needle
-%     objective_f_d = zeros(length(pos(:,6)),1);
-%     obj_dist = varargin(1,4)/2;
-%     for i=1: length(pos(:,6))
-%         if(pos(i,6) > obj_dist)
-%             objective_f_d (i,1) = 1;
-%         end
-%     end
-%    master_obj_function = zeros(length(objective_f_gaa(:,1)),1);
-
-%    master_obj_function(:,1) = objective_f_gaa(:,1) * objective_f_h(:,1) * objective_f_ws(:,1) * objective_f_ga(:,1) * objective_f_gav(:,1) * objective_f_d(:,1);
-    master_obj_function(:,1) = objective_f_gaa(:,1) * objective_f_h(:,1) * objective_f_ga(:,1) * objective_f_gav(:,1);   
-    index = max(master_obj_function);
-    index = find(master_obj_function(:,1) == max_i);
+    %Debugging
+    subplot(5,1,4);
+    plot(pos(:, 1), objective_f_h(:, 1));
+    %
     
-    %Index Finger 100, 50 msec before and after peak velocity
+    %Sagittal position of the index must be more than half of the azimuthal object
+    %distance from the needle
+    objective_f_d = zeros(length(vector_sagpos(:,1)),1);
+    obj_dist = varargin(1,4)/2;
+    for i=1: length(vector_sagpos(:,1))
+        if(vector_sagpos(i, 2) > obj_dist)
+            objective_f_d (i,1) = 1;
+        end
+    end
+    
+    %Debugging
+    subplot(5,1,5);
+    plot(vector_sagpos(:, 1), objective_f_d(:,1));
+    
+%    master_obj_function = zeros(length(objective_f_gaa(:,1)),1);
+%    master_obj_function(:,1) = objective_f_gaa(:,1) * objective_f_h(:,1) * objective_f_ws(:,1) * objective_f_ga(:,1) * objective_f_gav(:,1) * objective_f_d(:,1);
+    master_obj_function(:,1) = objective_f_gaa(:,1) .* objective_f_h(:,1) .* objective_f_ga(:,1) .* objective_f_gav(:,1) .* objective_f_d(:, 1); 
+    master_obj_function(master_obj_function == 0) = NaN; %Replace all 0s with NaNs
+    [~, index] = max(master_obj_function(approach_phase_end:return_phase_begin, 1));
+    index = approach_phase_end + index -1;
+    
+    %Debugging
+    figure()
+    plot(pos(:, 1), master_obj_function);
+    hold on;
+    plot(pos(index, 1), master_obj_function(index, 1), 'xr');
+    %
+    
+    %Max Grip
+    [~, max_g_index] = max(vector_sagpos(1:index, 4));
+    
+    %Index Finger 100, 50 msec before and after peak grip aperture
     % Assuming sample rate is 50 frames per second
         %100 msec before/after
-    if_100n_index = index - 5;
-    if_100p_index = index + 5;
+    if_100n_index = max_g_index - 5;
+    if_100p_index = max_g_index + 5;
         
         %40 msec before/after
-    if_40n_index = index - 2;
-    if_40p_index = index + 2;
+    if_40n_index = max_g_index - 2;
+    if_40p_index = max_g_index + 2;
 
         %60 msec before/after
-    if_60n_index = index -3;
-    if_60p_index = index +3;
+    if_60n_index = max_g_index -3;
+    if_60p_index = max_g_index +3;
 
         %50 msec before/after (x)
     x = [pos(if_60n_index, 2), pos(if_40n_index, 2)];
@@ -2484,11 +2490,20 @@ if(type == 1 && system ==2) %Optotrak grasping
    
     max_grip_positions = [if_x_50n_g if_y_50n_g if_z_50n_g if_x_50p_g if_y_50p_g if_z_50p_g if_x_100n_g if_y_100n_g if_z_100n_g if_x_100p_g if_y_100p_g if_z_100p_g th_x_50n_g th_y_50n_g th_z_50n_g th_x_50p_g th_y_50p_g th_z_50p_g th_x_100n_g th_y_100n_g th_z_100n_g th_x_100p_g th_y_100p_g th_z_100p_g];
     
+    %Placement start
+    placement_start = index;
+    while(velocity(placement_start, 3) > -0.1) %Using velocity in y direction
+        placement_start = placement_start+ 1;
+    end
+    %Placement end
+    %placement_end = ifs_move_z;
+    placement_end = placement_start;
+    while(velocity(placement_end, 3) > -0.01)
+        placement_end = placement_end + 1;
+    end
     final_output = [approach_output return_output index objp_start objp_end max_grip_positions];
     
     varargout = num2cell(final_output, [1 2]);
-    
-    
 end
 
 end

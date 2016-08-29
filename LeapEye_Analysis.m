@@ -128,7 +128,6 @@ function Index_XYZ_Check_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 % Hint: get(hObject,'Value') returns toggle state of Index_XYZ_Check
 
-% h = findobj(0, 'tag', 'figure1');
 if (handles.extract == 0)
     axes(handles.Top_Graph);
     cla;
@@ -248,7 +247,7 @@ if (handles.extract == 0)
                  end
             end
       end
-        aCheckbox = findobj('Tag','Wrist_Accel_Check');
+        aCheckbox = findobj('Tag','Wrist_Accel_Check'); %Turn off all other checkboxes
         bCheckbox = findobj('Tag','Thumb_Accel_Check');
         cCheckbox = findobj('Tag','Palm_Accel_Check');
         dCheckbox = findobj('Tag','Grip_Aperture_Check');
@@ -411,7 +410,7 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
           end
       end
 end
-    aCheckbox = findobj('Tag','Wrist_Accel_Check');
+    aCheckbox = findobj('Tag','Wrist_Accel_Check'); %Turn off all other checkboxes
     bCheckbox = findobj('Tag','Thumb_Accel_Check');
     cCheckbox = findobj('Tag','Palm_Accel_Check');
     dCheckbox = findobj('Tag','Grip_Aperture_Check');
@@ -526,7 +525,7 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          end
          
      end
-    aCheckbox = findobj('Tag','Wrist_Accel_Check');
+    aCheckbox = findobj('Tag','Wrist_Accel_Check'); %Turn off all other checkboxes
     bCheckbox = findobj('Tag','Thumb_Accel_Check');
     cCheckbox = findobj('Tag','Palm_Accel_Check');
     dCheckbox = findobj('Tag','Grip_Aperture_Check');
@@ -616,7 +615,7 @@ if (get(hObject,'Value') == get(hObject,'Max')) %Checkbox is selected
          set(handles.warning_text, 'String','Optotrak did not track the thumb.');
       end
     
-    aCheckbox = findobj('Tag','Wrist_Accel_Check');
+    aCheckbox = findobj('Tag','Wrist_Accel_Check'); %Turn off all other checkboxes
     bCheckbox = findobj('Tag','Index_Accel_Check');
     cCheckbox = findobj('Tag','Palm_Accel_Check');
     dCheckbox = findobj('Tag','Grip_Aperture_Check');
@@ -735,7 +734,7 @@ axes(handles.Bottom_Graph);
             plot(handles.Filtered_Accel (:,1), handles.Filtered_Accel(:,3), '-b');
          end
      end
-    aCheckbox = findobj('Tag','Wrist_Accel_Check');
+    aCheckbox = findobj('Tag','Wrist_Accel_Check'); %Turn off all other checkboxes
     bCheckbox = findobj('Tag','Thumb_Accel_Check');
     cCheckbox = findobj('Tag','Index_Accel_Check');
     dCheckbox = findobj('Tag','Grip_Aperture_Check');
@@ -822,7 +821,7 @@ axes(handles.Bottom_Graph);
       if(handles.system == 2) %Optotrak
          set(handles.warning_text, 'String','Optotrak did not track the wrist.');
       end
-    aCheckbox = findobj('Tag','Index_Accel_Check');
+    aCheckbox = findobj('Tag','Index_Accel_Check'); %Turn off all other checkboxes
     bCheckbox = findobj('Tag','Thumb_Accel_Check');
     cCheckbox = findobj('Tag','Palm_Accel_Check');
     dCheckbox = findobj('Tag','Grip_Aperture_Check');
@@ -926,10 +925,10 @@ set(handles.Raw_Radio,'Value',0);
 set(handles.Filter_Radio,'Value',0);
 
 if(handles.system ==1) %Leap
-    [~, handles.Trial_Num, handles.Master_array] = load_LEAP_data_gui(1); %Call load_LEAP_data_gui function to let user input required files
+    [~, handles.Trial_Num, handles.Master_array] = load_LEAP_data_gui(1); %Call load_LEAP_data_gui function to let user input required file
 end
 if(handles.system ==2) %Optotrak
-    [handles.frequency, handles.Trial_Num, handles.Master_array] = load_LEAP_data_gui(3); %Load Optotrak data
+    [handles.frequency, handles.Trial_Num, handles.Master_array] = load_LEAP_data_gui(3); %Call load_LEAP_data_gui to let user input required file
 end
 
 if(handles.system ==1)
@@ -959,7 +958,7 @@ if(handles.system ==1)
 end
 
 if (handles.system ==2) %Optotrak
-    %Time, Index, Palm
+    %Index, Palm/Thumb, Time, Grip Aperture
     handles.Raw_SagPos = zeros(length(handles.Master_array), 4); 
     handles.Raw_Velocity = zeros (length (handles.Master_array)-1,4); 
     handles.Raw_Accel = zeros (length(handles.Master_array)-2, 4); 
@@ -972,7 +971,7 @@ if (handles.system ==2) %Optotrak
     handles.Filtered_Velocity = zeros (length (handles.Master_array)-1,4);
     handles.Filtered_Accel = zeros (length(handles.Master_array)-2, 4);
     
-    %Time, Index (XYZ), Palm (XYZ)
+    %Index (XYZ), Palm/Thumb(XYZ), Time
     handles.Raw_XYZ = zeros(length(handles.Master_array), 7);
     handles.Raw_Velocity_XYZ = zeros (length (handles.Master_array)-1,7);
     handles.Raw_Accel_XYZ = zeros (length(handles.Master_array)-2, 7);
@@ -987,8 +986,8 @@ if (handles.system ==2) %Optotrak
 end
 
 handles.Raw_disp = zeros(1,3);
-handles.Vel_Tol = 0.02;
-handles.VelEnd_Tol = 0.1;
+handles.Vel_Tol = 0.02; %Velocity tolerance for start of movement (m/s)
+handles.VelEnd_Tol = 0.1; %Velocity tolerance for end of movement (m/s)
 handles.kin_array = zeros(1,13);
 handles.variables = zeros (1,4);
 h = findobj(0, 'tag', 'figure1');
@@ -1003,7 +1002,7 @@ if (get(handles.radiobutton4,'Value') == get(handles.radiobutton4,'Max')) %Point
 end
 handles.curr_col = 1;
 
-handles.Calibration_array = h(1).UserData;
+handles.Calibration_array = h(1).UserData; %Get calibration data
 
 index_x = 0;
 index_y = 0;
@@ -1206,11 +1205,8 @@ function Resample_Button_Callback(hObject, eventdata, handles)
 % hObject    handle to Resample_Button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-%if(handles.system ==1 || handles.system ==3) % Do not need to resample Optotrak (constant sampling at 50 Hz)
-    [status, handles.Master_array] = resample(handles.system, handles.Resample_Rate, handles.Master_array);
-%else
-    %status =0; %No warning for the Optotrak data as it is not resampled
-%end
+[status, handles.Master_array] = resample(handles.system, handles.Resample_Rate, handles.Master_array);
+
 if(handles.system ==1) %Leap
     if(status ==1)
         set(handles.warning_text, 'String','Warning: There is more than 30% of data missing from this trial.');
@@ -1231,7 +1227,7 @@ if(handles.system == 2) %Optotrak
         text = strcat(text,' There is no data (');
     end
     if(status(1) ~= 0)
-        text = strcat(text, 'index,');
+        text = strcat(text, 'index, ');
     end
     if(status(2) ~= 0)
         text = strcat(text, 'palm');
@@ -1272,7 +1268,7 @@ if(handles.system==1) %Leap
             handles.Resampled_XYZ (i,8) = sqrt((handles.Resampled_XYZ(i,1)-handles.Resampled_XYZ(i,4))^2); %Grip aperture (x)
             handles.Resampled_XYZ (i,9) = sqrt((handles.Resampled_XYZ(i,2)-handles.Resampled_XYZ(1,5))^2); %Grip aperture (y)
             handles.Resampled_XYZ (i,10) = sqrt((handles.Resampled_XYZ(i,3)-handles.Resampled_XYZ(i,6))^2);%Grip aperture (z)
-            handles.Resampled_XYZ (i,11) = sqrt((handles.Resampled_XYZ(i,8))^2+(handles.Resampled_XYZ(i,9))^2 + (handles.Resampled_XYZ(i,10))^2);  
+            handles.Resampled_XYZ (i,11) = sqrt((handles.Resampled_XYZ(i,8))^2+(handles.Resampled_XYZ(i,9))^2 + (handles.Resampled_XYZ(i,10))^2); %Grip Aperture 
         end
         
         for i=1: (length(handles.Master_array)-1)
@@ -1307,7 +1303,7 @@ if(handles.system==1) %Leap
             handles.Resampled_Velocity_XYZ (i,8) = (handles.Resampled_XYZ(i+1,8)-handles.Resampled_XYZ(i,8))/delta_time; %Grip aperture velocity (x)
             handles.Resampled_Velocity_XYZ (i,9) = (handles.Resampled_XYZ(i+1,9)-handles.Resampled_XYZ(i,9))/delta_time; %Grip aperture velocity(y)
             handles.Resampled_Velocity_XYZ (i,10) = (handles.Resampled_XYZ(i+1,10)-handles.Resampled_XYZ(i,10))/delta_time;%Grip aperture velocity(z)
-            handles.Resampled_Velocity_XYZ (i,11) = (handles.Resampled_XYZ(i+1,11)-handles.Resampled_XYZ(i,11))/delta_time;
+            handles.Resampled_Velocity_XYZ (i,11) = (handles.Resampled_XYZ(i+1,11)-handles.Resampled_XYZ(i,11))/delta_time; %Grip aperture velocity (3-d)
         end
         
         for i=1: (length(handles.Master_array)-2)
@@ -1713,14 +1709,14 @@ if(handles.system ==1) %Leap
     end
 
     if(handles.extract == 0 && handles.point == 1) %Grasping  
-        side = handles.event_data(handles.Trial_Num, 5);
-        side = cell2mat(side);
+       side = handles.event_data(handles.Trial_Num, 5);
+       side = cell2mat(side);
         handles.obj_dia = handles.event_data(handles.Trial_Num, 2);
         handles.obj_dist = handles.event_data(handles.Trial_Num, 4);
         handles.obj_height = handles.event_data(handles.Trial_Num, 3);
+
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel, handles.th_vec_vel, input_array);
-        %handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol,0, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0, handles.vec_vel,handles.th_vec_vel, input_array);
         handles.extract =1;
     end
 
@@ -2006,13 +2002,11 @@ if(handles.system ==2) %Optotrak
         handles.kin_array = zeros (1,32);
         side = handles.event_data(handles.Trial_Num, 5);
         side = cell2mat(side);
-        handles.obj_dia = handles.event_data(handles.Trial_Num, 2);
-        handles.obj_dist = handles.event_data(handles.Trial_Num, 4);
-        handles.obj_height = handles.event_data(handles.Trial_Num, 3);
+        handles.obj_dia = handles.event_data(handles.Trial_Num, 2); %Object Size
+        handles.obj_dist = handles.event_data(handles.Trial_Num, 4); %Azimuthal Location
+        handles.obj_height = handles.event_data(handles.Trial_Num, 3); %Object Height
         input_array = [handles.Vel_Tol, handles.VelEnd_Tol, handles.obj_dia, handles.obj_dist, handles.obj_height];
-        %handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel,0,0,0,handles.vec_vel,handles.th_vec_vel, input_array);
         handles.kin_array = KinVal_Extract (handles.marker_select, handles.system, side, handles.Resample_Rate, handles.point, handles.VelEnd_Tol, handles.Vel_Tol, handles.Filtered_XYZ, handles.Filtered_Velocity_XYZ, handles.Filtered_Accel_XYZ, handles.Filtered_SagPos, handles.Filtered_Velocity, handles.Filtered_Accel, handles.vec_vel, handles.th_vec_vel, input_array);
-
         handles.extract =1;
     end
 
@@ -2267,20 +2261,9 @@ if(handles.system ==2) %Optotrak
             plot(handles.Filtered_SagPos(handles.kin_array(1, 62), 1), handles.Filtered_SagPos(handles.kin_array(1, 62), 4), 'squarer'); %Obj placement end
             text(handles.Filtered_SagPos(handles.kin_array(1, 62), 1), handles.Filtered_SagPos(handles.kin_array(1, 62), 4), '\leftarrow Object Placement End')
             plot(handles.Filtered_SagPos(handles.kin_array(1, 61), 1), handles.Filtered_SagPos(handles.kin_array(1, 61), 4), 'squarer'); %Obj placement start
-            text(handles.Filtered_SagPos(handles.kin_array(1, 61), 1), handles.Filtered_SagPos(handles.kin_array(1, 61), 4), '\leftarrow Object Placement Begin')      
-%             
-%            axes(handles.Top_Graph);
-%             plot(handles.Filtered_XYZ(:, 1), handles.Filtered_XYZ(:, 4), '-r');
-%             hold on;
-%             plot(handles.Filtered_XYZ(handles.kin_array(1, 63), 7), handles.Filtered_XYZ(handles.kin_array(1, 63), 11), 'squarer'); %Grip begin
-%             text(handles.Filtered_XYZ(handles.kin_array(1, 63), 7),handles.Filtered_XYZ(handles.kin_array(1, 63), 11),'\leftarrow Grip Begin')
-%             plot(handles.Filtered_XYZ(handles.kin_array(1, 62), 7), handles.Filtered_XYZ(handles.kin_array(1, 62), 11), 'squarer'); %Obj placement end
-%             text(handles.Filtered_XYZ(handles.kin_array(1, 62), 7),handles.Filtered_XYZ(handles.kin_array(1, 62), 11),'\leftarrow Object Placement End')
-%             plot(handles.Filtered_XYZ(handles.kin_array(1, 61), 7), handles.Filtered_XYZ(handles.kin_array(1, 61), 11), 'squarer'); %Obj placement start
-%             text(handles.Filtered_XYZ(handles.kin_array(1, 61), 7),handles.Filtered_XYZ(handles.kin_array(1, 61), 11),'\leftarrow Object Placement Begin')           
+            text(handles.Filtered_SagPos(handles.kin_array(1, 61), 1), handles.Filtered_SagPos(handles.kin_array(1, 61), 4), '\leftarrow Object Placement Begin')                 
        end
         axes(handles.Top_Graph);
-        %handles.Filtered_XYZ(:,11)
         plot(handles.Filtered_XYZ(:,7), handles.Filtered_XYZ(:,11), '-r');
         hold on;
 
@@ -2589,7 +2572,6 @@ if(handles.point == 0) %Pointing
         thumb = 1;
         if (handles.marker_select == 2) %Index only selected
             thumb =0;
-            %handles.event_data
             %processing the accepted markers
             trial_validity = 1;
             hand_latency = handles.Master_array(handles.kin_array(1,1),13)/1000; 
@@ -2692,9 +2674,6 @@ if(handles.point == 0) %Pointing
             thumb_x_pos_PD = handles.Master_array(handles.kin_array(1, 30), 4) * thumb;
             thumb_y_pos_PD = handles.Master_array(handles.kin_array(1, 30), 5) * thumb;
             thumb_z_pos_PD = handles.Master_array(handles.kin_array(1, 30), 6) * thumb;
-        % a = {'ifs_move_x',' ifs_move_y',' ifs_move_z',' ths_move_x',' ths_move_y',' ths_move_z',' ife_move_x','ife_move_y',' ife_move_z',' the_move_x',' the_move_y',' the_move_z',' if_max_vel_index_x',' if_max_vel_index_y',' if_max_vel_index_z',' th_max_vel_index_x',' th_max_vel_index_y',' th_max_vel_index_z',' if_peakAccel_index_x',' if_peakAccel_index_y',' if_peakAccel_index_z',' th_peakAccel_index_x',' th_peakAccel_index_y',' th_peakAccel_index_z',' if_peakDeccel_index_x',' if_peakDeccel_index_y',' if_peakDeccel_index_z',' th_peakDeccel_index_x',' th_peakDeccel_index_y',' th_peakDeccel_index_z',' if_max_v_vel_index',' th_max_v_vel_index',' if_x_50n',' if_y_50n',' if_z_50n',' if_x_50p',' if_y_50p',' if_z_50p',' if_x_100n',' if_y_100n',' if_z_100n',' if_x_100p ','if_y_100p',' if_z_100p',' th_x_50n',' th_y_50n ','th_z_50n',' th_x_50p ','th_y_50p','th_z_50p',' th_x_100n ','th_y_100n',' th_z_100n',' th_x_100p',' th_y_100p ','th_z_100p'};
-        %     disp(a);
-        %     disp(handles.kin_array);
             thumb_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1,32),2) *thumb; 
 
             output_array = [trial_validity hand_latency movement_time_thumb_z 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 thumb_x_PA thumb_y_PA thumb_z_PA time_thumb_PA_z thumb_x_pos_PA thumb_y_pos_PA thumb_z_pos_PA thumb_x_PV thumb_y_PV thumb_z_PV time_thumb_PV_z thumb_x_pos_PV thumb_y_pos_PV thumb_z_pos_PV thumb_x_PD thumb_y_PD thumb_z_PD time_thumb_PD_z thumb_x_pos_PD thumb_y_pos_PD thumb_z_pos_PD thumb_end_pos_x thumb_end_pos_y thumb_end_pos_z index_peak_vel_vec thumb_peak_vel_vec 0 0 0 0 0 0 0 0 0 0 0 0 handles.kin_array(1,45)*thumb handles.kin_array(1,46)*thumb handles.kin_array(1,47)*thumb handles.kin_array(1,48)*thumb handles.kin_array(1,49)*thumb handles.kin_array(1,50)*thumb handles.kin_array(1,51)*thumb handles.kin_array(1,52)*thumb handles.kin_array(1,53)*thumb handles.kin_array(1,54)*thumb handles.kin_array(1,55)*thumb handles.kin_array(1,56)*thumb 0 0 0 thumb_begin_pos_x thumb_begin_pos_y thumb_begin_pos_z];
@@ -2725,7 +2704,7 @@ if(handles.point == 0) %Pointing
             index_begin_pos_y = handles.Master_array(handles.kin_array(1, 3)-1, 2) * index;
             index_begin_pos_z = handles.Master_array(handles.kin_array(1, 3)-1, 3) * index;
 
-            accuracyx = (index_end_pos_x-targetx); %accuracy of 
+            accuracyx = (index_end_pos_x-targetx); %accuracy of index finger when pointing at the target
             accuracyy = (index_end_pos_y-targety);
             accuracyz = (index_end_pos_z-targetz);
 
@@ -2796,9 +2775,7 @@ if(handles.point == 0) %Pointing
             thumb_x_pos_PD = handles.Master_array(handles.kin_array(1, 30), 4) * thumb;
             thumb_y_pos_PD = handles.Master_array(handles.kin_array(1, 30), 5) * thumb;
             thumb_z_pos_PD = handles.Master_array(handles.kin_array(1, 30), 6) * thumb;
-        % a = {'ifs_move_x',' ifs_move_y',' ifs_move_z',' ths_move_x',' ths_move_y',' ths_move_z',' ife_move_x','ife_move_y',' ife_move_z',' the_move_x',' the_move_y',' the_move_z',' if_max_vel_index_x',' if_max_vel_index_y',' if_max_vel_index_z',' th_max_vel_index_x',' th_max_vel_index_y',' th_max_vel_index_z',' if_peakAccel_index_x',' if_peakAccel_index_y',' if_peakAccel_index_z',' th_peakAccel_index_x',' th_peakAccel_index_y',' th_peakAccel_index_z',' if_peakDeccel_index_x',' if_peakDeccel_index_y',' if_peakDeccel_index_z',' th_peakDeccel_index_x',' th_peakDeccel_index_y',' th_peakDeccel_index_z',' if_max_v_vel_index',' th_max_v_vel_index',' if_x_50n',' if_y_50n',' if_z_50n',' if_x_50p',' if_y_50p',' if_z_50p',' if_x_100n',' if_y_100n',' if_z_100n',' if_x_100p ','if_y_100p',' if_z_100p',' th_x_50n',' th_y_50n ','th_z_50n',' th_x_50p ','th_y_50p','th_z_50p',' th_x_100n ','th_y_100n',' th_z_100n',' th_x_100p',' th_y_100p ','th_z_100p'};
-        %     disp(a);
-        %     disp(handles.kin_array);
+
             index_peak_vel_vec =handles.Filtered_Velocity(handles.kin_array(1,31),1) *index; 
             thumb_peak_vel_vec = handles.Filtered_Velocity(handles.kin_array(1,32),2) *thumb; 
 
@@ -3821,7 +3798,7 @@ function eventFile_Button_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 if(handles.system ==1 || handles.system ==2)
-    [filename, pathname] = uigetfile('*.mat','Select the Events File');
+    [filename, ~] = uigetfile('*.mat','Select the Events File');
     C= strsplit(filename, '.');
     if(handles.point == 0) %Pointing
         if(handles.system ==1) %Leap
@@ -3852,7 +3829,7 @@ if(handles.system ==1 || handles.system ==2)
         handles.event_data = event_d;
     end
     try
-        handles.event_data = num2cell(handles.event_data);
+        handles.event_data = num2cell(handles.event_data); 
     catch
     end
 
@@ -3866,9 +3843,8 @@ if(handles.system ==1 || handles.system ==2)
         xlswrite(handles.events_filename,{'Stimulus'}, 1,'C1'); %loaded events file information
         xlswrite(handles.events_filename,{'Delay'}, 1,'D1'); %loaded events file information
         xlswrite(handles.events_filename,{'Location'}, 1,'E1'); %loaded events file information
-        %xlswrite(handles.events_filename,{'Calibration Value'}, 1,'F1'); %loaded events file information
+        xlswrite(handles.events_filename,{'Calibration Value'}, 1,'F1'); %loaded events file information
         xlswrite(handles.events_filename, handles.event_data, 1,'A2'); %loaded events file information
-
         xlswrite(handles.events_filename,output_headers, 1,'H1:CO1');
     end
     if((handles.system == 1 || handles.system == 2) && handles.point == 1) %Leap/Optotrak Grasping
@@ -3886,7 +3862,11 @@ if(handles.system ==1 || handles.system ==2)
     end
     guidata(hObject, handles);
 end
-handles.event_data = cell2mat(handles.event_data);
+try
+    handles.event_data = cell2mat(handles.event_data);
+catch
+    %handles.event_data is already a matrix
+end
 drawnow; pause(0.05);  % this innocent line prevents the Matlab hang
 end
 
@@ -3926,7 +3906,6 @@ function table1_CreateFcn(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
-%set(hObject,'ColumnName',{'Trial #';'Trial Condition' ;'Stimulus';'Delay'; 'Location';'Side';'Calibration Value'});
 set(hObject, 'ColumnName',{'Trial #';'Trial Condition';'Stimulus';'Delay';'Location';'Calibration Value'});
 guidata(hObject, handles);
 end
