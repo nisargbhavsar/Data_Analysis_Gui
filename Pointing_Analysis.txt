@@ -1,0 +1,23 @@
+Steps:
+
+1) Before starting an analysis batch, load the calibration data.
+	-Click "Load Calibration Data"
+	-Clicking "Data Point" will give you the ability to choose two places in the data stream corresponding to a specific target.
+	-Choose the data points in order of needle, then the targets (from left to right)
+	-Verify the mean, standard deviation and differences in the table below the grid
+	-After the target points have been selected, click "Data Point" one last time, the window will close
+2) Load trial data
+	-When loading, the trial number will come up on the top left hand side of the window for validation
+3) Choose an appropriate resampling and filtering frequency
+4) Plot the data by first choosing one of the three options (Raw Data, Resampled Data, Filtered Data)
+5) Using the data cursor on the top left hand side of the window, locate the velocity peak in the z direction
+6) Choose "Index Only" from the drop down menu on the lower left hand side of the window
+7) Input a number slightly lower than the velocity peak (ie. 1.93 m/s -> 1.9) in the Index Velocity Edit Box on the right hand side of the window
+8) Click extract kinematic variables
+9) The extracted points can be moved using the slider
+10) Select the point which needs to be moved from the drop down menu, the slider will now allow the point to be moved
+11) Select either "Accept Trial" or "Reject Trial"
+12) If step 7 did not recognize the appropriate peak, select "Respecify"
+	-"Respecify" allows for two points to be selected on the velocity graph
+	-Between the two points, the algorithm will look for the peak approach phase velocity
+13) If selected "Accept Trial" / "Reject Trial" another trial can be loaded
